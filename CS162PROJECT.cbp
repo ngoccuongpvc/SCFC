@@ -32,10 +32,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="app/Controller/ControllerInterface.h" />
-		<Unit filename="app/Controller/UserController.h" />
-		<Unit filename="app/Model/AccountModel.h" />
-		<Unit filename="app/Model/ModelInterface.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
