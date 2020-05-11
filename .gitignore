@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/main.exe
+/CppProperties.json
+/.vs/ProjectSettings.json
+/.vs/SCFC/v16/Browse.VC.opendb
+/.vs/SCFC/v16/Browse.VC.db
+/.vs/SCFC/v16/ipch/AutoPCH/fc6516ad6e54a3ad/MAIN.ipch
+/.vs/SCFC/v16/ipch/AutoPCH/dd35389ce480765/MAIN.ipch
+/.vs/VSWorkspaceState.json
+/main.o
+/Debug
+/.vs/SCFC/v16/ipch/AutoPCH/8a9f07a06c30da9e
+/SCFC.vcxproj.user
+/SCFC.vcxproj.filters
+/SCFC.vcxproj
+/SCFC.sln

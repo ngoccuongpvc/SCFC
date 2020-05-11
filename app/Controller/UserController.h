@@ -7,21 +7,27 @@
 
 using namespace std;
 
+string role;
+
 class UserController : public ControllerInterface
 {
 private:
 
     void mainAction() {
-        cout << "Menu: " << endl;
-        cout << "1 - Login" << endl;
-        cout << "Please choose a number: ";
-        string type;
-        cin >> type;
-        if (type == "1") {
-            this->callMethod("loginAction");
+        extern stack<string> history;
+        string nextMethod;
+        if (role == "student") {
+            history.push("student-dashboard");
         }
-
-        return;
+        else if (role == "teacher") {
+            history.push("teacher-dashboard");
+        }
+        else if (role == "staff") {
+            history.push("staff-dashboard");
+        }
+        else {
+            history.push("login");
+        }
     }
 
     void loginAction() {
@@ -36,9 +42,29 @@ private:
         if (model->checkCredential(username, password)) {
             cout << "Login successful" << endl;
             cout << "You are login as: " << model->getUserRole(username) << endl;
+            role = model->getUserRole(username);
+            extern stack<string> history;
+            history.push("dashboard");
+
         } else {
             cout << "Wrong username or password" << endl;
         }
+    }
+
+    void studentDashboard() {
+        cout << "Hello Student!" << endl;
+    }
+    
+    void teacherDashboard() {
+        cout << "Hello Teacher!" << endl;
+    }
+    
+    void staffDashboard() {
+        cout << "Hello Staff!" << endl;
+    }
+
+    void changePasswordAction() {
+        cout << "Change password here!";
     }
 public:
 
@@ -48,6 +74,10 @@ public:
     UserController() {
         this->mapMethods["mainAction"] = [this]() { mainAction(); };
         this->mapMethods["loginAction"] = [this]() { loginAction(); };
+        this->mapMethods["studentDashboard"] = [this]() { studentDashboard(); };
+        this->mapMethods["teacherDashboard"] = [this]() { studentDashboard(); };
+        this->mapMethods["staffDashboard"] = [this]() { studentDashboard(); };
+
     }
 
 

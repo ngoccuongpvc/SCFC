@@ -4,6 +4,12 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <map>
+#include <functional>
+
+using namespace std;
+
 #define getName(var)  #var
 
 class ModelInterface
