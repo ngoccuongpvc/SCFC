@@ -1,12 +1,17 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack>
+#include <string>
+
 #include "app/Controller/ControllerInterface.h"
 #include "app/Controller/UserController.h"
+#include "app/View/Routes.h"
+
 using namespace std;
 
 /**
 History, which contains both controller name and action name
 */
-stack<pair<string,string>> History;
+extern stack<string> history;
 
 /**
 create to corresponding instance by its name
@@ -24,23 +29,43 @@ int main()
     /**
     set the default history
     */
-    History.push(make_pair<string,string>("UserController", "mainAction"));
-
+    history.push("login");
+    Routes *route = new Routes();
     /**
     this is just an example, we need to go forward or backward depend of what we put or pop to history
     */
+
+    
+    string path;
+
     while (true) {
-        string controllerName = History.top().first;
-        string actionName = History.top().second;
+        path = history.top();
+        string controllerName = route->getController(path);
+        string actionName = route->getAction(path);
 
         /**
         create the controller by controller interface
         */
-        ControllerInterface *controller = createInstance(controllerName);
+        ControllerInterface* controller = createInstance(controllerName);
         controller->callMethod(actionName);
-
         delete controller;
-        break;
+        
+        if (path == history.top()) {
+            route->showOptions(path);
+            int opt;
+            cout << "Choose your option: ";
+            cin >> opt;
+            if (!opt) {
+                history.pop();
+            }
+            else {
+                string nextPath = route->getOption(path, opt);
+                history.push(nextPath);
+            }
+        }
     }
+
+    extern string role;
+    cout << role;
     return 0;
 }

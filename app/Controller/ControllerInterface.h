@@ -1,7 +1,11 @@
 #ifndef CONTROLLERINTERFACE_H_INCLUDED
 #define CONTROLLERINTERFACE_H_INCLUDED
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
+#include <string>
+#include <functional>
+#include "../History.h"
 
 using namespace std;
 
