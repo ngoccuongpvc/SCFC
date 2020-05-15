@@ -2,10 +2,37 @@
 #define ACCOUNTMODEL_H_INCLUDED
 
 #include "ModelInterface.h"
+#include <sstream>
+#include <algorithm>
+
+using namespace std;
 
 class AccountModel : public ModelInterface
 {
 private:
+
+	string SHF(string input) //SHF = simple hash function
+	{
+		unsigned int magic = 5674356;
+		unsigned int hash = 1234564352;
+		for (int i = 0; i < input.length(); i++)
+		{
+			hash = hash ^ (input[i]);
+			hash = hash * magic;
+		}
+		return toHex(hash);
+	}
+
+	string toHex(unsigned int input)
+	{
+		string hexHash;
+		stringstream hexstream;
+		hexstream << hex << input;
+		hexHash = hexstream.str();
+		std::transform(hexHash.begin(), hexHash.end(), hexHash.begin(), ::toupper);
+		return hexHash;
+	}
+
 public:
 
     /**
@@ -21,7 +48,7 @@ public:
     bool checkCredential(string username, string password) {
         vector<string> conditions (this->columns.size(), "all");
         conditions[this->getIndex(getName(username))] = username;
-        conditions[this->getIndex(getName(password))] = password;
+        conditions[this->getIndex(getName(password))] = SHF(password); //hashing password
 
         if ((this->fetch(&conditions)).size() != 0) {
             return true;
