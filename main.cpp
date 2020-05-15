@@ -65,7 +65,5 @@ int main()
         }
     }
 
-    extern string role;
-    cout << role;
     return 0;
 }

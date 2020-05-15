@@ -75,8 +75,8 @@ public:
         this->mapMethods["mainAction"] = [this]() { mainAction(); };
         this->mapMethods["loginAction"] = [this]() { loginAction(); };
         this->mapMethods["studentDashboard"] = [this]() { studentDashboard(); };
-        this->mapMethods["teacherDashboard"] = [this]() { studentDashboard(); };
-        this->mapMethods["staffDashboard"] = [this]() { studentDashboard(); };
+        this->mapMethods["teacherDashboard"] = [this]() { teacherDashboard(); };
+        this->mapMethods["staffDashboard"] = [this]() { staffDashboard(); };
 
     }
 
