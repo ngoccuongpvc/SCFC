@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <cmath>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ public:
     }
 
     ofstream *writeConnection() {
-        ofstream *f = new ofstream(this->source, std::ofstream::app);
+        ofstream *f = new ofstream(this->source);
         if (f->is_open()) {
             return f;
         } else {
@@ -108,12 +109,71 @@ public:
         getline((*f), str);
         while (!(*f).eof()) {
             getline((*f), str);
+            if (str == "") continue;
             temp = this->split(str);
             if (getAll || isMeetConditions(conditions, &temp)) {
                 result.push_back(temp);
             }
         }
+        f->close();
         return result;
+    }
+
+    void save(vector<vector<string>>* records) {
+        ofstream* f = this->writeConnection();
+        for (int i = 0; i < (int)this->columns.size(); ++i) {
+            (*f) << this->columns[i];
+            if (i != this->columns.size() - 1) {
+                (*f) << ",";
+            }
+        }
+        (*f) << endl;
+
+        for (int i = 0; i < (int)records->size(); ++i) {
+            for (int j = 0; j < (int)(*records)[i].size(); ++j) {
+                (*f) << (*records)[i][j];
+                if (j != (*records)[i].size() - 1) {
+                    (*f) << ",";
+                }
+            }
+            (*f) << endl;
+        }
+        f->close();
+    }
+
+    /*
+        add a new record to the end of file
+        the first element will be automatically increasing
+    */
+    void add(vector<string> *record) {
+        vector<vector<string>> records = this->fetch();
+        int maxId = 0, temp;
+        for (int i = 0; i < (int)records.size(); ++i) {
+            temp = stoi(records[i][0]);
+            if (temp > maxId) maxId = temp;
+        }
+        (*record)[0] = to_string(maxId + 1);
+        records.push_back(*record);
+        this->save(&records);
+    }
+
+    /*
+        conditions should be initialized by vector<string> conditions(size, "all"), then specify columns that you want to restrict
+        record should be initialized by vector<string> record(size), then fill to columns that you want to update for ALL records
+        that meet the conditions above
+    */
+    void update(vector<string>* conditions, vector<string>* record) {
+        vector<vector<string>> records = this->fetch();
+        for (int i = 0; i < (int)records.size(); ++i) {
+            if (this->isMeetConditions(conditions, &records[i])) {
+                for (int j = 0; j < (int)records[i].size(); ++j) {
+                    if ((*record)[j] != "")
+                        records[i][j] = (*record)[j];
+                }
+            }
+        }
+
+        this->save(&records);
     }
 
     ModelInterface(string source) {
