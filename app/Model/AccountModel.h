@@ -11,6 +11,10 @@ class AccountModel : public ModelInterface
 {
 private:
 
+    string username;
+    string password;
+    string role;
+
 	string SHF(string input) //SHF = simple hash function
 	{
 		unsigned int magic = 5674356;
@@ -34,6 +38,30 @@ private:
 	}
 
 public:
+
+    void setUserName(string username) {
+        this->username = username;
+    }
+
+    void setPassword(string password) {
+        this->password = password;
+    }
+
+    void setRole(string role) {
+        this->role = role;
+    }
+
+    string getUserName() {
+        return this->username;
+    }
+
+    string getPassword() {
+        return this->password;
+    }
+
+    string getRole() {
+        return this->role;
+    }
 
     /**
     constructor, call to parent's constructor, the string inside is the path to its database
@@ -67,6 +95,42 @@ public:
             cout << "An exception has occurred" << endl;
             return "";
         }
+    }
+
+    bool registerUser() {
+        vector<string> conditions(this->columns.size(), "all");
+        conditions[this->getIndex("username")] = this->username;
+        if ((this->fetch(&conditions)).size() != 0) return false;
+        vector<string> account;
+        account.push_back(this->username);
+        account.push_back(SHF(this->password));
+        account.push_back(this->role);
+        this->add(&account);
+        return true;
+    }
+
+    bool checkMatchPassword(string password) {
+        if (SHF(password) == this->password) return true;
+        return false;
+    }
+
+    bool fetchAccount(string username) {
+        vector<string> conditions(this->columns.size(), "all");
+        conditions[this->getIndex("username")] = username;
+        vector<string> record = fetch(&conditions)[0];
+        this->username = record[1];
+        this->password = record[2];
+        this->role = record[3];
+        return true;
+    }
+
+    void changePassword(string password) {
+        this->password = SHF(password);
+        vector<string> conditions(this->columns.size(), "all");
+        conditions[this->getIndex("username")] = this->username;
+        vector<string> record = this->fetch(&conditions)[0];
+        record[2] = this->password;
+        this->update(&conditions, &record);
     }
 };
 
