@@ -41,5 +41,14 @@
     <ClInclude Include="app\Model\UserInfoModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="app\Model\CourseInformationModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Model\AttendanceModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Model\ScoreboardModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

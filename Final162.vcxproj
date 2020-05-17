@@ -105,7 +105,10 @@
     <ClInclude Include="app\controller\UserController.h" />
     <ClInclude Include="app\History.h" />
     <ClInclude Include="app\model\AccountModel.h" />
+    <ClInclude Include="app\Model\AttendanceModel.h" />
+    <ClInclude Include="app\Model\CourseInformationModel.h" />
     <ClInclude Include="app\model\ModelInterface.h" />
+    <ClInclude Include="app\Model\ScoreboardModel.h" />
     <ClInclude Include="app\Model\UserInfoModel.h" />
     <ClInclude Include="app\view\Routes.h" />
   </ItemGroup>
