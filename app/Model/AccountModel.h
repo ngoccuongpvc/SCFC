@@ -102,6 +102,7 @@ public:
         conditions[this->getIndex("username")] = this->username;
         if ((this->fetch(&conditions)).size() != 0) return false;
         vector<string> account;
+        account.push_back("0");
         account.push_back(this->username);
         account.push_back(SHF(this->password));
         account.push_back(this->role);
@@ -131,6 +132,8 @@ public:
         vector<string> record = this->fetch(&conditions)[0];
         record[2] = this->password;
         this->update(&conditions, &record);
+        extern stack<string> history;
+        history.push("dashboard");
     }
 };
 

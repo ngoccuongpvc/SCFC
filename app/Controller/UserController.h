@@ -79,13 +79,15 @@ private:
     }
 
     void registerAction() {
-        if (checkLoginStatus()) return;
+        //if (checkLoginStatus()) return;
+        
         bool validAccount = false;
         UserInfoModel* user = new UserInfoModel();
         AccountModel* am = new AccountModel();
         extern stack<string> history;
         while (!validAccount) {
             string firstName, lastName, dob, gender, role, username, password, studentID;
+            cout << "Welcome to the register screen" << endl;
             cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
             cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
             cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);

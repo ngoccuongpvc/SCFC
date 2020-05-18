@@ -115,6 +115,17 @@ public:
 	void UpdateCourse(string courseName) {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("CourseName")] = courseName;
+		vector<string> record = this->fetch(&conditions)[0];
+		record[1] = this->courseName;
+		record[2] = this->className;
+		record[3] = this->lecturerAccount;
+		record[4] = this->startDay;
+		record[5] = this->endDay;
+		record[6] = this->startHour;
+		record[7] = this->endHour;
+		record[8] = this->room;
+		record[9] = this->semester;
+		this->update(&conditions, &record);
 	}
 };
 

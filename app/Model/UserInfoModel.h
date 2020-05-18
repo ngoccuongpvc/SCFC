@@ -15,6 +15,7 @@ private:
     string firstName;
     string userGender;
     string dob;
+    string username;
 
 public:
 
@@ -38,6 +39,10 @@ public:
         this->dob = dob;
     }
 
+    void setUsername(string username) {
+        this->username = username;
+    }
+
     string getStudentID() {
         return this->studentID;
     }
@@ -52,6 +57,10 @@ public:
 
     string getDOB() {
         return this->dob;
+    }
+
+    string getUsername() {
+        return this->username;
     }
 
     string getUserGender() {
@@ -70,19 +79,22 @@ public:
     */
     string AddUser() {
         vector<string> info;
+        info.push_back("2");
         info.push_back(this->studentID);
         info.push_back(this->firstName);
         info.push_back(this->lastName);
         info.push_back(this->dob);
-        info.push_back(this->userGender);
+        info.push_back(this->userGender);     
+        if (this->studentID != "") this->username = this->studentID + this->dob;
+        else this->username = this->firstName + this->lastName;
+        info.push_back(this->username);
         this->add(&info);
-        if (this->studentID != "") return this->studentID + this->dob;
-        else return this->firstName + this->lastName;
+        return this->username;
     }
 
     bool CheckProfile(string username) {
         vector<string> conditions(this->columns.size(), "all");
-        conditions[this->getIndex(getName(username))] = username;
+        conditions[this->getIndex("username")] = username;
         vector<vector<string>> result = this->fetch(&conditions);
         if (result.size() != 0) {
             this->studentID = result[0][1];
@@ -90,6 +102,7 @@ public:
             this->lastName = result[0][3];
             this->dob = result[0][4];
             this->userGender = result[0][5];
+            this->username = result[0][6];
             return true;
         }
         else {

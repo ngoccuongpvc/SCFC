@@ -66,7 +66,7 @@ public:
 		addRoute("student-dashboard", "UserController", "studentDashboard");
 		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
-		addRoute("change-password", "UserController", "changePasswordAction");
+		addRoute("change-password", "UserController", "changePassword");
 
 		addRoute("log-out", "UserController", "logoutAction");
 		addRoute("register", "UserController", "registerAction");
@@ -79,6 +79,7 @@ public:
 		linkTo("student-dashboard", "check-in-result");
 		linkTo("student-dashboard", "view-schedule");
 		linkTo("student-dashboard", "view-scoreboard");
+		linkTo("student-dashboard", "log-out");
 
 		linkTo("access", "login");
 		linkTo("access", "register");
