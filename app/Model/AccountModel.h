@@ -11,6 +11,7 @@ class AccountModel : public ModelInterface
 {
 private:
 
+    int id;
     string username;
     string password;
     string role;
@@ -119,6 +120,7 @@ public:
         vector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("username")] = username;
         vector<string> record = fetch(&conditions)[0];
+        this->id = stoi(record[0]);
         this->username = record[1];
         this->password = record[2];
         this->role = record[3];

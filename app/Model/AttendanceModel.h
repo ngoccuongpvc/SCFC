@@ -9,6 +9,7 @@ using namespace std;
 class CourseInformationModel : public ModelInterface
 {
 private:
+	int id;
 	int courseId;
 	int studentId;
 	string day;
@@ -43,22 +44,30 @@ public:
 		return this->day;
 	}
 
-	bool FetchAttendance(int studentId, int courseId) {
+	vector<vector<string>> FetchAttendance(int studentId, int courseId) {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("studentId")] = studentId;
 		conditions[this->getIndex("courseId")] = courseId;
-		if (this->fetch(&conditions).size() == 0) return false;
-		vector<string> record = this->fetch(&conditions)[0];
-		this->studentId = stoi(record[1]);
-		this->courseId = stoi(record[2]);
-		this->day = record[3];
+		return this->fetch(&conditions);
+	}
+
+	bool FetchStudentAndCourse(int studentId, int courseId) {
+		vector<vector<string>> fetchResults = FetchAttendance(studentId, courseId);
+		if (fetchResults.size() == 0) return false;
+		this->studentId = stoi(fetchResults[0][1]);
+		this->courseId = stoi(fetchResults[0][2]);
 		return true;
 	}
 
-	void AddAttendance(int studentId, int courseId, string day) {
-		
+	void AddAttendance(string day) {
+		this->day = day;
+		vector<string> record;
+		record.push_back("0");
+		record.push_back(to_string(this->studentId));
+		record.push_back(to_string(this->courseId));
+		record.push_back(this->day);
+		this->add(&record);
 	}
-
 	
 };
 
