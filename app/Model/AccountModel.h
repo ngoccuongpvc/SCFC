@@ -11,7 +11,7 @@ class AccountModel : public ModelInterface
 {
 private:
 
-    int id;
+    string id;
     string username;
     string password;
     string role;
@@ -68,7 +68,10 @@ public:
     constructor, call to parent's constructor, the string inside is the path to its database
     */
     AccountModel() : ModelInterface("database/Account.csv") {
-
+        this->id = "all";
+        this->username = "all";
+        this->password = "all";
+        this->role = "all";
     }
 
     /**
@@ -98,17 +101,16 @@ public:
         }
     }
 
-    bool registerUser() {
+    void registerUser() {
         vector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("username")] = this->username;
-        if ((this->fetch(&conditions)).size() != 0) return false;
+        if ((this->fetch(&conditions)).size() != 0) return;
         vector<string> account;
-        account.push_back("0");
+        account.push_back(this->id);
         account.push_back(this->username);
         account.push_back(SHF(this->password));
         account.push_back(this->role);
         this->add(&account);
-        return true;
     }
 
     bool checkMatchPassword(string password) {
@@ -116,15 +118,13 @@ public:
         return false;
     }
 
-    bool fetchAccount(string username) {
+    vector<vector<string>> fetchAccount() {
         vector<string> conditions(this->columns.size(), "all");
-        conditions[this->getIndex("username")] = username;
-        vector<string> record = fetch(&conditions)[0];
-        this->id = stoi(record[0]);
-        this->username = record[1];
-        this->password = record[2];
-        this->role = record[3];
-        return true;
+        conditions[this->getIndex("id")] = this->id;
+        conditions[this->getIndex("username")] = this->username;
+        conditions[this->getIndex("password")] = this->password;
+        conditions[this->getIndex("role")] = this->role;
+        return fetch(&conditions);
     }
 
 	bool changePassword(string username, string newPass)

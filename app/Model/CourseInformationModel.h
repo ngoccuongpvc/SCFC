@@ -10,7 +10,7 @@ class CourseInformationModel : public ModelInterface
 {
 private:
 
-	int id;
+	string id;
 	string courseName;
 	string className;
 	string lecturerAccount;
@@ -20,10 +20,21 @@ private:
 	string endHour;
 	string room;
 	string semester;
+	string year;
 
 public:
 	CourseInformationModel() : ModelInterface("database/CourseInfo.csv") {
-
+		this->id = "all";
+		this->courseName = "all";
+		this->className = "all";
+		this->lecturerAccount = "all";
+		this->startDay = "all";
+		this->startHour = "all";
+		this->endDay = "all";
+		this->endHour = "all";
+		this->room = "all";
+		this->semester = "all";
+		this->year = "all";
 	}
 
 	void setCourseName(string courseName) {
@@ -62,6 +73,10 @@ public:
 		this->semester = semester;
 	}
 
+	void setYear(string year) {
+		this->year = year;
+	}
+
 	string getCourseName() {
 		return this->courseName;
 	}
@@ -97,46 +112,45 @@ public:
 	string getSemester() {
 		return this->semester;
 	}
-
-	void FetchCourse(string courseName) {
-		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("CourseName")] = courseName;
-		vector<string> record = this->fetch(&conditions)[0];
-		this->id = stoi(record[0]);
-		this->courseName = record[1];
-		this->className = record[2];
-		this->lecturerAccount = record[3];
-		this->startDay = record[4];
-		this->endDay = record[5];
-		this->startHour = record[6];
-		this->endHour = record[7];
-		this->room = record[8];
-		this->semester = record[9];
+	
+	string getYear() {
+		return this->year;
 	}
 
-	void UpdateCourse(string courseName) {
+	vector<vector<string>> FetchAllCourse() {
 		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("CourseName")] = courseName;
-		if (this->fetch(&conditions).size() == 0) return;
-		vector<string> record = this->fetch(&conditions)[0];
-		record[1] = this->courseName;
-		record[2] = this->className;
-		record[3] = this->lecturerAccount;
-		record[4] = this->startDay;
-		record[5] = this->endDay;
-		record[6] = this->startHour;
-		record[7] = this->endHour;
-		record[8] = this->room;
-		record[9] = this->semester;
-		this->update(&conditions, &record);
+		return this->fetch(&conditions);
+	}
+
+	vector<vector<string>> FetchCourse() {
+		vector<string> conditions(this->columns.size(), "all");
+		conditions[this->getIndex("id")] = this->id;
+		conditions[this->getIndex("courseName")] = this->courseName;
+		conditions[this->getIndex("className")] = this->className;
+		conditions[this->getIndex("lecturerAccount")] = this->lecturerAccount;
+		conditions[this->getIndex("startHour")] = this->startHour;
+		conditions[this->getIndex("endHour")] = this->endHour;
+		conditions[this->getIndex("startDay")] = this->startDay;
+		conditions[this->getIndex("endDay")] = this->endDay;
+		conditions[this->getIndex("semester")] = this->semester;
+		conditions[this->getIndex("room")] = this->room;
+		conditions[this->getIndex("year")] = this->year;
+		return this->fetch(&conditions);
+	}
+
+	void UpdateCourse(vector<string> toUpdate) {
+		vector<vector<string>> records = this->FetchCourse();
+		if (records.size() == 0) return;
+		vector<string> conditions = records[0];
+		this->update(&conditions, &toUpdate);
 	}
 
 	void AddCourse() {
 		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("CourseName")] = courseName;
+		conditions[this->getIndex("courseName")] = courseName;
 		if (this->fetch(&conditions).size() != 0) return;
 		vector<string> record;
-		record.push_back("0");
+		record.push_back(this->id);
 		record.push_back(this->courseName);
 		record.push_back(this->className);
 		record.push_back(this->lecturerAccount);
@@ -146,6 +160,7 @@ public:
 		record.push_back(this->endHour);
 		record.push_back(this->room);
 		record.push_back(this->semester);
+		record.push_back(this->year);
 		this->add(&record);
 	}
 };

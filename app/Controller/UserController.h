@@ -5,6 +5,9 @@
 #include <iostream>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/CourseInformationModel.h/"
+#include "../Model/ScoreboardModel.h"
+#include "../Model/AttendanceModel.h"
 
 using namespace std;
 
@@ -103,13 +106,19 @@ private:
             cout << "Role (student/ staff/ lecturer): "; cin >> role;
             if (toLowerCase(role) == "student") {
                 cout << "Student ID: "; cin >> studentID; user->setStudentID(studentID);
+                user->setUsername(studentID);
+                am->setUserName(studentID);
+                am->setPassword(dob);
             }
-            else user->setStudentID("");
-            cout << "Password: "; cin >> password;
-            username = user->AddUser();
-            am->setPassword(password);
-            am->setUserName(username);
-            validAccount = am->registerUser();
+            else {
+                user->setStudentID("");
+                cout << "Username: "; cin >> username; user->setUsername(username);
+                am->setUserName(username);
+                cout << "Password: "; cin >> password; am->setPassword(password);
+                am->setPassword(password);
+            }
+            user->AddUser();
+            am->registerUser();
         }
         createSession(am->getUserName());
         history.push("dashboard");
@@ -128,36 +137,60 @@ private:
     void seeProfile() {
         if (!checkLoginStatus()) return;
         UserInfoModel* user = new UserInfoModel();
-        if (user->CheckProfile(currentSession)) {
-            cout << "Student ID: " << user->getStudentID();
-            cout << "First name: " << user->getFirstName();
-            cout << "Full name: " << user->getLastName();
-            cout << "Date of Birth: " << user->getDOB();
-            cout << "Gender: " << user->getUserGender();
-        }
-        else {
+        user->setUsername(globalUsername);
+        vector<vector<string>> records = user->FetchInfo();
+        if (records.size() == 0) {
             cout << "Something wrong with your account, cannot fetch your profile.";
             return;
         }
+        cout << "Student ID: " << records[0][1] << endl;
+        cout << "First name: " << records[0][2] << endl;
+        cout << "Last name: " << records[0][3] << endl;
+        cout << "Date of Birth: " << records[0][4] << endl;
+        cout << "Gender: " << records[0][6] << endl;
         delete user;
     }
-  /*
-    void changePasswordAction() {
-        if (!checkLoginStatus()) return;
+
+    // Staff
+    
+    //----13. CRUD Academic years + semester
+    void showSemester() {
+        CourseInformationModel* cim = new CourseInformationModel();
+        vector<vector<string>> listCourses = cim->FetchAllCourse();
+        
+    }
+
+    void addCourse() {
+        CourseInformationModel* cim = new CourseInformationModel();
         AccountModel* am = new AccountModel();
-        am->fetchAccount(currentSession);
-        string oldPassword, newPassword;
-        cout << "Please enter your old password: "; cin >> oldPassword;
-        if (!am->checkMatchPassword(oldPassword)) {
-            cout << "Wrong password." << endl;
+        string temp;
+        cout << "Course name: "; cin >> temp; cim->setCourseName(temp);
+        cout << "Class name: "; cin >> temp; cim->setClassName(temp);
+        
+        cout << "Lecturer Account: "; cin >> temp;
+        // Check if the lecturer account is available
+        am->setUserName(temp);
+        vector<vector<string>> results = am->fetchAccount();
+        if (results.size() == 0) {
+            cout << "The lecturer account is not found, returning..." << endl;
             return;
         }
 
-        cout << "Enter your new password: "; cin >> newPassword;
-        am->changePassword(newPassword);
+        cout << "Start day: "; cin >> temp; cim->setStartDay(temp);
+        cout << "End day: "; cin >> temp; cim->setEndDay(temp);
+        cout << "Start hour: "; cin >> temp; cim->setStartHour(temp);
+        cout << "End hour: "; cin >> temp; cim->setEndHour(temp);
+        cout << "Room: "; cin >> temp; cim->setRoom(temp);
+        cout << "Semester: "; cin >> temp; cim->setSemester(temp);
+        cout << "Year: "; cin >> temp; cim->setYear(temp);
+        cim->AddCourse();
+        delete cim;
     }
-    
-   */
+
+
+    // Student
+
+    // Lecturer
 
     void accessDashboard() {
         cout << "Hello User!" << endl;
