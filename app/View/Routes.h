@@ -62,7 +62,7 @@ public:
 		addRoute("student-dashboard", "UserController", "studentDashboard");
 		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
-		addRoute("change-password", "UserController", "changePasswordAction");
+		addRoute("change-password", "UserController", "changePassword");
 
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");

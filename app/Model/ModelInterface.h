@@ -39,6 +39,14 @@ public:
         }
     }
 
+	void closeConnection(ifstream *f) {
+		delete f;
+	}
+
+	void closeConnection(ofstream* f) {
+		delete f;
+	}
+
     /**
     get the corresponding index of column order
     */
@@ -77,6 +85,7 @@ public:
         string str;
         getline((*f), str);
         f->close();
+		closeConnection(f);
         columns = split(str);
     }
 
@@ -116,6 +125,7 @@ public:
             }
         }
         f->close();
+		closeConnection(f);
         return result;
     }
 
@@ -139,6 +149,7 @@ public:
             (*f) << endl;
         }
         f->close();
+		closeConnection(f);
     }
 
     /*

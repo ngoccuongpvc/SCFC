@@ -68,6 +68,25 @@ public:
             return "";
         }
     }
+
+	//change password
+
+	bool changePassword(string username, string newPass)
+	{
+		try {
+			vector<string> conditions(this->columns.size(), "all");
+			conditions[this->getIndex("username")] = username;
+			vector<string> record = fetch(&conditions)[0];
+			record[this->getIndex("password")] = SHF(newPass);
+			this->update(&conditions, &record);
+			return true;
+		}
+		catch (exception e) {
+			cout << "An exception has occured" << endl;
+			return false;
+		}
+		
+	}
 };
 
 #endif // ACCOUNTMODEL_H_INCLUDED

@@ -56,7 +56,7 @@ int main()
             cout << "Choose your option: ";
             cin >> opt;
             if (!opt) {
-                history.pop();
+                history.pop(); //opt == 0
             }
             else {
                 string nextPath = route->getOption(path, opt);
