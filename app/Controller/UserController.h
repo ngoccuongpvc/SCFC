@@ -5,6 +5,9 @@
 #include <iostream>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/AttendanceModel.h"
+#include "../Model/CourseInformationModel.h"
+#include "../Model/ScoreboardModel.h"
 
 using namespace std;
 
@@ -148,6 +151,21 @@ private:
         cout << "Enter your new password: "; cin >> newPassword;
         am->changePassword(newPassword);
     }
+
+    // Staff
+
+        // Add new student
+    void addNewStudent() {
+        AccountModel* am = new AccountModel();
+        UserInfoModel* user = new UserInfoModel();
+
+        
+
+    }
+
+    // Student
+
+    // Lecturer
 
     void accessDashboard() {
         cout << "Hello User!" << endl;
