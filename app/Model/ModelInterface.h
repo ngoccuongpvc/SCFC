@@ -194,10 +194,10 @@ public:
     }
 
     ~ModelInterface() {
-        this->columns.clear();
-        this->values.clear();
+        //this->c/*olumns.clear();
+        //this->values.clear();
 
-        delete this;
+        //delete this*/;
     }
 };
 

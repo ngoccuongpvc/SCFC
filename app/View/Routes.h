@@ -56,6 +56,10 @@ public:
 		usage["view-schedule"] = "View schedule";
 		usage["view-scoreboard"] = "Scoreboard";
 
+		usage["log-out"] = "Log out";
+		usage["login"] = "Log in";
+		usage["register"] = "Register a new account";
+
 		/**************************************************************************/
 		addRoute("login", "UserController", "loginAction");
 		addRoute("dashboard", "UserController", "mainAction");
@@ -64,12 +68,21 @@ public:
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("change-password", "UserController", "changePassword");
 
+    
+		addRoute("log-out", "UserController", "logoutAction");
+		addRoute("register", "UserController", "registerAction");
+		addRoute("access", "UserController", "accessDashboard");
+
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");
 		linkTo("student-dashboard", "check-in");
 		linkTo("student-dashboard", "check-in-result");
 		linkTo("student-dashboard", "view-schedule");
 		linkTo("student-dashboard", "view-scoreboard");
+		linkTo("student-dashboard", "log-out");
+
+		linkTo("access", "login");
+		linkTo("access", "register");
 		
 	}
 };

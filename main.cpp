@@ -29,7 +29,7 @@ int main()
     /**
     set the default history
     */
-    history.push("login");
+    history.push("access");
     Routes *route = new Routes();
     /**
     this is just an example, we need to go forward or backward depend of what we put or pop to history
