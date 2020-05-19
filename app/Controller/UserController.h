@@ -12,6 +12,8 @@ string role;
 bool logged_in = false;
 string currentSession = "";
 
+string globalUsername = "null";
+
 class UserController : public ControllerInterface
 {
 private:
@@ -32,6 +34,7 @@ private:
             history.push("login");
         }
     }
+
 
     bool checkLoginStatus() {
         if (!logged_in || currentSession == "") {
@@ -70,7 +73,12 @@ private:
             createSession(username);
         } else {
             cout << "Wrong username or password" << endl;
+            cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
+				  bool tryAgain = false;
+				  cin >> tryAgain;
+				  if (!tryAgain) break;
         }
+
     }
 
     string toLowerCase(string s) {
@@ -133,7 +141,7 @@ private:
         }
         delete user;
     }
-
+  /*
     void changePasswordAction() {
         if (!checkLoginStatus()) return;
         AccountModel* am = new AccountModel();
@@ -148,6 +156,8 @@ private:
         cout << "Enter your new password: "; cin >> newPassword;
         am->changePassword(newPassword);
     }
+    
+   */
 
     void accessDashboard() {
         cout << "Hello User!" << endl;
@@ -167,7 +177,35 @@ private:
         cout << "Hello Staff!" << endl;
     }
 
-    
+    void changePasswordAction() {
+        cout << "Change password here!";
+		if (globalUsername == "null")
+		{
+			cout << "Login 1st!!" << endl;
+		}
+		else
+		{
+			string newPass;
+			cout << "Pls enter new password: ";
+			cin >> newPass;
+
+			AccountModel* model = new AccountModel();
+
+			if(model->changePassword(globalUsername, newPass))
+			{ 
+				cout << "Successfully change password!" << endl;
+				extern stack<string> history;
+				history.push("dashboard");
+			}
+			else 
+			{
+				cout << "Can't change password" << endl;
+			}
+
+			//delete model;
+		}
+    }
+
 public:
 
     /**
@@ -179,6 +217,7 @@ public:
         this->mapMethods["studentDashboard"] = [this]() { studentDashboard(); };
         this->mapMethods["teacherDashboard"] = [this]() { teacherDashboard(); };
         this->mapMethods["staffDashboard"] = [this]() { staffDashboard(); };
+		this->mapMethods["changePassword"] = [this](){ changePasswordAction(); };
 
         this->mapMethods["registerAction"] = [this]() { registerAction(); };
         this->mapMethods["logoutAction"] = [this]() { logoutAction(); };
