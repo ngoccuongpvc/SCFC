@@ -76,9 +76,6 @@ public:
         return this->userGender;
     }
 
-    /**
-    constructor, call to parent's constructor, the string inside is the path to its database
-    */
     UserInfoModel() : ModelInterface("database/UserInfo.csv") {
         this->id = "all";
         this->studentID = "all"; // if the user is a student
@@ -89,9 +86,6 @@ public:
         this->username = "all";
     }
 
-    /**
-    check if both username and password are both existed in database
-    */
     void AddUser() {
         vector<string> info;
         info.push_back(this->id);
