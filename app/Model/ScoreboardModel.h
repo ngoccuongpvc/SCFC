@@ -67,7 +67,7 @@ public:
 		return this->fetch(&conditions);
 	}
 
-	void UpdateScore(vector<string> *condition, vector<string> *toUpdate) {
+	void UpdateScore(vector<string> *conditions, vector<string> *toUpdate) {
 		this->update(conditions, toUpdate);
 	}
 
