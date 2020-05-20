@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
-#include "../Model/CourseInformationModel.h/"
+#include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 
@@ -59,29 +59,32 @@ private:
     }
 
     void loginAction() {
-        string username, password;
-        cout << "User name: ";
-        cin >> username;
-        cout << "Password: ";
-        cin >> password;
+		while (true)
+		{
+			string username, password;
+			cout << "User name: ";
+			cin >> username;
+			cout << "Password: ";
+			cin >> password;
 
-        AccountModel *model = new AccountModel();
+			AccountModel* model = new AccountModel();
 
-        if (model->checkCredential(username, password)) {
-            cout << "Login successful" << endl;
-            cout << "You are login as: " << model->getUserRole(username) << endl;
-            role = model->getUserRole(username);
-            extern stack<string> history;
-            history.push("dashboard");
-            createSession(username);
-        } else {
-            cout << "Wrong username or password" << endl;
-            cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
-				  bool tryAgain = false;
-				  cin >> tryAgain;
-				  if (!tryAgain) break;
-        }
-
+			if (model->checkCredential(username, password)) {
+				cout << "Login successful" << endl;
+				cout << "You are login as: " << model->getUserRole(username) << endl;
+				role = model->getUserRole(username);
+				extern stack<string> history;
+				history.push("dashboard");
+				createSession(username);
+			}
+			else {
+				cout << "Wrong username or password" << endl;
+				cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
+				bool tryAgain = false;
+				cin >> tryAgain;
+				if (!tryAgain) break;
+			}
+		}
     }
 
     string toLowerCase(string s) {

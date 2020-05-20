@@ -110,7 +110,7 @@ public:
 
     vector<string> UpdateInfo(vector<string> toUpdate) {
         vector<vector<string>> records = this->FetchInfo();
-        if (records.size() == 0) return;
+        if (records.size() == 0) return records[0];
         vector<string> conditions = records[0];
         this->update(&conditions, &toUpdate);
     }
