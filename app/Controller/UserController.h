@@ -41,7 +41,6 @@ private:
 
     bool checkLoginStatus() {
         if (!logged_in || currentSession == "") {
-            cout << "You are not logged in." << endl;
             return false;
         }
         else return true;
@@ -59,31 +58,31 @@ private:
     }
 
     void loginAction() {
-   /*     string username, password;
-        cout << "User name: ";
-        cin >> username;
-        cout << "Password: ";
-        cin >> password;*/
-
+        string username, password;
         AccountModel *model = new AccountModel();
-        vector<string> *conditions = new vector<string>(4, "all");
-        (*conditions)[1] = "ngoccuongpvc01";
-        model->erase(conditions);
-        //model->erase(condition)
-       /* if (model->checkCredential(username, password)) {
-            cout << "Login successful" << endl;
-            cout << "You are login as: " << model->getUserRole(username) << endl;
-            role = model->getUserRole(username);
-            extern stack<string> history;
-            history.push("dashboard");
-            createSession(username);
-        } else {
-            cout << "Wrong username or password" << endl;
-            cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
-				  bool tryAgain = false;
-				  cin >> tryAgain;
-				  if (!tryAgain) break;
-        }*/
+ 
+        while (true) {
+            cout << "User name: ";
+            cin >> username;
+            cout << "Password: ";
+            cin >> password;
+            if (model->checkCredential(username, password)) {
+                cout << "Login successful" << endl;
+                cout << "You are login as: " << model->getUserRole(username) << endl;
+                role = model->getUserRole(username);
+                extern stack<string> history;
+                history.push("dashboard");
+                createSession(username);
+                break;
+            }
+            else {
+                cout << "Wrong username or password" << endl;
+                cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
+                bool tryAgain = false;
+                cin >> tryAgain;
+                if (!tryAgain) break;
+            }
+        }  
 
     }
 
@@ -133,7 +132,8 @@ private:
         if (!checkLoginStatus()) return;
         extern stack<string> history;
         resetSession();
-        history.push("login");
+        history = stack<string>();
+        history.push("access");
     }
     
 
@@ -198,7 +198,7 @@ private:
     void accessDashboard() {
         cout << "Hello User!" << endl;
         extern stack<string> history;
-        history.push("access");
+        //history = stack<string>();
     }
 
     void studentDashboard() {
