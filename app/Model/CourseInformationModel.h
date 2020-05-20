@@ -155,6 +155,10 @@ public:
 		record.push_back(this->year);
 		this->add(&record);
 	}
+
+	void RemoveCourse(vector<string> *toDelete) {
+		this->erase(toDelete);
+	}
 };
 
 #endif // COURSEINFORMATIONMODEL_H_INCLUDED

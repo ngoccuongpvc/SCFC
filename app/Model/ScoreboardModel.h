@@ -81,6 +81,10 @@ public:
 		this->add(&record);
 	}
 
+	void DeleteScore(vector<string> *toDelete) {
+		this->erase(toDelete);
+	}
+
 	
 
 };

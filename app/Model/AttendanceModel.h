@@ -77,6 +77,10 @@ public:
 		this->add(&record);
 	}
 	
+	void RemoveAttendance(vector<string> *toDelete) {
+		this->erase(toDelete);
+	}
+	
 };
 
 #endif // ATTENDANCEMODEL_H_INCLUDED

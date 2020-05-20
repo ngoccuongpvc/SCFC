@@ -113,15 +113,6 @@ public:
         this->add(&account);
     }
 
-    vector<vector<string>> fetchUser() {
-        vector<string> conditions(this->columns.size(), "all");
-        conditions[this->getIndex("id")] = this->id;
-        conditions[this->getIndex("username")] = this->username;
-        conditions[this->getIndex("password")] = this->password;
-        conditions[this->getIndex("role")] = this->role;
-        return this->fetch(&conditions);
-    }
-
     bool checkMatchPassword(string password) {
         if (SHF(password) == this->password) return true;
         return false;
@@ -150,8 +141,11 @@ public:
 			cout << "An exception has occured" << endl;
 			return false;
 		}
-		
 	}
+
+    void removeAccount(vector<string>* toDelete) {
+        this->erase(toDelete);
+    }
 };
 
 #endif // ACCOUNTMODEL_H_INCLUDED
