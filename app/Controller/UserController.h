@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
-#include "../Model/CourseInformationModel.h/"
+#include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 
@@ -59,15 +59,18 @@ private:
     }
 
     void loginAction() {
-        string username, password;
+   /*     string username, password;
         cout << "User name: ";
         cin >> username;
         cout << "Password: ";
-        cin >> password;
+        cin >> password;*/
 
         AccountModel *model = new AccountModel();
-
-        if (model->checkCredential(username, password)) {
+        vector<string> *conditions = new vector<string>(4, "all");
+        (*conditions)[1] = "ngoccuongpvc01";
+        model->erase(conditions);
+        //model->erase(condition)
+       /* if (model->checkCredential(username, password)) {
             cout << "Login successful" << endl;
             cout << "You are login as: " << model->getUserRole(username) << endl;
             role = model->getUserRole(username);
@@ -80,7 +83,7 @@ private:
 				  bool tryAgain = false;
 				  cin >> tryAgain;
 				  if (!tryAgain) break;
-        }
+        }*/
 
     }
 

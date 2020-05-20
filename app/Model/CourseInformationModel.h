@@ -98,7 +98,7 @@ public:
 	}
 
 	string getStartHour() {
-		return this->getStartHour;
+		return this->startHour;
 	}
 
 	string getEndHour() {
