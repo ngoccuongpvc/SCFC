@@ -20,6 +20,10 @@ private:
 
 public:
 
+    void setId(string id) {
+        this->id = id;
+    }
+
     void setStudentID(string studentID) {
         this->studentID = studentID;
     }
@@ -42,6 +46,10 @@ public:
 
     void setUsername(string username) {
         this->username = username;
+    }
+
+    string getId() {
+        return this->id;
     }
 
     string getStudentID() {
@@ -108,11 +116,8 @@ public:
         return this->fetch(&conditions);
     }
 
-    vector<string> UpdateInfo(vector<string> toUpdate) {
-        vector<vector<string>> records = this->FetchInfo();
-        if (records.size() == 0) return;
-        vector<string> conditions = records[0];
-        this->update(&conditions, &toUpdate);
+    vector<string> UpdateInfo(vector<string>* condition, vector<string> *toUpdate) {
+        this->update(condition, toUpdate);
     }
     
 };

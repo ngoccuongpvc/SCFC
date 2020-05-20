@@ -156,7 +156,15 @@ private:
     //----13. CRUD Academic years + semester
     void showSemester() {
         CourseInformationModel* cim = new CourseInformationModel();
-        vector<vector<string>> listCourses = cim->FetchAllCourse();
+        vector<vector<string>> listCourses = cim->FetchCourse();
+        if (listCourses.size() == 0) {
+            cout << "No semester found." << endl;
+            return;
+        }
+        vector<string> semesters;
+        for (int i = 0; i < listCourses.size(); ++i) {
+            semesters.push_back(listCourses[i][9]);
+        }
         
     }
 
@@ -186,6 +194,83 @@ private:
         cim->AddCourse();
         delete cim;
     }
+
+    void editCourse() {
+        CourseInformationModel* cim = new CourseInformationModel();
+        cout << "Please enter the course name that you want to edit: "; string courseName; cin >> courseName;
+        cim->setCourseName(toLowerCase(courseName));
+        vector<vector<string>> results = cim->FetchCourse();
+        if (results.size() == 0) {
+            cout << "The course you entered does not exist. Please retry." << endl;
+            return;
+        }
+        vector<string> record = results[0];
+        cout << "Please enter the information that you want to change about this course. Press enter if you don't want to change that info.." << endl;
+        string temp;
+        vector<string> toUpdate;
+        toUpdate.push_back("");
+        cout << "Course name: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Class name: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Lecturer account: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Start hour: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "End hour: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Start day: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "End day: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Room: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Semester: ";  cin >> temp; toUpdate.push_back(temp);
+        cout << "Year: ";  cin >> temp; toUpdate.push_back(temp);
+        cim->UpdateCourse(&record, &toUpdate);
+    }
+
+    void listOfCourseCurrentSemester() {
+        CourseInformationModel* cim = new CourseInformationModel();
+        string semester;
+        cout << "Please enter the semester that you want to view the list of courses of: "; cin >> semester;
+        cim->setSemester(toLowerCase(semester));
+        vector<vector<string>> results = cim->FetchCourse();
+        if (results.size() == 0) {
+            cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
+            return;
+        }
+        vector<string> courses;
+        for (int i = 0; i < results.size(); ++i) {
+            courses.push_back(results[i][1]);
+        }
+    }
+
+    void viewListOfStudentsOfCourse() {
+        CourseInformationModel* cim = new CourseInformationModel();
+        UserInfoModel* uim = new UserInfoModel();
+        string temp, courseId, studentId;
+        cout << "Enter the name of the course you want to search: "; cin >> temp;
+        cim->setCourseName(temp);
+        vector<vector<string>> results = cim->FetchCourse();
+        if (results.size() == 0) {
+            cout << "The course you entered could not be found." << endl;
+            return;
+        }
+        courseId = results[0][0];
+        vector<vector<string>> students;
+        AttendanceModel* am = new AttendanceModel();
+        am->setCourseId(courseId);
+        results = am->FetchAttendance();
+        for (int i = 0; i < results.size(); ++i) {
+            uim->setId(results[i][1]);
+            vector<vector<string>> getBack = uim->FetchInfo();
+            if (getBack.size() != 0) {
+                students.push_back(getBack[0]);
+            }
+        }
+    }
+
+    void viewAttendanceList() {
+        AttendanceModel* am = new AttendanceModel();
+
+    }
+
+
+
+
 
 
     // Student
