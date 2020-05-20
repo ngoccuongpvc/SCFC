@@ -67,11 +67,8 @@ public:
 		return this->fetch(&conditions);
 	}
 
-	void UpdateScore(vector<string> toUpdate) {
-		vector<vector<string>> records = FetchScoreboard();
-		if (records.size() == 0) return;
-		vector<string> conditions = records[0];
-		this->update(&conditions, &toUpdate);
+	void UpdateScore(vector<string> *condition, vector<string> *toUpdate) {
+		this->update(conditions, toUpdate);
 	}
 
 	void AddScore() {
