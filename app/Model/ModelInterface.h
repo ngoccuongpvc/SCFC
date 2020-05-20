@@ -125,7 +125,7 @@ public:
             }
         }
         f->close();
-		closeConnection(f);
+		//closeConnection(f);
         return result;
     }
 
@@ -149,7 +149,7 @@ public:
             (*f) << endl;
         }
         f->close();
-		closeConnection(f);
+		//closeConnection(f);
     }
 
     /*
@@ -185,6 +185,18 @@ public:
         }
 
         this->save(&records);
+    }
+
+    void erase(vector<string>* conditions) {
+        vector<vector<string>> records = this->fetch();
+        vector<vector<string>> newRecords;
+        for (int i = 0; i < (int)records.size(); ++i) {
+            if (!this->isMeetConditions(conditions, &records[i])) {
+                newRecords.push_back(records[i]);
+            }
+        }
+
+        this->save(&newRecords);
     }
 
     ModelInterface(string source) {
