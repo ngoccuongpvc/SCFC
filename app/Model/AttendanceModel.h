@@ -23,6 +23,10 @@ public:
 		this->day = "all";
 	}
 
+	void setId(string id) {
+		this->id = id;;
+	}
+
 	void setCourseId(string id) {
 		this->courseId = id;
 	}
@@ -33,6 +37,10 @@ public:
 
 	void setDay(string day) {
 		this->day = day;
+	}
+
+	string getId() {
+		return this->id;
 	}
 
 	string getCourseId() {
@@ -56,11 +64,8 @@ public:
 		return this->fetch(&conditions);
 	}
 
-	void UpdateAttendance(vector<string> toUpdate) {
-		vector<vector<string>> records = this->FetchAttendance();
-		if (records.size() == 0) return;
-		vector<string> conditions = records[0];
-		this->update(&conditions, &toUpdate);
+	void UpdateAttendance(vector<string> *conditions, vector<string> *toUpdate) {
+		this->update(conditions, toUpdate);
 	}
 
 	void AddAttendance() {

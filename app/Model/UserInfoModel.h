@@ -20,6 +20,10 @@ private:
 
 public:
 
+    void setId(string id) {
+        this->id = id;
+    }
+
     void setStudentID(string studentID) {
         this->studentID = studentID;
     }
@@ -42,6 +46,10 @@ public:
 
     void setUsername(string username) {
         this->username = username;
+    }
+
+    string getId() {
+        return this->id;
     }
 
     string getStudentID() {
@@ -68,9 +76,6 @@ public:
         return this->userGender;
     }
 
-    /**
-    constructor, call to parent's constructor, the string inside is the path to its database
-    */
     UserInfoModel() : ModelInterface("database/UserInfo.csv") {
         this->id = "all";
         this->studentID = "all"; // if the user is a student
@@ -81,9 +86,6 @@ public:
         this->username = "all";
     }
 
-    /**
-    check if both username and password are both existed in database
-    */
     void AddUser() {
         vector<string> info;
         info.push_back(this->id);
@@ -108,11 +110,8 @@ public:
         return this->fetch(&conditions);
     }
 
-    vector<string> UpdateInfo(vector<string> toUpdate) {
-        vector<vector<string>> records = this->FetchInfo();
-        if (records.size() == 0) return records[0];
-        vector<string> conditions = records[0];
-        this->update(&conditions, &toUpdate);
+    vector<string> UpdateInfo(vector<string>* condition, vector<string> *toUpdate) {
+        this->update(condition, toUpdate);
     }
     
 };

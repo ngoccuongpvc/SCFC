@@ -117,11 +117,6 @@ public:
 		return this->year;
 	}
 
-	vector<vector<string>> FetchAllCourse() {
-		vector<string> conditions(this->columns.size(), "all");
-		return this->fetch(&conditions);
-	}
-
 	vector<vector<string>> FetchCourse() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("id")] = this->id;
@@ -138,11 +133,8 @@ public:
 		return this->fetch(&conditions);
 	}
 
-	void UpdateCourse(vector<string> toUpdate) {
-		vector<vector<string>> records = this->FetchCourse();
-		if (records.size() == 0) return;
-		vector<string> conditions = records[0];
-		this->update(&conditions, &toUpdate);
+	void UpdateCourse(vector<string> *conditions, vector<string> *toUpdate) {
+		this->update(conditions, toUpdate);
 	}
 
 	void AddCourse() {
@@ -154,10 +146,10 @@ public:
 		record.push_back(this->courseName);
 		record.push_back(this->className);
 		record.push_back(this->lecturerAccount);
-		record.push_back(this->startDay);
-		record.push_back(this->endDay);
 		record.push_back(this->startHour);
 		record.push_back(this->endHour);
+		record.push_back(this->startDay);
+		record.push_back(this->endDay);	
 		record.push_back(this->room);
 		record.push_back(this->semester);
 		record.push_back(this->year);

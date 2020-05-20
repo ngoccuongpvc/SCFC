@@ -51,6 +51,9 @@ int main()
 
 	/*END TEST SITE*/
     while (true) {
+        if (history.empty()) {
+            history.push("access");
+        }
         path = history.top();
         string controllerName = route->getController(path);
         string actionName = route->getAction(path);
