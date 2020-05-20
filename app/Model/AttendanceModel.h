@@ -6,25 +6,28 @@
 #include "../Model/ModelInterface.h"
 using namespace std;
 
-class CourseInformationModel : public ModelInterface
+class AttendanceModel : public ModelInterface
 {
 private:
-	int id;
-	int courseId;
-	int studentId;
+	string id;
+	string courseId;
+	string studentId;
 	string day;
 	
 
 public:
-	CourseInformationModel() : ModelInterface("database/CheckInList.csv") {
-
+	AttendanceModel() : ModelInterface("database/CheckInList.csv") {
+		this->id = "all";
+		this->courseId = "all";
+		this->studentId = "all";
+		this->day = "all";
 	}
 
-	void setCourseId(int id) {
+	void setCourseId(string id) {
 		this->courseId = id;
 	}
 
-	void setStudentId(int id) {
+	void setStudentId(string id) {
 		this->studentId = id;
 	}
 
@@ -32,11 +35,11 @@ public:
 		this->day = day;
 	}
 
-	int getCourseId() {
+	string getCourseId() {
 		return this->courseId;
 	}
 
-	int getStudentId() {
+	string getStudentId() {
 		return this->studentId;
 	}
 	
@@ -44,27 +47,27 @@ public:
 		return this->day;
 	}
 
-	vector<vector<string>> FetchAttendance(int studentId, int courseId) {
+	vector<vector<string>> FetchAttendance() {
 		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("studentId")] = studentId;
-		conditions[this->getIndex("courseId")] = courseId;
+		conditions[this->getIndex("studentId")] = this->studentId;
+		conditions[this->getIndex("id")] = this->id;
+		conditions[this->getIndex("day")] = this->day;
+		conditions[this->getIndex("courseId")] = this->courseId;
 		return this->fetch(&conditions);
 	}
 
-	bool FetchStudentAndCourse(int studentId, int courseId) {
-		vector<vector<string>> fetchResults = FetchAttendance(studentId, courseId);
-		if (fetchResults.size() == 0) return false;
-		this->studentId = stoi(fetchResults[0][1]);
-		this->courseId = stoi(fetchResults[0][2]);
-		return true;
+	void UpdateAttendance(vector<string> toUpdate) {
+		vector<vector<string>> records = this->FetchAttendance();
+		if (records.size() == 0) return;
+		vector<string> conditions = records[0];
+		this->update(&conditions, &toUpdate);
 	}
 
-	void AddAttendance(string day) {
-		this->day = day;
+	void AddAttendance() {
 		vector<string> record;
-		record.push_back("0");
-		record.push_back(to_string(this->studentId));
-		record.push_back(to_string(this->courseId));
+		record.push_back(this->id);
+		record.push_back(this->studentId);
+		record.push_back(this->courseId);
 		record.push_back(this->day);
 		this->add(&record);
 	}

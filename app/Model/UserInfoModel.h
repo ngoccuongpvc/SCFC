@@ -10,6 +10,7 @@ class UserInfoModel : public ModelInterface
 {
 private:
 
+    string id;
     string studentID; // if the user is a student
     string lastName;
     string firstName;
@@ -71,43 +72,47 @@ public:
     constructor, call to parent's constructor, the string inside is the path to its database
     */
     UserInfoModel() : ModelInterface("database/UserInfo.csv") {
-
+        this->id = "all";
+        this->studentID = "all"; // if the user is a student
+        this->lastName = "all";
+        this->firstName = "all";
+        this->userGender = "all";
+        this->dob = "all";
+        this->username = "all";
     }
 
     /**
     check if both username and password are both existed in database
     */
-    string AddUser() {
+    void AddUser() {
         vector<string> info;
-        info.push_back("2");
+        info.push_back(this->id);
         info.push_back(this->studentID);
         info.push_back(this->firstName);
         info.push_back(this->lastName);
         info.push_back(this->dob);
         info.push_back(this->userGender);     
-        if (this->studentID != "") this->username = this->studentID + this->dob;
-        else this->username = this->firstName + this->lastName;
         info.push_back(this->username);
         this->add(&info);
-        return this->username;
     }
 
-    bool CheckProfile(string username) {
+    vector<vector<string>> FetchInfo() {
         vector<string> conditions(this->columns.size(), "all");
-        conditions[this->getIndex("username")] = username;
-        vector<vector<string>> result = this->fetch(&conditions);
-        if (result.size() != 0) {
-            this->studentID = result[0][1];
-            this->firstName = result[0][2];
-            this->lastName = result[0][3];
-            this->dob = result[0][4];
-            this->userGender = result[0][5];
-            this->username = result[0][6];
-            return true;
-        }
-        else {
-            return false;
-        }
+        conditions[this->getIndex("id")] = this->id;
+        conditions[this->getIndex("studentId")] = this->studentID;
+        conditions[this->getIndex("firstName")] = this->firstName;
+        conditions[this->getIndex("lastName")] = this->lastName;
+        conditions[this->getIndex("dob")] = this->dob;
+        conditions[this->getIndex("username")] = this->username;
+        conditions[this->getIndex("userGender")] = this->userGender;
+        return this->fetch(&conditions);
+    }
+
+    vector<string> UpdateInfo(vector<string> toUpdate) {
+        vector<vector<string>> records = this->FetchInfo();
+        if (records.size() == 0) return;
+        vector<string> conditions = records[0];
+        this->update(&conditions, &toUpdate);
     }
     
 };

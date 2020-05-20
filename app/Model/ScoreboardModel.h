@@ -10,22 +10,26 @@ class ScoreboardModel : public ModelInterface
 {
 private:
 
-	int id;
-	int studentId;
-	int courseId;
+	string id;
+	string studentId;
+	string courseId;
 	string term;
 	string score;
 
 public:
 	ScoreboardModel() : ModelInterface("database/ScoreList.csv") {
-
+		this->id = "all";
+		this->studentId = "all";
+		this->courseId = "all";
+		this->term = "all";
+		this->score = "all";
 	}
 
-	void setStudentId(int id) {
+	void setStudentId(string id) {
 		this->studentId = id;
 	}
 
-	void setCourseId(int id) {
+	void setCourseId(string id) {
 		this->courseId = id;
 	}
 
@@ -37,11 +41,11 @@ public:
 		this->score = score;
 	}
 
-	int getStudentId() {
+	string getStudentId() {
 		return this->studentId;
 	}
 
-	int getCourseId() {
+	string getCourseId() {
 		return this->courseId;
 	}
 
@@ -53,47 +57,28 @@ public:
 		return this->score;
 	}
 
-	vector<vector<string>> FetchScoreStudent() {
+	vector<vector<string>> FetchScoreboard() {
 		vector<string> conditions(this->columns.size(), "all");
+		conditions[this->getIndex("id")] = this->id;
 		conditions[this->getIndex("studentId")] = this->studentId;
-		return this->fetch(&conditions);
-	}
-
-	vector<vector<string>> FetchScoreCourse() {
-		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("courseId")] = this->courseId;
-		return this->fetch(&conditions);
-	}
-	
-	vector<vector<string>> FetchScoreStudentAndCourse() {
-		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("studentId")] = this->studentId;
-		conditions[this->getIndex("courseId")] = this->courseId;
-		return this->fetch(&conditions);
-	}
-
-	vector<vector<string>> FetchTermScore() {
-		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("studentId")] = this->studentId;
-		conditions[this->getIndex("courseId")] = this->courseId;
+		conditions[this->getIndex("courseId")] = this->studentId;
 		conditions[this->getIndex("term")] = this->term;
+		conditions[this->getIndex("score")] = this->score;
 		return this->fetch(&conditions);
 	}
 
-	void UpdateScore() {
-		vector<vector<string>> records = FetchTermScore();
+	void UpdateScore(vector<string> toUpdate) {
+		vector<vector<string>> records = FetchScoreboard();
 		if (records.size() == 0) return;
 		vector<string> conditions = records[0];
-		vector<string> toUpdate = records[0];
-		toUpdate[4] = this->score;
 		this->update(&conditions, &toUpdate);
 	}
 
 	void AddScore() {
 		vector<string> record;
-		record.push_back("0");
-		record.push_back(to_string(this->studentId));
-		record.push_back(to_string(this->courseId));
+		record.push_back(this->id);
+		record.push_back(this->studentId);
+		record.push_back(this->courseId);
 		record.push_back(this->term);
 		record.push_back(this->score);
 		this->add(&record);
