@@ -10,16 +10,16 @@ class AttendanceModel : public ModelInterface
 {
 private:
 	string id;
-	string courseId;
 	string studentId;
+	string courseId;
 	string day;
 	
 
 public:
 	AttendanceModel() : ModelInterface("database/CheckInList.csv") {
 		this->id = "all";
-		this->courseId = "all";
 		this->studentId = "all";
+		this->courseId = "all";	
 		this->day = "all";
 	}
 

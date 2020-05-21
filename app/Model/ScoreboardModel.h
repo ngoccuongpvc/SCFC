@@ -68,7 +68,7 @@ public:
 	}
 
 	void UpdateScore(vector<string> *condition, vector<string> *toUpdate) {
-		this->update(conditions, toUpdate);
+		this->update(condition, toUpdate);
 	}
 
 	void AddScore() {
