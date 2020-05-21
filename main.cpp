@@ -47,7 +47,7 @@ int main()
 
 	View viewModel = View(data, col);
 	viewModel.displayTable();
-	
+	viewModel.exportTable();
 
 	/*END TEST SITE*/
     while (true) {
