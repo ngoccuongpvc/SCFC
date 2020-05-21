@@ -63,6 +63,12 @@ public:
 		usage["view-class"] = "View list of classes";
 		usage["view-student-in-class"] = "View list of students in a classe";
 
+		//TEACHER SECTION
+
+		usage["edit-attendence"] = "Editting one student's attendence day";
+		usage["delete-attendence"] = "Deleting one student from attendence list";
+		usage["edit-score"] = "Editting one student score";
+
 		/**************************************************************************/
 		addRoute("login", "UserController", "loginAction");
 		addRoute("dashboard", "UserController", "mainAction");
@@ -79,6 +85,11 @@ public:
 		addRoute("view-class", "ClassController", "showClassList");
 		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
 
+		//TEACHER SECTION
+		addRoute("edit-attendence", "UserController", "editAttendence");
+		addRoute("delete-attendence", "UserController", "deleteAttendence");
+		addRoute("edit-score", "UserController", "editScore");
+
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");
 		linkTo("student-dashboard", "check-in");
@@ -93,7 +104,11 @@ public:
 		linkTo("staff-dashboard", "import-class");
 		linkTo("staff-dashboard", "view-class");
 		linkTo("staff-dashboard", "view-student-in-class");
-		
+		//TEACHER SECTION
+		linkTo("teacher-dashboard", "edit-attendence");
+		linkTo("teacher-dashboard", "deleteAttendence");
+		linkTo("teacher-dashboard", "editScore");
+				
 	}
 };
 #endif // ROUTES_H_INCLUDED
