@@ -10,19 +10,19 @@
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
+#include "MiscellanousFunctions.h"
+#include "AuthorizeController.h"
 
 using namespace std;
 
-string role;
-bool logged_in = false;
-string currentSession = "";
 
-string globalUsername = "null";
 
 
 class UserController : public ControllerInterface
 {
 private:
+
+public:
 
     void mainAction() {
         extern stack<string> history;
@@ -41,134 +41,6 @@ private:
         }
     }
 
-
-    bool checkLoginStatus() {
-        if (!logged_in || currentSession == "") {
-            return false;
-        }
-        else return true;
-    }
-
-    void createSession(string username) {
-        if (checkLoginStatus()) return;
-        currentSession = username;
-        logged_in = true;
-    }
-
-    void resetSession() {
-        currentSession = "";
-        logged_in = false;
-    }
-
-    void loginAction() {
-        string username, password;
-        AccountModel *model = new AccountModel();
- 
-        while (true) {
-            cout << "User name: ";
-            cin >> username;
-            cout << "Password: ";
-            cin >> password;
-            if (model->checkCredential(username, password)) {
-                cout << "Login successful" << endl;
-                cout << "You are login as: " << model->getUserRole(username) << endl;
-                role = model->getUserRole(username);
-                extern stack<string> history;
-                history.push("dashboard");
-                createSession(username);
-                break;
-            }
-            else {
-                cout << "Wrong username or password" << endl;
-                cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
-                bool tryAgain = false;
-                cin >> tryAgain;
-                if (!tryAgain) break;
-            }
-        }  
-
-    }
-
-    string toLowerCase(string s) {
-        transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {return tolower(c); });
-        return s;
-    }
-
-    string capitalize(string str) {
-        int check = 0, i = 0;
-        while (str[i]) {
-            if (check == 0) {
-                str[i] = toupper(str[i]);
-                check = 1;
-            }
-            else if (isspace(str[i]))
-                check = 0;
-            i++;
-        }
-    }
-
-    void registerAction() {
-        //if (checkLoginStatus()) return;
-        
-        bool validAccount = false;
-        UserInfoModel* user = new UserInfoModel();
-        AccountModel* am = new AccountModel();
-        extern stack<string> history;
-        while (!validAccount) {
-            string firstName, lastName, dob, gender, role, username, password, studentID;
-            cout << "Welcome to the register screen" << endl;
-            cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
-            cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
-            cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
-            cout << "Gender: "; cin >> gender; user->setUserGender(gender);
-            cout << "Role (student/ staff/ lecturer): "; cin >> role;
-            if (toLowerCase(role) == "student") {
-                cout << "Student ID: "; cin >> studentID; user->setStudentID(studentID);
-                user->setUsername(studentID);
-                am->setUserName(studentID);
-                am->setPassword(dob);
-            }
-            else {
-                user->setStudentID("");
-                cout << "Username: "; cin >> username; user->setUsername(username);
-                am->setUserName(username);
-                cout << "Password: "; cin >> password; am->setPassword(password);
-                am->setPassword(password);
-            }
-            user->AddUser();
-            am->registerUser();
-        }
-        createSession(am->getUserName());
-        history.push("dashboard");
-        delete user;
-        delete am;
-    }
-
-    void logoutAction() {
-        if (!checkLoginStatus()) return;
-        extern stack<string> history;
-        resetSession();
-        history = stack<string>();
-        history.push("access");
-    }
-    
-
-    void seeProfile() {
-        if (!checkLoginStatus()) return;
-        UserInfoModel* user = new UserInfoModel();
-        user->setUsername(globalUsername);
-        vector<vector<string>> records = user->FetchInfo();
-        if (records.size() == 0) {
-            cout << "Something wrong with your account, cannot fetch your profile.";
-            return;
-        }
-        cout << "Student ID: " << records[0][1] << endl;
-        cout << "First name: " << records[0][2] << endl;
-        cout << "Last name: " << records[0][3] << endl;
-        cout << "Date of Birth: " << records[0][4] << endl;
-        cout << "Gender: " << records[0][6] << endl;
-        delete user;
-    }
 
     //-------------------------------- Staff-Course --------------------------------//
     
@@ -1040,7 +912,7 @@ private:
 		}
     }
 
-public:
+//public:
 
     /**
     Constructor of Controller, which map a string to a function
