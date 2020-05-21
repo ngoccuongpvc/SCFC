@@ -1,10 +1,12 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <windows.system.h>
 
 #include "app/Controller/ControllerInterface.h"
 #include "app/Controller/UserController.h"
 #include "app/View/Routes.h"
+#include "app/View/View.h"
 
 using namespace std;
 
@@ -38,7 +40,20 @@ int main()
     
     string path;
 
+	/*TEST SITE FOR VIEW
+
+	vector<string> col = { "col1", "col2", "col3" };
+	vector<vector<string>> data = { {"19", "hung","18"}, {"579844", "welll this must be the shortest","18"}, {"1", "hu","hu"} };
+
+	View viewModel = View(data, col);
+	viewModel.displayTable();
+	
+
+	/*END TEST SITE*/
     while (true) {
+        if (history.empty()) {
+            history.push("access");
+        }
         path = history.top();
         string controllerName = route->getController(path);
         string actionName = route->getAction(path);
