@@ -268,6 +268,7 @@ private:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The course you entered does not exist. Please retry." << endl;
+			delete cim; //check if crash
             return;
         }
         vector<string> record = results[0];
@@ -643,6 +644,94 @@ private:
 
     // Student
 
+    //LECTURER/TEACHER
+
+	void editAttendence()
+	{
+		cout << "Plz aware that you can edit the attendent's day of each student only" << endl;
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
+
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		cout << "Plz enter the day of attendence for this student: ";
+		string day; cin >> day;
+		vector<string> record = conditions[0];
+		record.back() = day;
+		am->UpdateAttendance(&conditions[0], &record);
+		delete am;
+		return;
+	}
+
+	void deleteAttendence()
+	{
+		cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
+		string opt; cin >> opt;
+
+		while (true)
+		{
+			if (opt == "Y") break;
+			else if (opt == "N") return;
+			else
+			{
+				cout << "Invalid input. Plz try again" << endl;
+				cin >> opt;
+			}
+		}
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
+
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		am->RemoveAttendance(&conditions[0]);
+		delete am;
+		return;
+	}
+
+	void editScore()
+	{
+		cout << "Editting score of student!" << endl;
+		ScoreboardModel* sm = new ScoreboardModel();
+		string courseId, studentId, term;
+		cout << "Plz enter course id: "; cin >> courseId; sm->setCourseId(courseId);
+		cout << "Plz enter student id "; cin >> studentId; sm->setStudentId(studentId);
+		cout << "Plz enter the term(mid/final)"; cin >> term; sm->setTerm(term);
+
+		vector<vector<string>> conditions = sm->FetchScoreboard();
+		if (conditions.size() == 0)
+		{
+			delete sm;
+			cout << "Can't find this student/course/term" << endl;
+			return;
+		}
+
+		string score;
+		cout << "Plz enter the score: "; cin >> score;
+		vector<string> record = conditions[0];
+		record[sm->getIndex["score"]] = score;
+		sm->UpdateScore(&conditions[0], &record);
+		delete sm;
+		return;
+	}
+
+	//END OF LECTURER/TEACHER
+
     void checkIn() {
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
@@ -874,6 +963,13 @@ public:
         this->mapMethods["registerAction"] = [this]() { registerAction(); };
         this->mapMethods["logoutAction"] = [this]() { logoutAction(); };
         this->mapMethods["changePassword"] = [this]() { changePasswordAction(); };
+
+		//STAFF SECTION
+
+		//STUDENT SECTION
+
+		//LECTURE/TEACHER SECTION
+		this->mapMethods["editAttendence"] = [this]() { editAttendence(); };
     }
 
 

@@ -43,6 +43,11 @@ public:
 		this->id = id;
 	}
 
+	void setID(string id)
+	{
+		this->id = id;
+	}
+
 	void setCourseName(string courseName) {
 		this->courseName = courseName;
 	}
@@ -82,6 +87,7 @@ public:
 	void setYear(string year) {
 		this->year = year;
 	}
+
 
 	void setDayOfWeek(string day) {
 		this->dayOfWeek = day;
