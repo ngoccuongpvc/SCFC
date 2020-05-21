@@ -5,17 +5,20 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
 class View
 {
 private:
+	string path = "database/exported.csv";
 	vector<vector<string>> data;
 	vector<string> colHeader;
 	vector<int> maxWidth;
 	int rowWidth = 0;
 
+	//CALCULATE MAX WIDTH OF EACH COL
 	string calculateMaxWidth()
 	{
 		if (this->data.size() == 0 || this->colHeader.size() == 0) return "null data";
@@ -32,7 +35,7 @@ private:
 			for (j; j < this->data[0].size(); j++)
 			{
 				int temp = this->data[i][j].size();
-				if (this->maxWidth[j] < temp) this->maxWidth[j] = temp + 4; //extra 2 space
+				if (this->maxWidth[j] < temp) this->maxWidth[j] = temp + 4; //extra 4 space
 				if (i == this->data.size() - 1) this->rowWidth += this->maxWidth[j];
 			}
 		}
@@ -40,11 +43,13 @@ private:
 		return "successfully init maxWidth";
 	}
 
+	//ALIGN CENTER FOR EACH CELL
 	string center(string input, int width)
 	{
 		return input + string((width - input.size())/ 2, ' ');
 	}
 
+	//HEADER SECTION
 	void headerPrint()
 	{
 		cout << setfill('-') << setw(this->rowWidth + 2*this->colHeader.size()) << '-' << endl;
@@ -57,6 +62,21 @@ private:
 		return;
 	}
 
+	void headerExport()
+	{
+		ofstream* f = this->writeConnection();
+		for (int i = 0; i < this->colHeader.size(); i++)
+		{
+			(*f) << this->colHeader[i];
+			if (i < this->data.size() - 1) (*f) << ',';
+		}
+		(*f) << endl;
+		f->close();
+		this->closeConnection(f);
+		return;
+	}
+
+	//DATA SECTION
 	void dataPrint()
 	{
 		for (int i = 0; i < this->data.size(); i++)
@@ -67,22 +87,57 @@ private:
 			}
 			cout << endl << setfill('-') << setw(this->rowWidth + 2 * this->colHeader.size()) << '-' << endl;
 		}
-		system("pause");
 		cout << setfill(' ') << setw(0);
 		return;
 	}
 
+	void dataExport()
+	{
+		ofstream* f = writeConnection();
+		for (int i = 0; i < this->data.size(); i++)
+		{
+			for (int j = 0; j < this->data[i].size(); j++)
+			{
+				(*f) << this->data[i][j];
+				if (j < this->data[i].size() - 1) (*f) << ',';
+			}
+			(*f) << endl;
+		}
+		f->close();
+		this->closeConnection(f);
+		return;
+	}
+	
+	//FILE CONNECTION SECTION
+
+	ofstream* writeConnection()
+	{
+		if (path == "null") return nullptr;
+		ofstream* f;
+		f = new ofstream(path, ios::out);
+		return f;
+	}
+
+	void closeConnection(ofstream* f)
+	{
+		delete f;
+	}
+	
+
 public:
 	void displayTable()
 	{
-		//print out
-		if (this->maxWidth.size() == 0 || this->rowWidth == 0) return;
 		//collumn format
 		this->headerPrint();
 		//data format
 		this->dataPrint();
-		
 		return;
+	}
+
+	void exportTable()
+	{
+		this->headerExport();
+		this->dataExport();
 	}
 
 	//init function
