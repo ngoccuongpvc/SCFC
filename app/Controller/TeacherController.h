@@ -13,13 +13,6 @@
 
 using namespace std;
 
-string role;
-bool logged_in = false;
-string currentSession = "";
-
-string globalUsername = "null";
-
-
 class TeacherController : public ControllerInterface
 {
 private:
@@ -41,8 +34,6 @@ private:
 			i++;
 		}
 	}
-
-	//LECTURER/TEACHER
 
 	void editAttendance()
 	{
@@ -128,7 +119,6 @@ private:
 		return;
 	}
 
-	//END OF LECTURER/TEACHER
 
 public:
 
