@@ -59,6 +59,9 @@ public:
 		usage["log-out"] = "Log out";
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
+		usage["import-class"] = "Import student list of class";
+		usage["view-class"] = "View list of classes";
+		usage["view-student-in-class"] = "View list of students in a classe";
 
 		/**************************************************************************/
 		addRoute("login", "UserController", "loginAction");
@@ -72,6 +75,9 @@ public:
 		addRoute("log-out", "UserController", "logoutAction");
 		addRoute("register", "UserController", "registerAction");
 		addRoute("access", "UserController", "accessDashboard");
+		addRoute("import-class", "ClassController", "importAction");
+		addRoute("view-class", "ClassController", "showClassList");
+		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
 
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");
@@ -83,6 +89,10 @@ public:
 
 		linkTo("access", "login");
 		linkTo("access", "register");
+
+		linkTo("staff-dashboard", "import-class");
+		linkTo("staff-dashboard", "view-class");
+		linkTo("staff-dashboard", "view-student-in-class");
 		
 	}
 };
