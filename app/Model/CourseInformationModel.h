@@ -21,6 +21,7 @@ private:
 	string room;
 	string semester;
 	string year;
+	string dayOfWeek;
 
 public:
 	CourseInformationModel() : ModelInterface("database/CourseInfo.csv") {
@@ -35,6 +36,11 @@ public:
 		this->room = "all";
 		this->semester = "all";
 		this->year = "all";
+		this->dayOfWeek = "all";
+	}
+
+	void setId(string id) {
+		this->id = id;
 	}
 
 	void setID(string id)
@@ -82,8 +88,12 @@ public:
 		this->year = year;
 	}
 
-	string getID()
-	{
+
+	void setDayOfWeek(string day) {
+		this->dayOfWeek = day;
+	}
+
+	string getId() {
 		return this->id;
 	}
 
@@ -127,6 +137,10 @@ public:
 		return this->year;
 	}
 
+	string getDayofWeek() {
+		return this->dayOfWeek;
+	}
+
 	vector<vector<string>> FetchCourse() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("id")] = this->id;
@@ -140,6 +154,7 @@ public:
 		conditions[this->getIndex("semester")] = this->semester;
 		conditions[this->getIndex("room")] = this->room;
 		conditions[this->getIndex("year")] = this->year;
+		conditions[this->getIndex("dayOfWeek")] = this->year;
 		return this->fetch(&conditions);
 	}
 
@@ -163,7 +178,12 @@ public:
 		record.push_back(this->room);
 		record.push_back(this->semester);
 		record.push_back(this->year);
+		record.push_back(this->dayOfWeek);
 		this->add(&record);
+	}
+
+	void RemoveCourse(vector<string> *toDelete) {
+		this->erase(toDelete);
 	}
 };
 
