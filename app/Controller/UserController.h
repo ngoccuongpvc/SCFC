@@ -686,7 +686,48 @@ private:
 				cin >> opt;
 			}
 		}
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
 
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		am->RemoveAttendance(&conditions[0]);
+		delete am;
+		return;
+	}
+
+	void editScore()
+	{
+		cout << "Editting score of student!" << endl;
+		ScoreboardModel* sm = new ScoreboardModel();
+		string courseId, studentId, term;
+		cout << "Plz enter course id: "; cin >> courseId; sm->setCourseId(courseId);
+		cout << "Plz enter student id "; cin >> studentId; sm->setStudentId(studentId);
+		cout << "Plz enter the term(mid/final)"; cin >> term; sm->setTerm(term);
+
+		vector<vector<string>> conditions = sm->FetchScoreboard();
+		if (conditions.size() == 0)
+		{
+			delete sm;
+			cout << "Can't find this student/course/term" << endl;
+			return;
+		}
+
+		string score;
+		cout << "Plz enter the score: "; cin >> score;
+		vector<string> record = conditions[0];
+		record[sm->getIndex["score"]] = score;
+		sm->UpdateScore(&conditions[0], &record);
+		delete sm;
+		return;
 	}
 
 	//END OF LECTURER/TEACHER
