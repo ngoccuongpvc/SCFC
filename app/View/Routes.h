@@ -60,11 +60,17 @@ public:
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
 
+		//TEACHER SECTION
+
+		usage["edit-attendance"] = "Editting one student's attendance day";
+		usage["delete-attendance"] = "Deleting one student from attendance list";
+		usage["edit-score"] = "Editting one student score";
+
 		/**************************************************************************/
 		addRoute("login", "UserController", "loginAction");
 		addRoute("dashboard", "UserController", "mainAction");
 		addRoute("student-dashboard", "UserController", "studentDashboard");
-		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
+		addRoute("teacher-dashboard", "TeacherController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("change-password", "UserController", "changePassword");
 
@@ -72,6 +78,11 @@ public:
 		addRoute("log-out", "UserController", "logoutAction");
 		addRoute("register", "UserController", "registerAction");
 		addRoute("access", "UserController", "accessDashboard");
+
+		//TEACHER SECTION
+		addRoute("edit-attendance", "TeacherController", "editattendance");
+		addRoute("delete-attendance", "TeacherController", "deleteattendance");
+		addRoute("edit-score", "TeacherController", "editScore");
 
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");
@@ -83,6 +94,12 @@ public:
 
 		linkTo("access", "login");
 		linkTo("access", "register");
+
+		//TEACHER SECTION
+		linkTo("teacher-dashboard", "editAttendance");
+		linkTo("teacher-dashboard", "deleteAttendance");
+		linkTo("teacher-dashboard", "editScore");
+		
 		
 	}
 };
