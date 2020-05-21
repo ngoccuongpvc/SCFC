@@ -69,6 +69,7 @@ public:
 
 	void UpdateScore(vector<string> *conditions, vector<string> *toUpdate) {
 		this->update(conditions, toUpdate);
+
 	}
 
 	void AddScore() {
@@ -79,6 +80,10 @@ public:
 		record.push_back(this->term);
 		record.push_back(this->score);
 		this->add(&record);
+	}
+
+	void DeleteScore(vector<string> *toDelete) {
+		this->erase(toDelete);
 	}
 
 	

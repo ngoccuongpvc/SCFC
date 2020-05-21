@@ -10,16 +10,16 @@ class AttendanceModel : public ModelInterface
 {
 private:
 	string id;
-	string courseId;
 	string studentId;
+	string courseId;
 	string day;
 	
 
 public:
 	AttendanceModel() : ModelInterface("database/CheckInList.csv") {
 		this->id = "all";
-		this->courseId = "all";
 		this->studentId = "all";
+		this->courseId = "all";	
 		this->day = "all";
 	}
 
@@ -75,6 +75,10 @@ public:
 		record.push_back(this->courseId);
 		record.push_back(this->day);
 		this->add(&record);
+	}
+	
+	void RemoveAttendance(vector<string> *toDelete) {
+		this->erase(toDelete);
 	}
 	
 };

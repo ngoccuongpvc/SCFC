@@ -113,6 +113,10 @@ public:
     vector<string> UpdateInfo(vector<string>* condition, vector<string> *toUpdate) {
         this->update(condition, toUpdate);
     }
+
+    void RemoveUser(vector<string> *toDelete) {
+        this->erase(toDelete);
+    }
     
 };
 
