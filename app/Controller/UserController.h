@@ -226,6 +226,7 @@ private:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The course you entered does not exist. Please retry." << endl;
+			delete cim; //check if crash
             return;
         }
         vector<string> record = results[0];
@@ -421,7 +422,52 @@ private:
 
     // Student
 
-    // Lecturer
+    //LECTURER/TEACHER
+
+	void editAttendence()
+	{
+		cout << "Plz aware that you can edit the attendent's day of each student only" << endl;
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
+
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		cout << "Plz enter the day of attendence for this student: ";
+		string day; cin >> day;
+		vector<string> record = conditions[0];
+		record.back() = day;
+		am->UpdateAttendance(&conditions[0], &record);
+		delete am;
+		return;
+	}
+
+	void deleteAttendence()
+	{
+		cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
+		string opt; cin >> opt;
+
+		while (true)
+		{
+			if (opt == "Y") break;
+			else if (opt == "N") return;
+			else
+			{
+				cout << "Invalid input. Plz try again" << endl;
+				cin >> opt;
+			}
+		}
+
+	}
+
+	//END OF LECTURER/TEACHER
 
     void accessDashboard() {
         cout << "Hello User!" << endl;
@@ -486,6 +532,13 @@ public:
         this->mapMethods["registerAction"] = [this]() { registerAction(); };
         this->mapMethods["logoutAction"] = [this]() { logoutAction(); };
         this->mapMethods["changePassword"] = [this]() { changePasswordAction(); };
+
+		//STAFF SECTION
+
+		//STUDENT SECTION
+
+		//LECTURE/TEACHER SECTION
+		this->mapMethods["editAttendence"] = [this]() { editAttendence(); };
     }
 
 

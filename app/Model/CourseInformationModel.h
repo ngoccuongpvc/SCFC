@@ -37,6 +37,11 @@ public:
 		this->year = "all";
 	}
 
+	void setID(string id)
+	{
+		this->id = id;
+	}
+
 	void setCourseName(string courseName) {
 		this->courseName = courseName;
 	}
@@ -75,6 +80,11 @@ public:
 
 	void setYear(string year) {
 		this->year = year;
+	}
+
+	string getID()
+	{
+		return this->id;
 	}
 
 	string getCourseName() {
