@@ -719,9 +719,9 @@ private:
 
     //LECTURER/TEACHER
 
-	void editAttendence()
+	void editAttendance()
 	{
-		cout << "Plz aware that you can edit the attendent's day of each student only" << endl;
+		cout << "Plz aware that you can edit the attendant's day of each student only" << endl;
 		AttendanceModel* am = new AttendanceModel();
 		string courseID, studentID;
 		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
@@ -735,7 +735,7 @@ private:
 			return;
 		}
 
-		cout << "Plz enter the day of attendence for this student: ";
+		cout << "Plz enter the day of Attendance for this student: ";
 		string day; cin >> day;
 		vector<string> record = conditions[0];
 		record.back() = day;
@@ -744,7 +744,7 @@ private:
 		return;
 	}
 
-	void deleteAttendence()
+	void deleteAttendance()
 	{
 		cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
 		string opt; cin >> opt;
@@ -779,7 +779,6 @@ private:
 
 	void editScore()
 	{
-		cout << "Editting score of student!" << endl;
 		ScoreboardModel* sm = new ScoreboardModel();
 		string courseId, studentId, term;
 		cout << "Plz enter course id: "; cin >> courseId; sm->setCourseId(courseId);
@@ -1062,7 +1061,9 @@ public:
 		//STUDENT SECTION
 
 		//LECTURE/TEACHER SECTION
-		this->mapMethods["editAttendence"] = [this]() { editAttendence(); };
+		this->mapMethods["editAttendance"] = [this]() { editAttendance(); };
+		this->mapMethods["deleteAttendance"] = [this]() { deleteAttendance(); };
+		this->mapMethods["editScore"] = [this]() { editScore(); };
     }
 
 
