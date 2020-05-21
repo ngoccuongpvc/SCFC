@@ -3,11 +3,13 @@
 
 #include "ControllerInterface.h"
 #include <iostream>
+#include <string.h>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
 #include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
+#include "../View/View.h"
 
 using namespace std;
 
@@ -16,6 +18,7 @@ bool logged_in = false;
 string currentSession = "";
 
 string globalUsername = "null";
+
 
 class UserController : public ControllerInterface
 {
@@ -91,6 +94,19 @@ private:
         return s;
     }
 
+    string capitalize(string str) {
+        int check = 0, i = 0;
+        while (str[i]) {
+            if (check == 0) {
+                str[i] = toupper(str[i]);
+                check = 1;
+            }
+            else if (isspace(str[i]))
+                check = 0;
+            i++;
+        }
+    }
+
     void registerAction() {
         //if (checkLoginStatus()) return;
         
@@ -161,6 +177,11 @@ private:
     void viewAllCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
         vector<vector<string>> results = cim->FetchCourse();
+        vector<string> header = cim->columns;
+        for (int i = 0; i < header.size(); ++i) header[i] = capitalize(header[i]);
+        View* view = new View(results, header);
+        view->displayTable();
+        delete view;
     }
 
     void showYear() {
@@ -179,6 +200,12 @@ private:
                 }
             }
         }
+        vector<vector<string>> info;
+        info.push_back(years);
+        vector<string> header; header.push_back("Year");
+        View* view = new View(info, header);
+        view->displayTable();
+        delete view;
     }
 
 
@@ -197,6 +224,12 @@ private:
                     semesters.push_back(listCourses[i][9]);
             }
         }
+        vector<vector<string>> info;
+        info.push_back(semesters);
+        vector<string> header; header.push_back("Semester");
+        View* view = new View(info, header);
+        view->displayTable();
+        delete view;
 
         delete cim;
     }
@@ -323,7 +356,13 @@ private:
         for (int i = 0; i < results.size(); ++i) {
             courses.push_back(results[i][1]);
         }
+        vector<vector<string>> info;
+        info.push_back(courses);
+        vector<string> header; header.push_back("Course Name");
+        View* view = new View(info, header);
+        view->displayTable();
         delete cim;
+        delete view;
     }
 
     void removeStudentFromCourse() {
@@ -436,9 +475,17 @@ private:
                 students.push_back(getBack[0]);
             }
         }
+
+        vector<string> header = uim->columns;
+        for (int i = 0; i < header.size(); ++i) {
+            header[i] = capitalize(header[i]);
+        }
+        View* view = new View(students, header);
+        view->displayTable();
         delete cim;
         delete uim;
         delete am;
+        delete view;
     }
 
     void viewAttendanceList() {
@@ -481,8 +528,18 @@ private:
             }
             attendance.push_back(attendanceOfOne);
         }
+        int max_column = 0;
+        for (int i = 0; i < attendance.size(); ++i) {
+            if (attendance[i].size() > max_column) max_column = attendance[i].size();
+        }
+        vector<string> header; header.push_back("Course Name");
+        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        View* view = new View(attendance, header);
+        view->displayTable();
+        delete view;
         delete am;
         delete cim;
+        delete view;
     }
 
     void createLecturer() {
@@ -524,8 +581,16 @@ private:
                 lecturers.push_back(getBack[0]);
             }
         }
+        vector<string> header = uim->columns;
+        for (int i = 0; i < header.size(); ++i) {
+            header[i] = capitalize(header[i]);
+        }
+        View* view = new View(lecturers, header);
+        view->displayTable();
+
         delete uim;
         delete am;
+        delete view;
     }
 
     void editLecturer() {
@@ -620,7 +685,15 @@ private:
                 score.push_back(scoreLine);
             }
         }
-
+        int max_column = 0;
+        for (int i = 0; i < scores.size(); ++i) {
+            if (scores[i].size() > max_column) max_column = scores[i].size();
+        }
+        vector<string> header; header.push_back("Course Name");
+        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        View* view = new View(scores, header);
+        view->displayTable();
+        delete view;
         delete sm;
         delete sm_temp;
         delete cim;
@@ -807,6 +880,15 @@ private:
             }
             attendance.push_back(attendanceOfOne);
         }
+        int max_column = 0;
+        for (int i = 0; i < attendance.size(); ++i) {
+            if (attendance[i].size() > max_column) max_column = attendance[i].size();
+        }
+        vector<string> header; header.push_back("Course Name");
+        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        View* view = new View(attendance, header);
+        view->displayTable();
+        delete view;
         delete uim;
         delete cim;
         delete am;
@@ -847,12 +929,20 @@ private:
             schedule.push_back(studyPeriod);
             schedules.push_back(schedule);
         }
-
+        int max_column = 0;
+        for (int i = 0; i < schedules.size(); ++i) {
+            if (schedules[i].size() > max_column) max_column = schedules[i].size();
+        }
+        vector<string> header; header.push_back("Course Name");
+        header.push_back("Day Of Week"); header.push_back("Daily Hour");
+        header.push_back("Study Period");
+        View* view = new View(schedules, header);
+        view->displayTable();
         delete uim;
         delete cim;
         delete am;
         delete am_temp;
-
+        delete view;
     }
 
     void viewScoreOfCourse() {
@@ -891,11 +981,14 @@ private:
             score.push_back(scoreboard[i][4]);
             scores.push_back(score);
         }
+        vector<string> header; header.push_back("Term"); header.push_back("Score");
+        View* view = new View(scores, header);
+        view->displayTable();
 
         delete cim;
         delete uim;
         delete sm;
-        
+        delete view;
     }
 
     // Lecturer
