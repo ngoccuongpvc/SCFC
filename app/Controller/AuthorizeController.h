@@ -2,19 +2,25 @@
 #define AUTHORIZECONTROLLER_H_INCLUDED
 
 #include "ControllerInterface.h"
-#include "UserController.h"
+#include <string.h>
+#include "../Model/AccountModel.h"
+#include "../Model/UserInfoModel.h"
+#include "../Model/CourseInformationModel.h"
+#include "../Model/ScoreboardModel.h"
+#include "../Model/AttendanceModel.h"
+#include "../View/View.h"
+
+string role;
+bool logged_in = false;
+string currentSession = "";
+
+string globalUsername = "null";
 
 class AuthorizeController : public ControllerInterface {
 
 private:
 
 public:
-    string role;
-    bool logged_in = false;
-    string currentSession = "";
-
-    string globalUsername = "null";
-
     bool checkLoginStatus() {
         if (!logged_in || currentSession == "") {
             return false;
@@ -107,6 +113,41 @@ public:
         resetSession();
         history = stack<string>();
         history.push("access");
+    }
+
+    void changePasswordAction() {
+        cout << "Change password here!";
+        if (globalUsername == "null")
+        {
+            cout << "Login 1st!!" << endl;
+        }
+        else
+        {
+            string newPass;
+            cout << "Pls enter new password: ";
+            cin >> newPass;
+
+            AccountModel* model = new AccountModel();
+
+            if (model->changePassword(globalUsername, newPass))
+            {
+                cout << "Successfully change password!" << endl;
+                extern stack<string> history;
+                history.push("dashboard");
+            }
+            else
+            {
+                cout << "Can't change password" << endl;
+            }
+            //delete model;
+        }
+    }
+
+    AuthorizeController() {
+        this->mapMethods["changePasswordAction"] = [this]() { changePasswordAction(); };
+        this->mapMethods["logoutAction"] = [this]() { logoutAction(); };
+        this->mapMethods["loginAction"] = [this]() { loginAction(); };
+        this->mapMethods["registerAction"] = [this]() { registerAction(); };
     }
 };
 

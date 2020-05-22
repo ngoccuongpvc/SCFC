@@ -11,6 +11,7 @@ class CourseInformationModel : public ModelInterface
 private:
 
 	string id;
+	string courseId;
 	string courseName;
 	string className;
 	string lecturerAccount;
@@ -37,15 +38,16 @@ public:
 		this->semester = "all";
 		this->year = "all";
 		this->dayOfWeek = "all";
+		this->courseId = "all";
 	}
 
 	void setId(string id) {
 		this->id = id;
 	}
 
-	void setID(string id)
+	void setCourseId(string id)
 	{
-		this->id = id;
+		this->courseId = id;
 	}
 
 	void setCourseName(string courseName) {
@@ -97,6 +99,10 @@ public:
 		return this->id;
 	}
 
+	string getCourseId() {
+		return this->courseId;
+	}
+
 	string getCourseName() {
 		return this->courseName;
 	}
@@ -144,6 +150,7 @@ public:
 	vector<vector<string>> FetchCourse() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("id")] = this->id;
+		conditions[this->getIndex("courseId")] = this->id;
 		conditions[this->getIndex("courseName")] = this->courseName;
 		conditions[this->getIndex("className")] = this->className;
 		conditions[this->getIndex("lecturerAccount")] = this->lecturerAccount;
@@ -179,6 +186,7 @@ public:
 		record.push_back(this->semester);
 		record.push_back(this->year);
 		record.push_back(this->dayOfWeek);
+		record.push_back(this->courseId);
 		this->add(&record);
 	}
 

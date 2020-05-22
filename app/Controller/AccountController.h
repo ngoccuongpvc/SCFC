@@ -1,8 +1,8 @@
 #ifndef ACCOUNTCONTROLLER_H_INCLUDED
 #define ACCOUNTCONTROLLER_H_INCLUDED
 
-#include "UserController.h"
 #include "AuthorizeController.h"
+#include "MiscellanousFunctions.h"
 
 #include <iostream>
 #include <string.h>
@@ -60,7 +60,6 @@ public:
     }
 
     void viewAllLecturer() {
-        if (role != "staff") return;
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         am->setRole("lecturer");
@@ -90,7 +89,6 @@ public:
     }
 
     void editLecturer() {
-        if (role != "staff") return;
         UserInfoModel* uim = new UserInfoModel();
         cout << "Please enter the username of the lecturer that you want to edit: "; string username; cin >> username;
         uim->setUsername(toLowerCase(username));
@@ -116,7 +114,6 @@ public:
     }
 
     void deleteLecturer() {
-        if (role != "staff") return;
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         string lecturer;
@@ -141,34 +138,15 @@ public:
         delete am;
     }
 
-    void changePasswordAction() {
-        cout << "Change password here!";
-        if (globalUsername == "null")
-        {
-            cout << "Login 1st!!" << endl;
-        }
-        else
-        {
-            string newPass;
-            cout << "Pls enter new password: ";
-            cin >> newPass;
-
-            AccountModel* model = new AccountModel();
-
-            if (model->changePassword(globalUsername, newPass))
-            {
-                cout << "Successfully change password!" << endl;
-                extern stack<string> history;
-                history.push("dashboard");
-            }
-            else
-            {
-                cout << "Can't change password" << endl;
-            }
-
-            //delete model;
-        }
+    AccountController() {
+        this->mapMethods["createLecturer"] = [this]() { createLecturer(); };
+        this->mapMethods["deleteLecturer"] = [this]() { deleteLecturer(); };
+        this->mapMethods["editLecturer"] = [this]() { editLecturer(); };
+        this->mapMethods["seeProfile"] = [this]() { seeProfile(); };
+        this->mapMethods["viewAllLecturer"] = [this]() { viewAllLecturer(); };
     }
+
+    
 };
 
 #endif // USERCONTROLLER_H_INCLUDED
