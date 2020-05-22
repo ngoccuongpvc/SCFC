@@ -1,8 +1,10 @@
 #ifndef ROUTES_H_INCLUDED
 #define ROUTES_H_INCLUDED
 
+#include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -49,7 +51,6 @@ public:
 
 	Routes()
 	{
-
 		usage["change-password"] = "Change password";
 		usage["check-in"] = "Check in";
 		usage["check-in-result"] = "View your check in result";
@@ -69,12 +70,6 @@ public:
 		usage["delete-attendence"] = "Deleting one student from attendence list";
 		usage["edit-score"] = "Editting one student score";
 
-		//TEACHER SECTION
-
-		usage["edit-attendance"] = "Editting one student's attendance day";
-		usage["delete-attendance"] = "Deleting one student from attendance list";
-		usage["edit-score"] = "Editting one student score";
-
 		/**************************************************************************/
 		addRoute("login", "UserController", "loginAction");
 		addRoute("dashboard", "UserController", "mainAction");
@@ -87,6 +82,8 @@ public:
 		addRoute("log-out", "UserController", "logoutAction");
 		addRoute("register", "UserController", "registerAction");
 		addRoute("access", "UserController", "accessDashboard");
+
+		//CLASS SECTION
 		addRoute("import-class", "ClassController", "importAction");
 		addRoute("view-class", "ClassController", "showClassList");
 		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
@@ -95,11 +92,6 @@ public:
 		addRoute("edit-attendence", "UserController", "editAttendence");
 		addRoute("delete-attendence", "UserController", "deleteAttendence");
 		addRoute("edit-score", "UserController", "editScore");
-
-		//TEACHER SECTION
-		addRoute("edit-attendance", "TeacherController", "editAttendance");
-		addRoute("delete-attendance", "TeacherController", "deleteAttendance");
-		addRoute("edit-score", "TeacherController", "editScore");
 
 		/**************************************************************************/
 		linkTo("student-dashboard", "change-password");
@@ -113,9 +105,9 @@ public:
 		linkTo("access", "register");
 
 		//TEACHER SECTION
-		linkTo("teacher-dashboard", "editAttendance");
-		linkTo("teacher-dashboard", "deleteAttendance");
-		linkTo("teacher-dashboard", "editScore");
+		linkTo("teacher-dashboard", "edit-attendence");
+		linkTo("teacher-dashboard", "delete-attendence");
+		linkTo("teacher-dashboard", "edit-score");
 		
 		linkTo("staff-dashboard", "import-class");
 		linkTo("staff-dashboard", "view-class");

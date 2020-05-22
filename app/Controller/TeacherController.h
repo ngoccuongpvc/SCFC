@@ -35,6 +35,26 @@ private:
 		}
 	}
 
+	//PROBLEM 28->34
+
+	void viewCourseList()
+	{
+		//view list of course in current semester
+		return;
+	}
+
+	void viewStudentInCourse()
+	{
+		//view list of student in a course
+		return;
+	}
+	
+	void viewAttendanceCourse()
+	{
+		//view Ateendance list in a course
+		return;
+	}
+
 	void editAttendance()
 	{
 		cout << "Plz aware that you can edit the attendant's day of each student only" << endl;
@@ -93,6 +113,12 @@ private:
 		return;
 	}
 
+	void importScoreBoard()
+	{
+		//import score board in a course (mid, final, lab, bonus) from a csv file
+		return;
+	}
+
 	void editScore()
 	{
 		cout << "Editting score of student!" << endl;
@@ -118,6 +144,12 @@ private:
 		record[sm->getIndex["score"]] = score;
 		sm->UpdateScore(&conditions, &record);
 		delete sm;
+		return;
+	}
+
+	void viewScorsBoard()
+	{
+		//view score board of a course
 		return;
 	}
 

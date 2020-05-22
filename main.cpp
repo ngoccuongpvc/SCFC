@@ -28,6 +28,9 @@ ControllerInterface *createInstance(string name)
     else if (name == "ClassController") {
         return new ClassController();
     }
+	else if (name == "TeacherController") {
+		return new TeacherController();
+	}
     return nullptr;
 }
 

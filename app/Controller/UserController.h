@@ -539,7 +539,6 @@ private:
         delete view;
         delete am;
         delete cim;
-        delete view; //??
     }
 
     void createLecturer() {
