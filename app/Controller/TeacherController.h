@@ -102,8 +102,8 @@ private:
 		cout << "Plz enter student id "; cin >> studentId; sm->setStudentId(studentId);
 		cout << "Plz enter the term(mid/final)"; cin >> term; sm->setTerm(term);
 
-		vector<vector<string>> conditions = sm->FetchScoreboard();
-		if (conditions.size() == 0)
+		vector<vector<string>> results = sm->FetchScoreboard();
+		if (results.size() == 0)
 		{
 			delete sm;
 			cout << "Can't find this student/course/term" << endl;
@@ -112,9 +112,11 @@ private:
 
 		string score;
 		cout << "Plz enter the score: "; cin >> score;
-		vector<string> record = conditions[0];
+
+		vector<string> record = results[0];
+		vector<string> conditions = results[0];
 		record[sm->getIndex["score"]] = score;
-		sm->UpdateScore(&conditions[0], &record);
+		sm->UpdateScore(&conditions, &record);
 		delete sm;
 		return;
 	}

@@ -80,8 +80,8 @@ public:
 		addRoute("access", "UserController", "accessDashboard");
 
 		//TEACHER SECTION
-		addRoute("edit-attendance", "TeacherController", "editattendance");
-		addRoute("delete-attendance", "TeacherController", "deleteattendance");
+		addRoute("edit-attendance", "TeacherController", "editAttendance");
+		addRoute("delete-attendance", "TeacherController", "deleteAttendance");
 		addRoute("edit-score", "TeacherController", "editScore");
 
 		/**************************************************************************/
