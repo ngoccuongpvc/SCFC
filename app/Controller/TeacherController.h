@@ -39,13 +39,38 @@ private:
 
 	void viewCourseList()
 	{
-		//view list of course in current semester
+		//view list of courses in current semester
+		CourseInformationModel* cim = new CourseInformationModel();
+		string sem;
+		cout << "Plz enter the semester you want to view(only 1, 2, or 3): "; cin >> sem;
+		while (true)
+		{
+			if (sem.back() < '4' && sem.back() > '0') break;
+			else sem = "";
+			cout << "Invalid input. Plz try again: ";
+			cin >> sem;
+		}
+
+		cim->setSemester(sem);
+		vector<vector<string>> results = cim->FetchCourse();
+		if (results.size() == 0)
+		{
+			delete cim;
+			return;
+		}
+
+		vector<string> cols = cim->columns;
+		View* view = new View(results, cols);
+		view->displayTable();
+		delete view;
+		delete cim;
 		return;
 	}
 
 	void viewStudentInCourse()
 	{
 		//view list of student in a course
+		
 		return;
 	}
 	
@@ -91,6 +116,7 @@ private:
 			else if (opt == "N") return;
 			else
 			{
+				opt = "";
 				cout << "Invalid input. Plz try again" << endl;
 				cin >> opt;
 			}
@@ -161,6 +187,7 @@ public:
 	*/
 	TeacherController() {
 		
+		this->mapMethods["viewCoursesList"] = [this]() { viewCourseList(); };
 		this->mapMethods["editAttendance"] = [this]() { editAttendance(); };
 		this->mapMethods["deleteAttendance"] = [this]() { deleteAttendance(); };
 		this->mapMethods["editScore"] = [this]() { editScore(); };
