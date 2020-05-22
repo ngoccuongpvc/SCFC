@@ -53,6 +53,7 @@ public:
 		usage["log-out"] = "Log out";
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
+
 		usage["change-password"] = "Change password";
 
 		/****** COURSE OPERATIONS ******/
@@ -104,6 +105,10 @@ public:
 		usage["course-dashboard-lecturer"] = "View course operations for lecturers";
 		usage["score-dashboard-lecturer"] = "View scoreboard operations for lecturers";
 		usage["attendance-dashboard-lecturer"] = "View attendance operations for lecturers";
+
+		usage["import-class"] = "Import student list of class";
+		usage["view-class"] = "View list of classes";
+		usage["view-student-in-class"] = "View list of students in a classe";
 
 		/**************************************************************************/
 
@@ -158,6 +163,14 @@ public:
 		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("access", "UserController", "accessDashboard");
+		addRoute("import-class", "ClassController", "importAction");
+		addRoute("view-class", "ClassController", "showClassList");
+		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
+
+		//TEACHER SECTION
+		addRoute("edit-attendence", "UserController", "editAttendence");
+		addRoute("delete-attendence", "UserController", "deleteAttendence");
+		addRoute("edit-score", "UserController", "editScore");
 
 		addRoute("class-dashboard-staff", "UserController", "classDashboardStaff");
 		addRoute("course-dashboard-staff", "UserController", "courseDashboardStaff");
@@ -223,7 +236,15 @@ public:
 
 		linkTo("access", "login");
 		linkTo("access", "register");
-		
+
+		linkTo("staff-dashboard", "import-class");
+		linkTo("staff-dashboard", "view-class");
+		linkTo("staff-dashboard", "view-student-in-class");
+		//TEACHER SECTION
+		linkTo("teacher-dashboard", "edit-attendence");
+		linkTo("teacher-dashboard", "deleteAttendence");
+		linkTo("teacher-dashboard", "editScore");
+				
 	}
 };
 #endif // ROUTES_H_INCLUDED
