@@ -59,6 +59,15 @@ public:
 		usage["log-out"] = "Log out";
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
+		usage["import-class"] = "Import student list of class";
+		usage["view-class"] = "View list of classes";
+		usage["view-student-in-class"] = "View list of students in a classe";
+
+		//TEACHER SECTION
+
+		usage["edit-attendence"] = "Editting one student's attendence day";
+		usage["delete-attendence"] = "Deleting one student from attendence list";
+		usage["edit-score"] = "Editting one student score";
 
 		//TEACHER SECTION
 
@@ -78,6 +87,14 @@ public:
 		addRoute("log-out", "UserController", "logoutAction");
 		addRoute("register", "UserController", "registerAction");
 		addRoute("access", "UserController", "accessDashboard");
+		addRoute("import-class", "ClassController", "importAction");
+		addRoute("view-class", "ClassController", "showClassList");
+		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
+
+		//TEACHER SECTION
+		addRoute("edit-attendence", "UserController", "editAttendence");
+		addRoute("delete-attendence", "UserController", "deleteAttendence");
+		addRoute("edit-score", "UserController", "editScore");
 
 		//TEACHER SECTION
 		addRoute("edit-attendance", "TeacherController", "editAttendance");
@@ -100,7 +117,9 @@ public:
 		linkTo("teacher-dashboard", "deleteAttendance");
 		linkTo("teacher-dashboard", "editScore");
 		
-		
+		linkTo("staff-dashboard", "import-class");
+		linkTo("staff-dashboard", "view-class");
+		linkTo("staff-dashboard", "view-student-in-class");
 	}
 };
 #endif // ROUTES_H_INCLUDED
