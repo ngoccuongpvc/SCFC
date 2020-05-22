@@ -10,8 +10,8 @@ class CourseInformationModel : public ModelInterface
 {
 private:
 
-	string id;
-	string courseId;
+	string id; // the incrementing id
+	string courseId; //ex: cs162, mth251
 	string courseName;
 	string className;
 	string lecturerAccount;

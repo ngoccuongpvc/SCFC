@@ -53,7 +53,8 @@ public:
     void addCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
         AccountModel* am = new AccountModel();
-        string temp;
+        string temp, temp2;
+        cout << "Course ID: "; cin >> temp2;
         cout << "Course name: "; cin >> temp; cim->setCourseName(toLowerCase(temp));
         cout << "Course id: "; cin >> temp; cim->setCourseId(toLowerCase(temp));
         cout << "Class name: "; cin >> temp; cim->setClassName(toLowerCase(temp));
@@ -66,7 +67,6 @@ public:
             cout << "The lecturer account is not found, returning..." << endl;
             return;
         }
-
         cout << "Start day: "; cin >> temp; cim->setStartDay(toLowerCase(temp));
         cout << "End day: "; cin >> temp; cim->setEndDay(toLowerCase(temp));
         cout << "Start hour: "; cin >> temp; cim->setStartHour(toLowerCase(temp));
@@ -75,6 +75,7 @@ public:
         cout << "Room: "; cin >> temp; cim->setRoom(toLowerCase(temp));
         cout << "Semester: "; cin >> temp; cim->setSemester(toLowerCase(temp));
         cout << "Year: "; cin >> temp; cim->setYear(toLowerCase(temp));
+        cim->setCourseName(toLowerCase(temp2));
         cim->AddCourse();
         cout << "Successfully added the course." << endl;
         delete cim;
@@ -93,9 +94,10 @@ public:
         }
         vector<string> record = results[0];
         cout << "Please enter the information that you want to change about this course. Press enter if you don't want to change that info.." << endl;
-        string temp;
+        string temp, temp2;
         vector<string> toUpdate;
         toUpdate.push_back(record[0]);
+        cout << "Course ID: ";  cin >> temp2; 
         cout << "Course name: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));   
         cout << "Class name: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
         cout << "Lecturer account: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
@@ -107,7 +109,7 @@ public:
         cout << "Room: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
         cout << "Semester: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
         cout << "Year: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
-        cout << "Course id: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
+        toUpdate.push_back(toLowerCase(temp2));
         cim->UpdateCourse(&record, &toUpdate);
         cout << "Successfully updated the course." << endl;
         delete cim;

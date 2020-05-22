@@ -11,8 +11,8 @@ class ScoreboardModel : public ModelInterface
 private:
 
 	string id;
-	string studentId;
-	string courseId;
+	string studentId; // The incrementing id of UserInformationModel records
+	string courseId; // The incrementing id of CourseInformationModel records
 	string term;
 	string score;
 
