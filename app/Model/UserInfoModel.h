@@ -10,7 +10,7 @@ class UserInfoModel : public ModelInterface
 {
 private:
 
-    string id;
+    string id; // the incrementing id
     string studentID; // if the user is a student
     string lastName;
     string firstName;
