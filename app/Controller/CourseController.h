@@ -15,7 +15,7 @@ class CourseController : public ControllerInterface {
 private:
 public:
 
-    void importAction() {
+    void importCourse() {
         cout << "Choose file: ";
         string path;
         cin >> path;
@@ -340,6 +340,7 @@ public:
         this->mapMethods["addCourse"] = [this]() { addCourse(); };
         this->mapMethods["addStudentToCourse"] = [this]() { addStudentToCourse(); };
         this->mapMethods["editCourse"] = [this]() { editCourse(); };
+        this->mapMethods["importCourse"] = [this]() { importCourse(); };
         this->mapMethods["listOfCourseCurrentSemester"] = [this]() { listOfCourseCurrentSemester(); };
         this->mapMethods["listOfCourseCurrentYear"] = [this]() {listOfCourseCurrentYear(); };
         this->mapMethods["removeCourse"] = [this]() { removeCourse(); };

@@ -15,7 +15,7 @@ class ScoreboardController : public ControllerInterface {
 private:
 public:
 
-    void importAction() {
+    void importScoreboard() {
         cout << "Choose file: ";
         string path;
         cin >> path;
@@ -83,10 +83,19 @@ public:
             uim->setStudentId(studentResults[i][1]);
             score.push_back(uim->FetchInfo()[0][1]);
             vector<vector<string>> scoreResult = sm_temp->FetchScoreboard();
+            string midterm, lab, final, bonus;
+            midterm = lab = final = bonus = "";
             for (int k = 0; k < scoreResult.size(); k++) {
-                string scoreLine = scoreResult[k][4];
-                score.push_back(scoreLine);
+                if (scoreResult[k][3] == "midterm") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "lab") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "final") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "bonus") midterm = scoreResult[k][4];
             }
+            score.push_back(midterm);
+            score.push_back(lab);
+            score.push_back(final);
+            score.push_back(bonus);
+            scores.push_back(score);
         }
         int max_column = 0;
         for (int i = 0; i < scores.size(); ++i) {
@@ -108,7 +117,67 @@ public:
     }
 
     void exportScoreboard() {
-
+        cout << "Choose file to export to: ";
+        string path;
+        cin >> path;
+        ScoreboardModel* sm = new ScoreboardModel();
+        CourseInformationModel* cim = new CourseInformationModel();
+        UserInfoModel* uim = new UserInfoModel();
+        string courseId, studentId;
+        cout << "Please enter the ID of the course whose scoreboard you want to export: "; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        vector<vector<string>> courseResult = cim->FetchCourse();
+        if (courseResult.size() == 0) {
+            cout << "The course you entered does not exist." << endl;
+            return;
+        }
+        sm->setCourseId(courseId);
+        sm->setScore("");
+        sm->setTerm("");
+        vector<vector<string>> studentResults = sm->FetchScoreboard();
+        if (studentResults.size() == 0) {
+            cout << "No students was given any score in the given course." << endl;
+            return;
+        }
+        ScoreboardModel* sm_temp = new ScoreboardModel();
+        vector<vector<string>> scores;
+        sm_temp->setCourseId(courseId);
+        for (int i = 0; i < studentResults.size(); ++i) {
+            vector<string> score;
+            sm_temp->setStudentId(studentResults[i][1]);
+            uim->setStudentId(studentResults[i][1]);
+            score.push_back(uim->FetchInfo()[0][1]);
+            vector<vector<string>> scoreResult = sm_temp->FetchScoreboard();
+            string midterm, lab, final, bonus;
+            midterm = lab = final = bonus = "";
+            for (int k = 0; k < scoreResult.size(); k++) {
+                if (scoreResult[k][3] == "midterm") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "lab") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "final") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "bonus") midterm = scoreResult[k][4];
+            }
+            score.push_back(midterm);
+            score.push_back(lab);
+            score.push_back(final);
+            score.push_back(bonus);
+            scores.push_back(score);
+        }
+        int max_column = 0;
+        for (int i = 0; i < scores.size(); ++i) {
+            if (scores[i].size() > max_column) max_column = scores[i].size();
+        }
+        vector<string> header; header.push_back("Student ID");
+        header.push_back("Midterm");
+        header.push_back("Lab");
+        header.push_back("Final");
+        header.push_back("Bonus");
+        View* view = new View(scores, header);
+        view->exportTable();
+        delete view;
+        delete sm;
+        delete sm_temp;
+        delete cim;
+        delete uim;
     }
 
     void editScore()
@@ -118,7 +187,7 @@ public:
         string courseId, studentId, term;
         cout << "Please enter course id: "; cin >> courseId; sm->setCourseId(courseId);
         cout << "Please enter student id "; cin >> studentId; sm->setStudentId(studentId);
-        cout << "Pleasee enter the term (mid/final)"; cin >> term; sm->setTerm(term);
+        cout << "Pleasee enter the term (midterm/final/bonus/lab)"; cin >> term; sm->setTerm(term);
 
         vector<vector<string>> conditions = sm->FetchScoreboard();
         if (conditions.size() == 0)
@@ -180,6 +249,7 @@ public:
     }
 
     ScoreboardController() {
+        this->mapMethods["importScoreboard"] = [this]() {importScoreboard(); };
         this->mapMethods["editScore"] = [this]() { editScore(); };
         this->mapMethods["exportScoreboard"] = [this]() { exportScoreboard(); };
         this->mapMethods["searchAndViewScore"] = [this]() { searchAndViewScore(); };

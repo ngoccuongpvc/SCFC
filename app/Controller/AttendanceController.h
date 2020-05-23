@@ -67,13 +67,59 @@ public:
 
 
     void exportAttendance() {
+        cout << "Choose file to export to: ";
+        string path;
+        cin >> path;
+        AttendanceModel* am = new AttendanceModel();
+        CourseInformationModel* cim = new CourseInformationModel();
+        UserInfoModel* uim = new UserInfoModel();
+        string temp, courseId;
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
+            cout << "The course you entered could not be found." << endl;
+            return;
+        }
+        vector<vector<string>> attendance;
+        am->setCourseId(courseId);
+        am->setDay("");
+        vector<vector<string>> results = am->FetchAttendance();
+        if (results.size() == 0) {
+            cout << "No students attended the given course, please recheck." << endl;
+            return;
+        }
+        AttendanceModel* am_temp = new AttendanceModel();
+        am_temp->setCourseId(courseId);
+        for (int i = 0; i < results.size(); ++i) {
+            am_temp->setStudentId(results[i][1]);
+            uim->setStudentId(results[i][1]);
+            vector<vector<string>> users = uim->FetchInfo();
+            vector<string> attendanceOfOne;
+            if (users.size() != 0) {
+                attendanceOfOne.push_back(users[0][1]);
+            }
+            else attendanceOfOne.push_back("");
+            vector<vector<string>> getBack = am->FetchAttendance();
 
+            for (int k = 0; k < getBack.size(); ++k) {
+                attendanceOfOne.push_back(getBack[k][3]);
+            }
+            attendance.push_back(attendanceOfOne);
+        }
+        int max_column = 0;
+        for (int i = 0; i < attendance.size(); ++i) {
+            if (attendance[i].size() > max_column) max_column = attendance[i].size();
+        }
+        vector<string> header; header.push_back("Course Name");
+        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        View* view = new View(attendance, header);
+        view->exportTable();
+        delete view;
+        delete am;
+        delete cim;
+        delete view;
     }
-    //--------------------------------xx Staff-Attendance xx--------------------------------//
 
-    // Student
-
-    //LECTURER/TEACHER
 
     void editAttendance()
     {
@@ -216,6 +262,7 @@ public:
 
     AttendanceController() {
         this->mapMethods["checkIn"] = [this]() { checkIn(); };
+        this->mapMethods["exportAttendance"] = [this]() {exportAttendance();  };
         this->mapMethods["deleteAttendance"] = [this]() { deleteAttendance(); };
         this->mapMethods["editAttendance"] = [this]() { editAttendance(); };
         this->mapMethods["exportAttendance"] = [this]() { exportAttendance(); };
