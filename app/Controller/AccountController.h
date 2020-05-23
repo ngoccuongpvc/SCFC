@@ -43,7 +43,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         string temp;
-        uim->setStudentID("");
+        uim->setStudentId("");
         cout << "Lecturer first name: "; cin >> temp; uim->setFirstName(toLowerCase(temp));
         cout << "Lecturer last name: "; cin >> temp; uim->setLastName(toLowerCase(temp));
         cout << "Lecturer DOB: "; cin >> temp; uim->setDOB(toLowerCase(temp));
