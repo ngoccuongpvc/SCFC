@@ -200,7 +200,7 @@ public:
         string score;
         cout << "Please enter the score: "; cin >> score;
         vector<string> record = conditions[0];
-        record[sm->getIndex["score"]] = score;
+        record[4] = score;
         sm->UpdateScore(&conditions[0], &record);
         delete sm;
         return;
