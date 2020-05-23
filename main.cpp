@@ -4,8 +4,14 @@
 #include <windows.system.h>
 
 #include "app/Controller/ControllerInterface.h"
-#include "app/Controller/UserController.h"
+#include "app/Controller/AcademicController.h"
+#include "app/Controller/AccountController.h"
+#include "app/Controller/AttendanceController.h"
+#include "app/Controller/AuthorizeController.h"
 #include "app/Controller/ClassController.h"
+#include "app/Controller/CourseController.h"
+#include "app/Controller/ScoreboardController.h"
+#include "app/Controller/UserController.h"
 
 #include "app/View/Routes.h"
 #include "app/View/View.h"
@@ -28,6 +34,25 @@ ControllerInterface *createInstance(string name)
     else if (name == "ClassController") {
         return new ClassController();
     }
+    else if (name == "AccountController") {
+        return new AccountController();
+    }
+    else if (name == "AuthorizeController") {
+        return new AuthorizeController();
+    }
+    else if (name == "CourseController") {
+        return new CourseController();
+    }
+    else if (name == "ScoreboardController") {
+        return new ScoreboardController();
+    }
+    else if (name == "AcademicController") {
+        return new AcademicController();
+    }
+    else if (name == "AttendanceController") {
+        return new AttendanceController();
+    }
+
     return nullptr;
 }
 

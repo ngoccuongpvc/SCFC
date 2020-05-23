@@ -7,7 +7,9 @@
 using namespace std;
 
 string toLowerCase(string s) {
-    transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {return tolower(c); });
+    for (int i = 0; i < s.length(); ++i) {
+        s[i] = tolower(s[i]);
+    }
     return s;
 }
 
