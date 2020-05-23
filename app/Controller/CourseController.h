@@ -14,6 +14,46 @@
 class CourseController : public ControllerInterface {
 private:
 public:
+
+    void importAction() {
+        cout << "Choose file: ";
+        string path;
+        cin >> path;
+        CourseInformationModel* cim = new CourseInformationModel();
+        AttendanceModel* am = new AttendanceModel();
+        UserInfoModel* uim = new UserInfoModel();
+
+        ModelInterface* model = new ModelInterface(path);
+        vector<vector<string>> records = model->fetch();
+
+        for (vector<string> record : records) {
+            cim->setCourseId(record[1]);
+            cim->setCourseName(record[2]);
+            cim->setClassName(record[3]);
+            cim->setLecturerAccount(record[4]);
+            cim->setStartDay(record[5]);
+            cim->setEndDay(record[6]);
+            cim->setDayOfWeek(record[7]);
+            cim->setStartHour(record[8]);
+            cim->setEndHour(record[9]);
+            cim->setRoom(record[10]);
+            cim->AddCourse();
+
+            am->setCourseId(record[1]);
+            am->setDay("");
+            vector<vector<string>> students = uim->FetchInfo();
+            for (int i = 0; i < students.size(); ++i) {
+                if (students[i][1] != "") {
+                    am->setStudentId(students[i][1]);     
+                    am->AddAttendance();
+                }
+            }
+
+        }
+
+        cout << "Imported Successfully" << endl;
+    }
+
     void viewAllCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
         vector<vector<string>> results = cim->FetchCourse();
@@ -184,23 +224,19 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AttendanceModel* am = new AttendanceModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        string studentIdentifier, courseId, studentId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseIdentifier; cin >> courseIdentifier;
-        cim->setCourseId(toLowerCase(courseIdentifier));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
+        string courseId, studentId;
+        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             return;
         }
-        courseId = courseResult[0][0];
-        cout << "Please enter the student ID of the student you want to remove from this course: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
+        cout << "Please enter the student ID of the student you want to remove from this course: "; cin >> studentId;
+        uim->setStudentId(toLowerCase(studentId));
+        if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             return;
         }
-        studentId = studentResult[0][0];
         am->setCourseId(courseId);
         am->setStudentId(studentId);
         vector<vector<string>> attendance = am->FetchAttendance();
@@ -225,23 +261,19 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AttendanceModel* am = new AttendanceModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        string studentIdentifier, courseId, studentId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseIdentifier; cin >> courseIdentifier;
-        cim->setCourseId(toLowerCase(courseIdentifier));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
+        string courseId, studentId;
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             return;
         }
-        courseId = courseResult[0][0];
-        cout << "Please enter the student ID of the student you want to add into this course: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
+        cout << "Please enter the student ID of the student you want to add into this course: "; cin >> studentId;
+        uim->setStudentId(toLowerCase(studentId));
+        if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             return;
         }
-        studentId = studentResult[0][0];
         am->setCourseId(courseId);
         am->setStudentId(studentId);
         if (am->FetchAttendance().size() != 0) {
@@ -274,21 +306,18 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AttendanceModel* am = new AttendanceModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseIdentifier; cin >> courseIdentifier;
-        cim->setCourseId(toLowerCase(courseIdentifier));
-        vector<vector<string>> results = cim->FetchCourse();
-        if (results.size() == 0) {
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
             return;
         }
-        courseId = results[0][0];
         vector<vector<string>> students;
-
         am->setCourseId(courseId);
         am->setDay("");
-        results = am->FetchAttendance();
+        vector<vector<string>> results = am->FetchAttendance();
         for (int i = 0; i < results.size(); ++i) {
-            uim->setId(results[i][1]);
+            uim->setStudentId(results[i][1]);
             vector<vector<string>> getBack = uim->FetchInfo();
             if (getBack.size() != 0) {
                 students.push_back(getBack[0]);
