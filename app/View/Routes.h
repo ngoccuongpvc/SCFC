@@ -55,7 +55,6 @@ public:
 		usage["log-out"] = "Log out";
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
-
 		usage["change-password"] = "Change password";
 
 		/****** COURSE OPERATIONS ******/
@@ -162,7 +161,7 @@ public:
 		/****** USER OPERATIONS ******/
 		addRoute("dashboard", "UserController", "mainAction");
 		addRoute("student-dashboard", "UserController", "studentDashboard");
-		addRoute("teacher-dashboard", "TeacherController", "teacherDashboard");
+		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("access", "UserController", "accessDashboard");
 
@@ -240,11 +239,6 @@ public:
 
 		linkTo("access", "login");
 		linkTo("access", "register");
-
-		//TEACHER SECTION
-		linkTo("teacher-dashboard", "edit-attendence");
-		linkTo("teacher-dashboard", "delete-attendence");
-		linkTo("teacher-dashboard", "edit-score");
 		
 		linkTo("staff-dashboard", "import-class");
 		linkTo("staff-dashboard", "view-class");

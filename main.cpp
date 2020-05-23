@@ -5,7 +5,6 @@
 
 #include "app/Controller/ControllerInterface.h"
 #include "app/Controller/UserController.h"
-#include "app/Controller/TeacherController.h"
 #include "app/Controller/ClassController.h"
 #include "app/View/Routes.h"
 #include "app/View/View.h"
@@ -28,9 +27,6 @@ ControllerInterface *createInstance(string name)
     else if (name == "ClassController") {
         return new ClassController();
     }
-	else if (name == "TeacherController") {
-		return new TeacherController();
-	}
     return nullptr;
 }
 

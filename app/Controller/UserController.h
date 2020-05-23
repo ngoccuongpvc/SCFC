@@ -539,55 +539,56 @@ public:
 
     //-------------------------------- Staff-Scoreboard --------------------------------//
 
-    void searchAndViewScore() {
-        ScoreboardModel* sm = new ScoreboardModel();
-        CourseInformationModel* cim = new CourseInformationModel();
-        UserInfoModel* uim = new UserInfoModel();
-        string courseName, studentIdentifier, courseId, studentId;
-        cout << "Please enter the name of the course you want to view score of: "; cin >> courseName;
-        cim->setCourseName(toLowerCase(courseName));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
-            cout << "The course you entered does not exist." << endl;
-            return;
-        }
-        courseId = courseResult[0][0];
-        sm->setCourseId(courseId);
-        sm->setScore("");
-        sm->setTerm("");
-        vector<vector<string>> studentResults = sm->FetchScoreboard();
-        if (studentResults.size() == 0) {
-            cout << "No students was given any score in the given course." << endl;
-            return;
-        }
-        ScoreboardModel* sm_temp = new ScoreboardModel();
-        vector<vector<string>> scores;
-        sm_temp->setCourseId(courseId);
-        for (int i = 0; i < studentResults.size(); ++i) {
-            vector<string> score;
-            sm_temp->setStudentId(studentResults[i][1]);
-            uim->setId(studentResults[i][1]);
-            vector<vector<string>> users = uim->FetchInfo();
-            score.push_back(users[0][1]);
-            vector<vector<string>> scoreResult = sm_temp->FetchScoreboard();
-            for (int k = 0; k < scoreResult.size(); k++) {
-                string scoreLine = scoreResult[k][3] + ":" + scoreResult[k][4];
-                score.push_back(scoreLine);
-            }
-        }
-        int max_column = 0;
-        for (int i = 0; i < scores.size(); ++i) {
-            if (scores[i].size() > max_column) max_column = scores[i].size();
-        }
-        vector<string> header; header.push_back("Course Name");
-        for (int i = 0; i < max_column; ++i) header.push_back(" ");
-        View* view = new View(scores, header);
-        view->displayTable();
-        delete view;
-        delete sm;
-        delete sm_temp;
-        delete cim;
-        delete uim;
+	void searchAndViewScore() {
+		ScoreboardModel* sm = new ScoreboardModel();
+		CourseInformationModel* cim = new CourseInformationModel();
+		UserInfoModel* uim = new UserInfoModel();
+		string courseName, studentIdentifier, courseId, studentId;
+		cout << "Please enter the name of the course you want to view score of: "; cin >> courseName;
+		cim->setCourseName(toLowerCase(courseName));
+		vector<vector<string>> courseResult = cim->FetchCourse();
+		if (courseResult.size() == 0) {
+			cout << "The course you entered does not exist." << endl;
+			return;
+		}
+		courseId = courseResult[0][0];
+		sm->setCourseId(courseId);
+		sm->setScore("");
+		sm->setTerm("");
+		vector<vector<string>> studentResults = sm->FetchScoreboard();
+		if (studentResults.size() == 0) {
+			cout << "No students was given any score in the given course." << endl;
+			return;
+		}
+		ScoreboardModel* sm_temp = new ScoreboardModel();
+		vector<vector<string>> scores;
+		sm_temp->setCourseId(courseId);
+		for (int i = 0; i < studentResults.size(); ++i) {
+			vector<string> score;
+			sm_temp->setStudentId(studentResults[i][1]);
+			uim->setId(studentResults[i][1]);
+			vector<vector<string>> users = uim->FetchInfo();
+			score.push_back(users[0][1]);
+			vector<vector<string>> scoreResult = sm_temp->FetchScoreboard();
+			for (int k = 0; k < scoreResult.size(); k++) {
+				string scoreLine = scoreResult[k][3] + ":" + scoreResult[k][4];
+				score.push_back(scoreLine);
+			}
+		}
+		int max_column = 0;
+		for (int i = 0; i < scores.size(); ++i) {
+			if (scores[i].size() > max_column) max_column = scores[i].size();
+		}
+		vector<string> header; header.push_back("Course Name");
+		for (int i = 0; i < max_column; ++i) header.push_back(" ");
+		View* view = new View(scores, header);
+		view->displayTable();
+		delete view;
+		delete sm;
+		delete sm_temp;
+		delete cim;
+		delete uim;
+	}
 
     void staffDashboard() {
         cout << "Hello Staff!" << endl;
@@ -597,8 +598,9 @@ public:
         cout << "This is the class operation dashboard for staff." << endl;
     }
 
-    void courseDashboardStaff() {
-        cout << "This is the course operation dashboard for staff." << endl;
+	void courseDashboardStaff() {
+		cout << "This is the course operation dashboard for staff." << endl;
+	}
     //--------------------------------xx Staff-Scoreboard xx--------------------------------//
 
     //-------------------------------- Staff-Attendance --------------------------------//
@@ -609,133 +611,47 @@ public:
     }
     //--------------------------------xx Staff-Attendance xx--------------------------------//
 
-    void checkIn() {
-        UserInfoModel* uim = new UserInfoModel();
-        CourseInformationModel* cim = new CourseInformationModel();
-        AttendanceModel* am = new AttendanceModel();
-        if (role != "student") return;
-        string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter the name of the course you want to checkin: "; cin >> courseName;
-        cim->setCourseName(toLowerCase(courseName));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
-            cout << "The course you entered does not exist." << endl;
-            return;
-        }
-        courseId = courseResult[0][0];
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
-            cout << "The student ID you entered does not exist." << endl;
-            return;
-        }
-        studentId = studentResult[0][0];
-        am->setStudentId(studentId);
-        am->setCourseId(courseId);
-        am->setDay("");
-        vector<vector<string>> enrollment = am->FetchAttendance();
-        if (enrollment.size() == 0) {
-            cout << "You are not enrolled in this course." << endl;
-            return;
-        }
-        cout << "Please enter the day you are checking in: "; cin >> day;
-        am->setDay(day);
-        am->AddAttendance();
-        cout << "Successfully added your checkin." << endl;
-        delete uim;
-        delete am;
-        delete cim;
-    //LECTURER/TEACHER
-
-  /*
-	void editAttendance()
-	{
-		cout << "Plz aware that you can edit the attendant's day of each student only" << endl;
+	void checkIn() {
+		UserInfoModel* uim = new UserInfoModel();
+		CourseInformationModel* cim = new CourseInformationModel();
 		AttendanceModel* am = new AttendanceModel();
-		string courseID, studentID;
-		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
-		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
-		vector<vector<string>> conditions = am->FetchAttendance();
-
-		if (conditions.size() == 0)
-		{
-			cout << "Unable to find this course/student!" << endl;
-			delete am;
+		if (role != "student") return;
+		string courseName, studentIdentifier, courseId, studentId, day;
+		cout << "Please enter the name of the course you want to checkin: "; cin >> courseName;
+		cim->setCourseName(toLowerCase(courseName));
+		vector<vector<string>> courseResult = cim->FetchCourse();
+		if (courseResult.size() == 0) {
+			cout << "The course you entered does not exist." << endl;
 			return;
 		}
-
-		cout << "Plz enter the day of Attendance for this student: ";
-		string day; cin >> day;
-		vector<string> record = conditions[0];
-		record.back() = day;
-		am->UpdateAttendance(&conditions[0], &record);
+		courseId = courseResult[0][0];
+		cout << "Please enter your student Id: "; cin >> studentIdentifier;
+		uim->setStudentID(toLowerCase(studentIdentifier));
+		vector<vector<string>> studentResult = uim->FetchInfo();
+		if (studentResult.size() == 0) {
+			cout << "The student ID you entered does not exist." << endl;
+			return;
+		}
+		studentId = studentResult[0][0];
+		am->setStudentId(studentId);
+		am->setCourseId(courseId);
+		am->setDay("");
+		vector<vector<string>> enrollment = am->FetchAttendance();
+		if (enrollment.size() == 0) {
+			cout << "You are not enrolled in this course." << endl;
+			return;
+		}
+		cout << "Please enter the day you are checking in: "; cin >> day;
+		am->setDay(day);
+		am->AddAttendance();
+		cout << "Successfully added your checkin." << endl;
+		delete uim;
 		delete am;
-		return;
+		delete cim;
 	}
 
-	void deleteAttendance()
-	{
-		cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
-		string opt; cin >> opt;
-
-		while (true)
-		{
-			if (opt == "Y") break;
-			else if (opt == "N") return;
-			else
-			{
-				cout << "Invalid input. Plz try again" << endl;
-				cin >> opt;
-			}
-		}
-		AttendanceModel* am = new AttendanceModel();
-		string courseID, studentID;
-		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
-		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
-		vector<vector<string>> conditions = am->FetchAttendance();
-
-		if (conditions.size() == 0)
-		{
-			cout << "Unable to find this course/student!" << endl;
-			delete am;
-			return;
-		}
-
-		am->RemoveAttendance(&conditions[0]);
-		delete am;
-		return;
-	}
-
-	void editScore()
-	{
-		ScoreboardModel* sm = new ScoreboardModel();
-		string courseId, studentId, term;
-		cout << "Plz enter course id: "; cin >> courseId; sm->setCourseId(courseId);
-		cout << "Plz enter student id "; cin >> studentId; sm->setStudentId(studentId);
-		cout << "Plz enter the term(mid/final)"; cin >> term; sm->setTerm(term);
-
-		vector<vector<string>> conditions = sm->FetchScoreboard();
-		if (conditions.size() == 0)
-		{
-			delete sm;
-			cout << "Can't find this student/course/term" << endl;
-			return;
-		}
-
-		string score;
-		cout << "Plz enter the score: "; cin >> score;
-		vector<string> record = conditions[0];
-		record[sm->getIndex["score"]] = score;
-		sm->UpdateScore(&conditions[0], &record);
-		delete sm;
-		return;
-	}
-  */
-
-	//END OF LECTURER/TEACHER
-    }
-
+	///////////////////////////////////////////////////////////////////////////////////
+    
     void scoreDashboardStaff() {
         cout << "This is the score operation dashboard for staff." << endl;
     }
@@ -748,10 +664,11 @@ public:
         cout << "This is the lecturer operation dashboard for staff." << endl;
     }
 
-    void accessDashboard() {
-        cout << "Hello User!" << endl;
-        extern stack<string> history;
-        //history = stack<string>();
+	void accessDashboard() {
+		cout << "Hello User!" << endl;
+		extern stack<string> history;
+		//history = stack<string>();
+	}
 
     void courseDashboardLecturer() {
         cout << "This is the course operation dashboard for lecturer." << endl;

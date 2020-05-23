@@ -312,7 +312,7 @@ public:
         this->mapMethods["addStudentToCourse"] = [this]() { addStudentToCourse(); };
         this->mapMethods["editCourse"] = [this]() { editCourse(); };
         this->mapMethods["listOfCourseCurrentSemester"] = [this]() { listOfCourseCurrentSemester(); };
-        this->mapMethods["listOfCourseCurrentYear"] = [this]() {listOfCourseCurrentYear(); };
+        this->mapMethods["listOfCourseCurrentYear"] = [this]() { listOfCourseCurrentYear(); };
         this->mapMethods["removeCourse"] = [this]() { removeCourse(); };
         this->mapMethods["removeCourseBySemester"] = [this]() { removeCourseBySemester(); };
         this->mapMethods["removeCourseByYear"] = [this]() { removeCourseByYear(); };
