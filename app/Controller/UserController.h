@@ -4,6 +4,7 @@
 #include "ControllerInterface.h"
 #include <iostream>
 #include <string.h>
+
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
 #include "../Model/CourseInformationModel.h"
@@ -11,18 +12,25 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 
+#include "MiscellanousFunctions.h"
+
+#include "AuthorizeController.h"
+#include "AcademicController.h"
+#include "AttendanceController.h"
+#include "ScoreboardController.h"
+#include "AuthorizeController.h"
+#include "CourseController.h"
+
 using namespace std;
 
-string role;
-bool logged_in = false;
-string currentSession = "";
 
-string globalUsername = "null";
 
 
 class UserController : public ControllerInterface
 {
 private:
+
+public:
 
     void mainAction() {
         extern stack<string> history;
@@ -41,136 +49,19 @@ private:
         }
     }
 
-
-    bool checkLoginStatus() {
-        if (!logged_in || currentSession == "") {
-            return false;
-        }
-        else return true;
-    }
-
-    void createSession(string username) {
-        if (checkLoginStatus()) return;
-        currentSession = username;
-        logged_in = true;
-    }
-
-    void resetSession() {
-        currentSession = "";
-        logged_in = false;
-    }
-
-    void loginAction() {
-        string username, password;
-        AccountModel *model = new AccountModel();
- 
-        while (true) {
-            cout << "User name: ";
-            cin >> username;
-            cout << "Password: ";
-            cin >> password;
-            if (model->checkCredential(username, password)) {
-                cout << "Login successful" << endl;
-                cout << "You are login as: " << model->getUserRole(username) << endl;
-                role = model->getUserRole(username);
-                extern stack<string> history;
-                history.push("dashboard");
-                createSession(username);
-                break;
-            }
-            else {
-                cout << "Wrong username or password" << endl;
-                cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
-                bool tryAgain = false;
-                cin >> tryAgain;
-                if (!tryAgain) break;
-            }
-        }  
-
-    }
-
-    string toLowerCase(string s) {
-        transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {return tolower(c); });
-        return s;
-    }
-
-    string capitalize(string str) {
-        int check = 0, i = 0;
-        while (str[i]) {
-            if (check == 0) {
-                str[i] = toupper(str[i]);
-                check = 1;
-            }
-            else if (isspace(str[i]))
-                check = 0;
-            i++;
-        }
-    }
-
-    void registerAction() {
-        //if (checkLoginStatus()) return;
-        
-        bool validAccount = false;
-        UserInfoModel* user = new UserInfoModel();
-        AccountModel* am = new AccountModel();
+    void accessDashboard() {
+        cout << "Hello User!" << endl;
         extern stack<string> history;
-        while (!validAccount) {
-            string firstName, lastName, dob, gender, role, username, password, studentID;
-            cout << "Welcome to the register screen" << endl;
-            cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
-            cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
-            cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
-            cout << "Gender: "; cin >> gender; user->setUserGender(gender);
-            cout << "Role (student/ staff/ lecturer): "; cin >> role;
-            if (toLowerCase(role) == "student") {
-                cout << "Student ID: "; cin >> studentID; user->setStudentID(studentID);
-                user->setUsername(studentID);
-                am->setUserName(studentID);
-                am->setPassword(dob);
-            }
-            else {
-                user->setStudentID("");
-                cout << "Username: "; cin >> username; user->setUsername(username);
-                am->setUserName(username);
-                cout << "Password: "; cin >> password; am->setPassword(password);
-                am->setPassword(password);
-            }
-            user->AddUser();
-            am->registerUser();
-        }
-        createSession(am->getUserName());
-        history.push("dashboard");
-        delete user;
-        delete am;
+        //history = stack<string>();
     }
 
-    void logoutAction() {
-        if (!checkLoginStatus()) return;
-        extern stack<string> history;
-        resetSession();
-        history = stack<string>();
-        history.push("access");
+    void studentDashboard() {
+        cout << "Hello Student!" << endl;
     }
     
-
-    void seeProfile() {
-        if (!checkLoginStatus()) return;
-        UserInfoModel* user = new UserInfoModel();
-        user->setUsername(globalUsername);
-        vector<vector<string>> records = user->FetchInfo();
-        if (records.size() == 0) {
-            cout << "Something wrong with your account, cannot fetch your profile.";
-            return;
-        }
-        cout << "Student ID: " << records[0][1] << endl;
-        cout << "First name: " << records[0][2] << endl;
-        cout << "Last name: " << records[0][3] << endl;
-        cout << "Date of Birth: " << records[0][4] << endl;
-        cout << "Gender: " << records[0][6] << endl;
-        delete user;
+    void teacherDashboard() {
+        cout << "Hello Teacher!" << endl;
     }
-
-    //-------------------------------- Staff-Course --------------------------------//
     
     //----13. CRUD Academic years + semester
 
@@ -698,12 +589,16 @@ private:
         delete cim;
         delete uim;
 
+    void staffDashboard() {
+        cout << "Hello Staff!" << endl;
     }
 
-    void exportScoreboard() {
-
+    void classDashboardStaff() {
+        cout << "This is the class operation dashboard for staff." << endl;
     }
 
+    void courseDashboardStaff() {
+        cout << "This is the course operation dashboard for staff." << endl;
     //--------------------------------xx Staff-Scoreboard xx--------------------------------//
 
     //-------------------------------- Staff-Attendance --------------------------------//
@@ -713,10 +608,6 @@ private:
 
     }
     //--------------------------------xx Staff-Attendance xx--------------------------------//
-
-    // Student
-
-	//
 
     void checkIn() {
         UserInfoModel* uim = new UserInfoModel();
@@ -755,222 +646,145 @@ private:
         delete uim;
         delete am;
         delete cim;
+    //LECTURER/TEACHER
+
+  /*
+	void editAttendance()
+	{
+		cout << "Plz aware that you can edit the attendant's day of each student only" << endl;
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
+
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		cout << "Plz enter the day of Attendance for this student: ";
+		string day; cin >> day;
+		vector<string> record = conditions[0];
+		record.back() = day;
+		am->UpdateAttendance(&conditions[0], &record);
+		delete am;
+		return;
+	}
+
+	void deleteAttendance()
+	{
+		cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
+		string opt; cin >> opt;
+
+		while (true)
+		{
+			if (opt == "Y") break;
+			else if (opt == "N") return;
+			else
+			{
+				cout << "Invalid input. Plz try again" << endl;
+				cin >> opt;
+			}
+		}
+		AttendanceModel* am = new AttendanceModel();
+		string courseID, studentID;
+		cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+		cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+		vector<vector<string>> conditions = am->FetchAttendance();
+
+		if (conditions.size() == 0)
+		{
+			cout << "Unable to find this course/student!" << endl;
+			delete am;
+			return;
+		}
+
+		am->RemoveAttendance(&conditions[0]);
+		delete am;
+		return;
+	}
+
+	void editScore()
+	{
+		ScoreboardModel* sm = new ScoreboardModel();
+		string courseId, studentId, term;
+		cout << "Plz enter course id: "; cin >> courseId; sm->setCourseId(courseId);
+		cout << "Plz enter student id "; cin >> studentId; sm->setStudentId(studentId);
+		cout << "Plz enter the term(mid/final)"; cin >> term; sm->setTerm(term);
+
+		vector<vector<string>> conditions = sm->FetchScoreboard();
+		if (conditions.size() == 0)
+		{
+			delete sm;
+			cout << "Can't find this student/course/term" << endl;
+			return;
+		}
+
+		string score;
+		cout << "Plz enter the score: "; cin >> score;
+		vector<string> record = conditions[0];
+		record[sm->getIndex["score"]] = score;
+		sm->UpdateScore(&conditions[0], &record);
+		delete sm;
+		return;
+	}
+  */
+
+	//END OF LECTURER/TEACHER
     }
 
-    void viewCheckInResult() {
-        if (role != "student") return;
-        UserInfoModel* uim = new UserInfoModel();
-        CourseInformationModel* cim = new CourseInformationModel();
-        AttendanceModel* am = new AttendanceModel();
-        string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
-            cout << "The student ID you entered does not exist." << endl;
-            return;
-        }
-        studentId = studentResult[0][0];
-        am->setStudentId(studentId);
-        am->setDay("");
-        vector<vector<string>> enrollment = am->FetchAttendance();
-        if (enrollment.size() == 0) {
-            cout << "You are not enrolled in this course." << endl;
-            return;
-        }
-        vector<vector<string>> attendance;
-        AttendanceModel* am_temp = new AttendanceModel();
-        am_temp->setStudentId(studentId);
-        for (int i = 0; i < enrollment.size(); ++i) {
-            cim->setId(enrollment[i][2]);
-            vector<vector<string>> courses = cim->FetchCourse();
-            vector<string> attendanceOfOne;
-            attendanceOfOne.push_back(courses[0][1]);
-            am_temp->setCourseId(enrollment[i][2]);
-            vector<vector<string>> days = am_temp->FetchAttendance();
-            for (int k = 0; k < days.size(); ++k) {
-                attendanceOfOne.push_back(days[k][3]);
-            }
-            attendance.push_back(attendanceOfOne);
-        }
-        int max_column = 0;
-        for (int i = 0; i < attendance.size(); ++i) {
-            if (attendance[i].size() > max_column) max_column = attendance[i].size();
-        }
-        vector<string> header; header.push_back("Course Name");
-        for (int i = 0; i < max_column; ++i) header.push_back(" ");
-        View* view = new View(attendance, header);
-        view->displayTable();
-        delete view;
-        delete uim;
-        delete cim;
-        delete am;
+    void scoreDashboardStaff() {
+        cout << "This is the score operation dashboard for staff." << endl;
     }
 
-    void viewSchedule() {
-        UserInfoModel* uim = new UserInfoModel();
-        CourseInformationModel* cim = new CourseInformationModel();
-        AttendanceModel* am = new AttendanceModel();
-        string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
-            cout << "The student ID you entered does not exist." << endl;
-            return;
-        }
-        studentId = studentResult[0][0];
-        am->setStudentId(studentId);
-        am->setDay("");
-        vector<vector<string>> enrollment = am->FetchAttendance();
-        if (enrollment.size() == 0) {
-            cout << "You are not enrolled in any course." << endl;
-            return;
-        }
-        vector<vector<string>> schedules;
-        AttendanceModel* am_temp = new AttendanceModel();
-        am_temp->setStudentId(studentId);
-        for (int i = 0; i < enrollment.size(); ++i) {
-            cim->setId(enrollment[i][2]);
-            vector<vector<string>> courses = cim->FetchCourse();
-            vector<string> schedule;
-            schedule.push_back(courses[0][1]);
-            schedule.push_back(courses[0][11]);
-            string dailyHour = courses[0][6] + "-" + courses[0][7];
-            string studyPeriod = courses[0][4] + "-" + courses[0][5];
-            schedule.push_back(dailyHour);
-            schedule.push_back(studyPeriod);
-            schedules.push_back(schedule);
-        }
-        int max_column = 0;
-        for (int i = 0; i < schedules.size(); ++i) {
-            if (schedules[i].size() > max_column) max_column = schedules[i].size();
-        }
-        vector<string> header; header.push_back("Course Name");
-        header.push_back("Day Of Week"); header.push_back("Daily Hour");
-        header.push_back("Study Period");
-        View* view = new View(schedules, header);
-        view->displayTable();
-        delete uim;
-        delete cim;
-        delete am;
-        delete am_temp;
-        delete view;
+    void attendanceDashboardStaff() {
+        cout << "This is the attendance operation dashboard for staff." << endl;
     }
 
-    void viewScoreOfCourse() {
-        UserInfoModel* uim = new UserInfoModel();
-        CourseInformationModel* cim = new CourseInformationModel();
-        ScoreboardModel* sm = new ScoreboardModel();
-        if (role != "student") return;
-        string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter the name of the course you want to checkin: "; cin >> courseName;
-        cim->setCourseName(toLowerCase(courseName));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
-            cout << "The course you entered does not exist." << endl;
-            return;
-        }
-        courseId = courseResult[0][0];
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
-            cout << "The student ID you entered does not exist." << endl;
-            return;
-        }
-        studentId = studentResult[0][0];
-        sm->setStudentId(studentId);
-        sm->setCourseId(courseId);
-        vector<vector<string>> scoreboard = sm->FetchScoreboard();
-        if (scoreboard.size() == 0) {
-            cout << "You are not enrolled in this course." << endl;
-            return;
-        }
-        vector<vector<string>> scores;
-        for (int i = 0; i < scoreboard.size(); ++i) {
-            vector<string> score;
-            score.push_back(scoreboard[i][3]);
-            score.push_back(scoreboard[i][4]);
-            scores.push_back(score);
-        }
-        vector<string> header; header.push_back("Term"); header.push_back("Score");
-        View* view = new View(scores, header);
-        view->displayTable();
-
-        delete cim;
-        delete uim;
-        delete sm;
-        delete view;
+    void lecturerDashboardStaff() {
+        cout << "This is the lecturer operation dashboard for staff." << endl;
     }
 
     void accessDashboard() {
         cout << "Hello User!" << endl;
         extern stack<string> history;
         //history = stack<string>();
+
+    void courseDashboardLecturer() {
+        cout << "This is the course operation dashboard for lecturer." << endl;
     }
 
-    void studentDashboard() {
-        cout << "Hello Student!" << endl;
-    }
-    
-    void teacherDashboard() {
-        cout << "Hello Teacher!" << endl;
-    }
-    
-    void staffDashboard() {
-        cout << "Hello Staff!" << endl;
+    void scoreDashboardLecturer() {
+        cout << "This is the score operation dashboard for lecturer." << endl;
     }
 
-    void changePasswordAction() {
-        cout << "Change password here!";
-		if (globalUsername == "null")
-		{
-			cout << "Login 1st!!" << endl;
-		}
-		else
-		{
-			string newPass;
-			cout << "Pls enter new password: ";
-			cin >> newPass;
-
-			AccountModel* model = new AccountModel();
-
-			if(model->changePassword(globalUsername, newPass))
-			{ 
-				cout << "Successfully change password!" << endl;
-				extern stack<string> history;
-				history.push("dashboard");
-			}
-			else 
-			{
-				cout << "Can't change password" << endl;
-			}
-
-			//delete model;
-		}
+    void attendanceDashboardLecturer() {
+        cout << "This is the attendance operation dashboard for lecturer." << endl;
     }
 
-public:
+//public:
 
     /**
     Constructor of Controller, which map a string to a function
     */
     UserController() {
+
         this->mapMethods["mainAction"] = [this]() { mainAction(); };
-        this->mapMethods["loginAction"] = [this]() { loginAction(); };
         this->mapMethods["studentDashboard"] = [this]() { studentDashboard(); };
         this->mapMethods["teacherDashboard"] = [this]() { teacherDashboard(); };
         this->mapMethods["staffDashboard"] = [this]() { staffDashboard(); };
-		this->mapMethods["changePassword"] = [this](){ changePasswordAction(); };
 
-        this->mapMethods["registerAction"] = [this]() { registerAction(); };
-        this->mapMethods["logoutAction"] = [this]() { logoutAction(); };
-        this->mapMethods["changePassword"] = [this]() { changePasswordAction(); };
+        this->mapMethods["classDashboardStaff"] = [this]() { classDashboardStaff(); };
+        this->mapMethods["courseDashboardStaff"] = [this]() { courseDashboardStaff(); };
+        this->mapMethods["scoreDashboardStaff"] = [this]() { scoreDashboardStaff(); };
+        this->mapMethods["attendanceDashboardStaff"] = [this]() { attendanceDashboardStaff(); };
+        this->mapMethods["courseDashboardLecturer"] = [this]() { courseDashboardLecturer(); };
+        this->mapMethods["scoreDashboardLecturer"] = [this]() { scoreDashboardLecturer(); };
+        this->mapMethods["attendanceDashboardLecturer"] = [this]() { attendanceDashboardLecturer(); };
 
-		//STAFF SECTION
-
-		//STUDENT SECTION
 
     }
 
