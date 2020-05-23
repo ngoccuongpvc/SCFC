@@ -128,6 +128,22 @@ public:
         return false;
     }
 
+    bool changePassword(string username, string newPass)
+    {
+        try {
+            vector<string> conditions(this->columns.size(), "all");
+            conditions[this->getIndex("username")] = username;
+            vector<string> record = fetch(&conditions)[0];
+            record[this->getIndex("password")] = SHF(newPass);
+            this->update(&conditions, &record);
+            return true;
+        }
+        catch (exception e) {
+            cout << "An exception has occured" << endl;
+            return false;
+        }
+    }
+
     /*Before fetching, please ensure that all parameters that are required as conditions are set in model using 'set' functions
     Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
     vector<vector<string>> fetchAccount() {

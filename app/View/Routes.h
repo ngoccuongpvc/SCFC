@@ -53,13 +53,13 @@ public:
 		usage["log-out"] = "Log out";
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
-
 		usage["change-password"] = "Change password";
 
 		/****** COURSE OPERATIONS ******/
 		usage["add-course"] = "Manually add a new course";
 		usage["add-student-to-course"] = "Add a student to an available course";
 		usage["edit-course"] = "Edit the information of a course";
+		usage["import-course"] = "Import courses from a csv file";
 		usage["list-of-course-current-semester"] = "View list of courses in a semester";
 		usage["list-of-course-current-year"] = "View list of courses in an academic year";
 		usage["remove-course"] = "Manually remove a course";
@@ -71,6 +71,7 @@ public:
 
 		/****** SCOREBOARD OPERATIONS ******/
 		usage["edit-score"] = "Edit scores of a student";
+		usage["import-score"] = "Import scoreboard for a course";
 		usage["export-scoreboard"] = "Export scoreboard to a CSV file";
 		usage["search-and-view-score"] = "Search and view scoreboard of a course";
 		usage["view-score-of-course"] = "View scores of an enrolled course";
@@ -122,6 +123,7 @@ public:
 		addRoute("add-course", "CourseController", "addCourse");
 		addRoute("add-student-to-course", "CourseController", "addStudentToCourse");
 		addRoute("edit-course", "CourseController", "editCourse");
+		addRoute("import-course", "CourseController", "importCourse");
 		addRoute("list-of-course-current-semester", "CourseController", "listOfCourseCurrentSemester");
 		addRoute("list-of-course-current-year", "CourseController", "listOfCourseCurrentYear");
 		addRoute("remove-course", "CourseController", "removeCourse");
@@ -132,6 +134,7 @@ public:
 		addRoute("view-list-of-students-of-course", "CourseController", "viewListOFStudentsOfCourse");
 		
 		/****** SCOREBOARD OPERATIONS ******/
+		addRoute("import-scoreboard", "ScoreboardController", "importScoreboard");
 		addRoute("edit-score", "ScoreboardController", "editScore");
 		addRoute("export-scoreboard", "ScoreboardController", "exportScoreboard");
 		addRoute("search-and-view-score", "ScoreboardController", "searchAndViewScore");
@@ -207,6 +210,7 @@ public:
 		linkTo("course-dashboard-staff", "add-course");
 		linkTo("course-dashboard-staff", "add-student-to-course");
 		linkTo("course-dashboard-staff", "edit-course");
+		linkTo("course-dashboard-staff", "import-course");
 		linkTo("course-dashboard-staff", "list-of-course-current-semester");
 		linkTo("course-dashboard-staff", "list-of-course-current-year");
 		linkTo("course-dashboard-staff", "remove-course");
@@ -234,6 +238,7 @@ public:
 		linkTo("course-dashboard-lecturer", "view-attendance-list");
 		linkTo("course-dashboard-lecturer", "edit-attendance");
 		/****** LECTURER - SCORE OPERATIONS ******/
+		linkTo("course-dashboard-lecturer", "import-scoreboard");
 		linkTo("course-dashboard-lecturer", "edit-score");
 		linkTo("course-dashboard-lecturer", "search-and-view-score");
 

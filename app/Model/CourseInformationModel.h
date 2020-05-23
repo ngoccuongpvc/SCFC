@@ -237,7 +237,7 @@ public:
 	/*Please provide 2 vectors for updating. The 'conditions' vector is the conditions of the records you want to change.
 	The 'toUpdate' vector contains the fields (in the correct order) you want to update in those records. The remaining fields that you don't want to change may be left empty or same as the original record.
 	In case you want to update the current record already set in the model, please provide 'nullptr' in 'conditions' field. Please do not leave the 'toUupdate' field blank.*/
-	vector<string> UpdateCourse(vector<string>* conditions = nullptr, vector<string>* toUpdate = nullptr) {
+	void UpdateCourse(vector<string>* conditions = nullptr, vector<string>* toUpdate = nullptr) {
 		if (toUpdate == nullptr) return;
 		if (conditions == nullptr) conditions = getCourseInfo();
 		this->update(conditions, toUpdate);

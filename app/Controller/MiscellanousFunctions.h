@@ -22,6 +22,7 @@ string capitalize(string str) {
             check = 0;
         i++;
     }
+    return str;
 }
 
 #endif
