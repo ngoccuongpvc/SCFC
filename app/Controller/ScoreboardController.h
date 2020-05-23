@@ -14,6 +14,46 @@
 class ScoreboardController : public ControllerInterface {
 private:
 public:
+
+    void importAction() {
+        cout << "Choose file: ";
+        string path;
+        cin >> path;
+        CourseInformationModel* cim = new CourseInformationModel();
+        AttendanceModel* am = new AttendanceModel();
+        UserInfoModel* uim = new UserInfoModel();
+        ScoreboardModel* sm = new ScoreboardModel();
+
+        ModelInterface* model = new ModelInterface(path);
+        vector<vector<string>> records = model->fetch();
+
+        cout << "Please enter the Course ID: "; string courseId; cin >> courseId;
+        cim->setCourseId(courseId);
+        if (cim->FetchCourse().size() == 0) {
+            cout << "There is no such course." << endl;
+            return;
+        }
+        sm->setCourseId(courseId);
+
+        for (vector<string> record : records) {
+            sm->setStudentId(record[0]);
+            sm->setTerm("midterm");
+            sm->setScore(record[1]);
+            sm->AddScore();
+            sm->setTerm("lab");
+            sm->setScore(record[2]);
+            sm->AddScore();
+            sm->setTerm("final");
+            sm->setScore(record[3]);
+            sm->AddScore();
+            sm->setTerm("bonus");
+            sm->setScore(record[4]);
+            sm->AddScore();
+        }
+
+        cout << "Imported Successfully" << endl;
+    }
+
     void searchAndViewScore() {
         ScoreboardModel* sm = new ScoreboardModel();
         CourseInformationModel* cim = new CourseInformationModel();
@@ -44,7 +84,7 @@ public:
             score.push_back(uim->FetchInfo()[0][1]);
             vector<vector<string>> scoreResult = sm_temp->FetchScoreboard();
             for (int k = 0; k < scoreResult.size(); k++) {
-                string scoreLine = scoreResult[k][3] + ":" + scoreResult[k][4];
+                string scoreLine = scoreResult[k][4];
                 score.push_back(scoreLine);
             }
         }
@@ -52,8 +92,11 @@ public:
         for (int i = 0; i < scores.size(); ++i) {
             if (scores[i].size() > max_column) max_column = scores[i].size();
         }
-        vector<string> header; header.push_back("Course Name");
-        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        vector<string> header; header.push_back("Student ID");
+        header.push_back("Midterm");
+        header.push_back("Lab");
+        header.push_back("Final");
+        header.push_back("Bonus");
         View* view = new View(scores, header);
         view->displayTable();
         delete view;
@@ -135,6 +178,7 @@ public:
         delete sm;
         delete view;
     }
+
     ScoreboardController() {
         this->mapMethods["editScore"] = [this]() { editScore(); };
         this->mapMethods["exportScoreboard"] = [this]() { exportScoreboard(); };

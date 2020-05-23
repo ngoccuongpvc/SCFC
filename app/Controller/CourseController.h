@@ -16,7 +16,42 @@ private:
 public:
 
     void importAction() {
-        
+        cout << "Choose file: ";
+        string path;
+        cin >> path;
+        CourseInformationModel* cim = new CourseInformationModel();
+        AttendanceModel* am = new AttendanceModel();
+        UserInfoModel* uim = new UserInfoModel();
+
+        ModelInterface* model = new ModelInterface(path);
+        vector<vector<string>> records = model->fetch();
+
+        for (vector<string> record : records) {
+            cim->setCourseId(record[1]);
+            cim->setCourseName(record[2]);
+            cim->setClassName(record[3]);
+            cim->setLecturerAccount(record[4]);
+            cim->setStartDay(record[5]);
+            cim->setEndDay(record[6]);
+            cim->setDayOfWeek(record[7]);
+            cim->setStartHour(record[8]);
+            cim->setEndHour(record[9]);
+            cim->setRoom(record[10]);
+            cim->AddCourse();
+
+            am->setCourseId(record[1]);
+            am->setDay("");
+            vector<vector<string>> students = uim->FetchInfo();
+            for (int i = 0; i < students.size(); ++i) {
+                if (students[i][1] != "") {
+                    am->setStudentId(students[i][1]);     
+                    am->AddAttendance();
+                }
+            }
+
+        }
+
+        cout << "Imported Successfully" << endl;
     }
 
     void viewAllCourse() {
@@ -280,7 +315,7 @@ public:
         vector<vector<string>> students;
         am->setCourseId(courseId);
         am->setDay("");
-        results = am->FetchAttendance();
+        vector<vector<string>> results = am->FetchAttendance();
         for (int i = 0; i < results.size(); ++i) {
             uim->setStudentId(results[i][1]);
             vector<vector<string>> getBack = uim->FetchInfo();
