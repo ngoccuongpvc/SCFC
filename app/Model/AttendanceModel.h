@@ -5,13 +5,20 @@
 #include <string>
 #include "../Model/ModelInterface.h"
 using namespace std;
-
+/*
+<Remember to lowercase before setting>
+The csv file for this model has the following order:
+0. Record ID (1,2,3,...)
+1. Student ID (19125064)
+2. Course ID (cs162)
+3. Day (08-06-2020)
+*/
 class AttendanceModel : public ModelInterface
 {
 private:
 	string id;
-	string studentId; // The incrementing id of UserInformationModel records
-	string courseId; // The incrementing id of CourseInformationModel records
+	string studentId;
+	string courseId;
 	string day;
 	
 
@@ -39,22 +46,28 @@ public:
 		this->day = day;
 	}
 
+	// The incrementing id of this record
 	string getId() {
 		return this->id;
 	}
 
+	// The string id of the course, i.e CS162
 	string getCourseId() {
 		return this->courseId;
 	}
 
+	// The student id, i.e 19125064
 	string getStudentId() {
 		return this->studentId;
 	}
 	
+	// The day of attendance
 	string getDay() {
 		return this->day;
 	}
 
+	/*Before fetching, please ensure that all parameters that are required as conditions are set in model using 'set' functions
+	Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
 	vector<vector<string>> FetchAttendance() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("studentId")] = this->studentId;
@@ -64,21 +77,48 @@ public:
 		return this->fetch(&conditions);
 	}
 
-	void UpdateAttendance(vector<string> *conditions, vector<string> *toUpdate) {
+
+	/*Before adding, please provide all necessary information for the model using the 'set' functions.
+	Except that the 'id' of the model (the incrementing id) is not needed.*/
+	void AddAttendance() {
+		vector<string>* record = getAttendanceInfo();
+		this->add(record);
+	}
+	
+	/*Set the values in the model using a vector.
+	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
+	void setAttendanceInfo(vector<string>* info) {
+		if (info->size() != this->columns.size()) return;
+		this->studentId = (*info)[1];
+		this->courseId = (*info)[2];
+		this->day = (*info)[3];
+	}
+
+	/*Get the values in the model and return as a vector.
+	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
+	vector<string>* getAttendanceInfo() {
+		vector<string>* info = new vector<string>();
+		info->push_back(this->id);
+		info->push_back(this->studentId);
+		info->push_back(this->courseId);
+		info->push_back(this->day);
+		return info;
+	}
+
+	/*Please provide 2 vectors for updating. The 'conditions' vector is the conditions of the records you want to change.
+	The 'toUpdate' vector contains the fields (in the correct order) you want to update in those records. The remaining fields that you don't want to change may be left empty or same as the original record.
+	In case you want to update the current record already set in the model, please provide 'nullptr' in 'conditions' field. Please do not leave the 'toUupdate' field blank.*/
+	vector<string> UpdateAttendance(vector<string>* conditions = nullptr, vector<string>* toUpdate = nullptr) {
+		if (toUpdate == nullptr) return;
+		if (conditions == nullptr) conditions = getAttendanceInfo();
 		this->update(conditions, toUpdate);
 	}
 
-	void AddAttendance() {
-		vector<string> record;
-		record.push_back(this->id);
-		record.push_back(this->studentId);
-		record.push_back(this->courseId);
-		record.push_back(this->day);
-		this->add(&record);
-	}
-	
-	void RemoveAttendance(vector<string> *toDelete) {
-		this->erase(toDelete);
+	/*The 'toDelete' vector is the conditions of the records you want to delete.
+	In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'conditions' parameter.*/
+	void RemoveAttendance(vector<string>* conditions = nullptr) {
+		if (conditions == nullptr) conditions = getAttendanceInfo();
+		this->erase(conditions);
 	}
 	
 };

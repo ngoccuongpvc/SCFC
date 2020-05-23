@@ -7,6 +7,14 @@
 
 using namespace std;
 
+/*
+<Remember to lowercase before setting>
+The csv file for this model has the following order:
+0. Record ID (1,2,3,...)
+1. Username (19125064, htthanh)
+2. Password (****** - hashed)
+3. Role (student/lecturer/staff)
+*/
 class AccountModel : public ModelInterface
 {
 private:
@@ -101,6 +109,8 @@ public:
         }
     }
 
+    /*Before adding, please provide all necessary information for the model using the 'set' functions.
+    Except that the 'id' of the model (the incrementing id) is not needed.*/
     void registerUser() {
         vector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("username")] = this->username;
@@ -118,6 +128,8 @@ public:
         return false;
     }
 
+    /*Before fetching, please ensure that all parameters that are required as conditions are set in model using 'set' functions
+    Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
     vector<vector<string>> fetchAccount() {
         vector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("id")] = this->id;
@@ -127,22 +139,8 @@ public:
         return fetch(&conditions);
     }
 
-	bool changePassword(string username, string newPass)
-	{
-		try {
-			vector<string> conditions(this->columns.size(), "all");
-			conditions[this->getIndex("username")] = username;
-			vector<string> record = fetch(&conditions)[0];
-			record[this->getIndex("password")] = SHF(newPass);
-			this->update(&conditions, &record);
-			return true;
-		}
-		catch (exception e) {
-			cout << "An exception has occured" << endl;
-			return false;
-		}
-	}
-
+    /*The 'toDelete' vector is the conditions of the records you want to delete.
+    In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'toDelete' parameter.*/
     void removeAccount(vector<string>* toDelete) {
         this->erase(toDelete);
     }

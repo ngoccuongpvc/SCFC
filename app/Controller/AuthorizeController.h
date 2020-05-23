@@ -86,13 +86,13 @@ public:
             cout << "Gender: "; cin >> gender; user->setUserGender(gender);
             cout << "Role (student/ staff/ lecturer): "; cin >> role;
             if (toLowerCase(role) == "student") {
-                cout << "Student ID: "; cin >> studentID; user->setStudentID(studentID);
+                cout << "Student ID: "; cin >> studentID; user->setStudentId(studentID);
                 user->setUsername(studentID);
                 am->setUserName(studentID);
                 am->setPassword(dob);
             }
             else {
-                user->setStudentID("");
+                user->setStudentId("");
                 cout << "Username: "; cin >> username; user->setUsername(username);
                 am->setUserName(username);
                 cout << "Password: "; cin >> password; am->setPassword(password);

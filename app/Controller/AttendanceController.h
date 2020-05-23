@@ -19,18 +19,16 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseIdentifier; cin >> courseIdentifier;
-        cim->setCourseId(toLowerCase(courseIdentifier));
-        vector<vector<string>> results = cim->FetchCourse();
-        if (results.size() == 0) {
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
             return;
         }
-        courseId = results[0][0];
         vector<vector<string>> attendance;
         am->setCourseId(courseId);
         am->setDay("");
-        results = am->FetchAttendance();
+        vector<vector<string>> results = am->FetchAttendance();
         if (results.size() == 0) {
             cout << "No students attended the given course, please recheck." << endl;
             return;
@@ -39,7 +37,7 @@ public:
         am_temp->setCourseId(courseId);
         for (int i = 0; i < results.size(); ++i) {
             am_temp->setStudentId(results[i][1]);
-            uim->setId(results[i][1]);
+            uim->setStudentId(results[i][1]);
             vector<vector<string>> users = uim->FetchInfo();
             vector<string> attendanceOfOne;
             if (users.size() != 0) {
@@ -79,11 +77,11 @@ public:
 
     void editAttendance()
     {
-        cout << "Plz aware that you can edit the attendent's day of each student only" << endl;
+        cout << "Please be aware that you can edit one attendance of a student at a time" << endl;
         AttendanceModel* am = new AttendanceModel();
         string courseID, studentID;
-        cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
-        cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+        cout << "Please enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+        cout << "Please enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
         vector<vector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
@@ -93,7 +91,7 @@ public:
             return;
         }
 
-        cout << "Plz enter the day of attendence for this student: ";
+        cout << "Please enter the day of attendance for this student: ";
         string day; cin >> day;
         vector<string> record = conditions[0];
         record.back() = day;
@@ -104,7 +102,7 @@ public:
 
     void deleteAttendance()
     {
-        cout << "Plz aware that you can't recovery the deleted data. Do you want continue(Y/N)" << endl;
+        cout << "Please be aware that you cannot recover the deleted data. Do you want continue (Y/N)" << endl;
         string opt; cin >> opt;
 
         while (true)
@@ -113,14 +111,14 @@ public:
             else if (opt == "N") return;
             else
             {
-                cout << "Invalid input. Plz try again" << endl;
+                cout << "Invalid input. Please try again" << endl;
                 cin >> opt;
             }
         }
         AttendanceModel* am = new AttendanceModel();
         string courseID, studentID;
-        cout << "Plz enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
-        cout << "Plz enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
+        cout << "Please enter the course ID: "; cin >> courseID; am->setCourseId(courseID);
+        cout << "Please enter the student ID: "; cin >> studentID; am->setStudentId(studentID);
         vector<vector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
@@ -134,27 +132,24 @@ public:
         delete am;
         return;
     }
+
     void checkIn() {
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
-        string studentIdentifier, courseId, studentId, day;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseIdentifier; cin >> courseIdentifier;
-        cim->setCourseId(toLowerCase(courseIdentifier));
-        vector<vector<string>> courseResult = cim->FetchCourse();
-        if (courseResult.size() == 0) {
+        string courseId, studentId, day;
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cim->setCourseId(toLowerCase(courseId));
+        if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             return;
         }
-        courseId = courseResult[0][0];
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
+        cout << "Please enter your student Id: "; cin >> studentId;
+        uim->setStudentId(toLowerCase(studentId));
+        if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             return;
         }
-        studentId = studentResult[0][0];
         am->setStudentId(studentId);
         am->setCourseId(courseId);
         am->setDay("");
@@ -176,15 +171,13 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
-        string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
+        string courseName, courseId, studentId, day;
+        cout << "Please enter your student Id: "; cin >> studentId;
+        uim->setStudentId(toLowerCase(studentId));
+        if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             return;
         }
-        studentId = studentResult[0][0];
         am->setStudentId(studentId);
         am->setDay("");
         vector<vector<string>> enrollment = am->FetchAttendance();
@@ -196,7 +189,7 @@ public:
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setStudentId(studentId);
         for (int i = 0; i < enrollment.size(); ++i) {
-            cim->setId(enrollment[i][2]);
+            cim->setCourseId(enrollment[i][2]);
             vector<vector<string>> courses = cim->FetchCourse();
             vector<string> attendanceOfOne;
             attendanceOfOne.push_back(courses[0][1]);

@@ -34,7 +34,7 @@ public:
 			accountModel->setPassword(record[5]);
 			accountModel->setRole("student");
 
-			userInfoModel->setStudentID(record[1]);
+			userInfoModel->setStudentId(record[1]);
 			userInfoModel->setLastName(record[2]);
 			userInfoModel->setFirstName(record[3]);
 			userInfoModel->setUserGender(record[4]);
@@ -79,7 +79,7 @@ public:
 		int gender = userInfoModel->getIndex("userGender");
 		
 		for (int i = 0; i < n; ++i) {
-			userInfoModel->setStudentID(students[i]);
+			userInfoModel->setStudentId(students[i]);
 			record = userInfoModel->FetchInfo()[0];
 			studentInfo.push_back(record);
 			cout << record[id] << " " << record[firstname] << " " << record[lastname] << " " << record[gender] << " " << record[dob] << endl;

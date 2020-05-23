@@ -167,11 +167,6 @@ public:
 		addRoute("view-class", "ClassController", "showClassList");
 		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
 
-		//TEACHER SECTION
-		addRoute("edit-attendence", "UserController", "editAttendence");
-		addRoute("delete-attendence", "UserController", "deleteAttendence");
-		addRoute("edit-score", "UserController", "editScore");
-
 		addRoute("class-dashboard-staff", "UserController", "classDashboardStaff");
 		addRoute("course-dashboard-staff", "UserController", "courseDashboardStaff");
 		addRoute("score-dashboard-staff", "UserController", "scoreDashboardStaff");
@@ -204,6 +199,10 @@ public:
 		linkTo("lecturer-dashboard", "attendance-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "log-out");
 
+		/****** STAFF - CLASS OPERATIONS ******/
+		linkTo("class-dashboard-staff", "import-class");
+		linkTo("class-dashboard-staff", "view-class");
+		linkTo("class-dashboard-staff", "view-student-in-class");
 		/****** STAFF - COURSE OPERATIONS ******/
 		linkTo("course-dashboard-staff", "add-course");
 		linkTo("course-dashboard-staff", "add-student-to-course");
@@ -223,6 +222,10 @@ public:
 		linkTo("attendance-dashboard-staff", "export-attendance");
 		linkTo("attendance-dashboard-staff", "view-attendance-list");
 		/****** STAFF - LECTURER OPERATIONS ******/
+		linkTo("lecturer-dashboard-staff", "create-lecturer");
+		linkTo("lecturer-dashboard-staff", "delete-lecturer");
+		linkTo("lecturer-dashboard-staff", "edit-lecturer");
+		linkTo("lecturer-dashboard-staff", "view-all-lecturer");
 
 		/****** LECTURER - COURSE OPERATIONS ******/
 		linkTo("course-dashboard-lecturer", "list-of-course-current-semester");
@@ -237,13 +240,7 @@ public:
 		linkTo("access", "login");
 		linkTo("access", "register");
 
-		linkTo("staff-dashboard", "import-class");
-		linkTo("staff-dashboard", "view-class");
-		linkTo("staff-dashboard", "view-student-in-class");
-		//TEACHER SECTION
-		linkTo("teacher-dashboard", "edit-attendence");
-		linkTo("teacher-dashboard", "deleteAttendence");
-		linkTo("teacher-dashboard", "editScore");
+		
 				
 	}
 };

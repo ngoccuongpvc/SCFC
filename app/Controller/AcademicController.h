@@ -69,16 +69,15 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentIdentifier;
-        uim->setStudentID(toLowerCase(studentIdentifier));
-        vector<vector<string>> studentResult = uim->FetchInfo();
-        if (studentResult.size() == 0) {
+        cout << "Please enter your student Id: "; cin >> studentId;
+        am->setStudentId(studentId);
+        am->setDay("");
+        uim->setStudentId(toLowerCase(studentId));
+        vector<vector<string>> results = uim->FetchInfo();
+        if (results.size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             return;
         }
-        studentId = studentResult[0][0];
-        am->setStudentId(studentId);
-        am->setDay("");
         vector<vector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in any course." << endl;
@@ -88,13 +87,13 @@ public:
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setStudentId(studentId);
         for (int i = 0; i < enrollment.size(); ++i) {
-            cim->setId(enrollment[i][2]);
-            vector<vector<string>> courses = cim->FetchCourse();
+            cim->setCourseId(enrollment[i][2]);
+            vector<string> course = cim->FetchCourse()[0];
             vector<string> schedule;
-            schedule.push_back(courses[0][1]);
-            schedule.push_back(courses[0][11]);
-            string dailyHour = courses[0][6] + "-" + courses[0][7];
-            string studyPeriod = courses[0][4] + "-" + courses[0][5];
+            schedule.push_back(course[1]);
+            schedule.push_back(course[11]);
+            string dailyHour = course[6] + "-" + course[7];
+            string studyPeriod = course[4] + "-" + course[5];
             schedule.push_back(dailyHour);
             schedule.push_back(studyPeriod);
             schedules.push_back(schedule);
