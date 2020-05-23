@@ -262,7 +262,7 @@ public:
         AttendanceModel* am = new AttendanceModel();
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -306,7 +306,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AttendanceModel* am = new AttendanceModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to edit: "; string courseId; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
