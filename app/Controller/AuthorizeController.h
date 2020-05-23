@@ -77,30 +77,28 @@ public:
         UserInfoModel* user = new UserInfoModel();
         AccountModel* am = new AccountModel();
         extern stack<string> history;
-        while (!validAccount) {
-            string firstName, lastName, dob, gender, role, username, password, studentID;
-            cout << "Welcome to the register screen" << endl;
-            cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
-            cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
-            cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
-            cout << "Gender: "; cin >> gender; user->setUserGender(gender);
-            cout << "Role (student/ staff/ lecturer): "; cin >> role;
-            if (toLowerCase(role) == "student") {
-                cout << "Student ID: "; cin >> studentID; user->setStudentId(studentID);
-                user->setUsername(studentID);
-                am->setUserName(studentID);
-                am->setPassword(dob);
-            }
-            else {
-                user->setStudentId("");
-                cout << "Username: "; cin >> username; user->setUsername(username);
-                am->setUserName(username);
-                cout << "Password: "; cin >> password; am->setPassword(password);
-                am->setPassword(password);
-            }
-            user->AddUser();
-            am->registerUser();
+        string firstName, lastName, dob, gender, role, username, password, studentID;
+        cout << "Welcome to the register screen" << endl;
+        cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
+        cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
+        cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
+        cout << "Gender: "; cin >> gender; user->setUserGender(gender);
+        cout << "Role (student/ staff/ lecturer): "; cin >> role;
+        if (toLowerCase(role) == "student") {
+            cout << "Student ID: "; cin >> studentID; user->setStudentId(studentID);
+            user->setUsername(studentID);
+            am->setUserName(studentID);
+            am->setPassword(dob);
         }
+        else {
+            user->setStudentId("");
+            cout << "Username: "; cin >> username; user->setUsername(username);
+            am->setUserName(username);
+            cout << "Password: "; cin >> password; am->setPassword(password);
+            am->setPassword(password);
+        }
+        user->AddUser();
+        am->registerUser();
         createSession(am->getUserName());
         history.push("dashboard");
         delete user;
