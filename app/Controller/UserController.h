@@ -23,9 +23,6 @@
 
 using namespace std;
 
-
-
-
 class UserController : public ControllerInterface
 {
 private:

@@ -50,5 +50,29 @@
     <ClInclude Include="app\Model\ScoreboardModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="app\Controller\AcademicController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\AccountController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\AttendanceController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\AuthorizeController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\ClassController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\CourseController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\MiscellanousFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\ScoreboardController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

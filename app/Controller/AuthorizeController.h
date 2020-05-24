@@ -97,6 +97,7 @@ public:
             cout << "Password: "; cin >> password; am->setPassword(password);
             am->setPassword(password);
         }
+		am->setRole(role);
         user->AddUser();
         am->registerUser();
         createSession(am->getUserName());
