@@ -45,10 +45,14 @@ public:
         AccountModel* model = new AccountModel();
 
         while (true) {
+			//fflush
+			string temp;
+			getline(cin, temp);
+
             cout << "User name: ";
-            cin >> username;
+            getline(cin, username);
             cout << "Password: ";
-            cin >> password;
+            getline(cin, password);
             if (model->checkCredential(username, password)) {
                 cout << "Login successful" << endl;
                 cout << "You are login as: " << model->getUserRole(username) << endl;
@@ -81,6 +85,7 @@ public:
         extern stack<string> history;
         string firstName, lastName, dob, gender, role_l, username, password, studentID;
 
+		//fflush
 		string temp;
 		getline(cin, temp);
 
@@ -135,7 +140,7 @@ public:
         {
             string newPass;
             cout << "Pls enter new password: ";
-            cin >> newPass;
+            getline(cin, newPass);
 
             AccountModel* model = new AccountModel();
 

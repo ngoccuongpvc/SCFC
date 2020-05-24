@@ -75,4 +75,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="database\Account.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\Class.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\CourseInfo.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\CheckInList.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\ScoreList.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\UserInfo.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -163,7 +163,7 @@ public:
 		/****** USER OPERATIONS ******/
 		addRoute("dashboard", "UserController", "mainAction");
 		addRoute("student-dashboard", "UserController", "studentDashboard");
-		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
+		addRoute("lecturer-dashboard", "UserController", "lecturerDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("access", "UserController", "accessDashboard");
 		addRoute("import-class", "ClassController", "importAction");
