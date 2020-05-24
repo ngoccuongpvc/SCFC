@@ -101,7 +101,15 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app\Controller\AcademicController.h" />
+    <ClInclude Include="app\Controller\AccountController.h" />
+    <ClInclude Include="app\Controller\AttendanceController.h" />
+    <ClInclude Include="app\Controller\AuthorizeController.h" />
+    <ClInclude Include="app\Controller\ClassController.h" />
     <ClInclude Include="app\controller\ControllerInterface.h" />
+    <ClInclude Include="app\Controller\CourseController.h" />
+    <ClInclude Include="app\Controller\MiscellanousFunctions.h" />
+    <ClInclude Include="app\Controller\ScoreboardController.h" />
     <ClInclude Include="app\controller\UserController.h" />
     <ClInclude Include="app\History.h" />
     <ClInclude Include="app\model\AccountModel.h" />

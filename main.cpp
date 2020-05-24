@@ -52,7 +52,6 @@ ControllerInterface *createInstance(string name)
     else if (name == "AttendanceController") {
         return new AttendanceController();
     }
-
     return nullptr;
 }
 
