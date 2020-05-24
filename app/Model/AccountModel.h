@@ -157,7 +157,11 @@ public:
 
     /*The 'toDelete' vector is the conditions of the records you want to delete.
     In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'toDelete' parameter.*/
-    void removeAccount(vector<string>* toDelete) {
+    void removeAccount(vector<string>* toDelete = nullptr) {
+        if (toDelete == nullptr) {
+            toDelete = new vector<string>((this->columns).size(), "all");
+            (*toDelete)[this->getIndex("username")] = this->username;
+        }
         this->erase(toDelete);
     }
 };

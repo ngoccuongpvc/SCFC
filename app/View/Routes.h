@@ -107,10 +107,15 @@ public:
 		usage["score-dashboard-lecturer"] = "View scoreboard operations for lecturers";
 		usage["attendance-dashboard-lecturer"] = "View attendance operations for lecturers";
 
+		/****** CLASS OPERATIONS ******/
 		usage["import-class"] = "Import student list of class";
 		usage["view-class"] = "View list of classes";
-		usage["view-student-in-class"] = "View list of students in a classe";
-
+		usage["view-student-in-class"] = "View list of students in a class";
+		usage["add-student-to-class"] = "Add a new student to class";
+		usage["student-manipulate"] = "Student operations";
+		usage["remove-student"] = "Remove a student";
+		usage["edit-student"] = "Edit student information";
+		usage["change-student-class"] = "Move student to new class";
 		/**************************************************************************/
 
 		/****** AUTHORIZATION ******/
@@ -166,10 +171,18 @@ public:
 		addRoute("teacher-dashboard", "UserController", "teacherDashboard");
 		addRoute("staff-dashboard", "UserController", "staffDashboard");
 		addRoute("access", "UserController", "accessDashboard");
+
+		/****** CLASS OPERATORS ********************/
 		addRoute("import-class", "ClassController", "importAction");
 		addRoute("view-class", "ClassController", "showClassList");
 		addRoute("view-student-in-class", "ClassController", "showStudentInClass");
+		addRoute("add-student-to-class", "ClassController", "addStudent");
+		addRoute("student-manipulate", "ClassController", "studentManipulate");
+		addRoute("remove-student", "ClassController", "removeStudent");
+		addRoute("edit-student", "ClassController", "editStudent");
+		addRoute("change-student-class", "ClassController", "changeStudentClass");
 
+		/*********************************************/
 		addRoute("class-dashboard-staff", "UserController", "classDashboardStaff");
 		addRoute("course-dashboard-staff", "UserController", "courseDashboardStaff");
 		addRoute("score-dashboard-staff", "UserController", "scoreDashboardStaff");
@@ -206,6 +219,12 @@ public:
 		linkTo("class-dashboard-staff", "import-class");
 		linkTo("class-dashboard-staff", "view-class");
 		linkTo("class-dashboard-staff", "view-student-in-class");
+		linkTo("class-dashboard-staff", "student-manipulate");
+		linkTo("student-manipulate", "add-student-to-class");
+		linkTo("student-manipulate", "remove-student");
+		linkTo("student-manipulate", "edit-student");
+		linkTo("student-manipulate", "change-student-class");
+
 		/****** STAFF - COURSE OPERATIONS ******/
 		linkTo("course-dashboard-staff", "add-course");
 		linkTo("course-dashboard-staff", "add-student-to-course");

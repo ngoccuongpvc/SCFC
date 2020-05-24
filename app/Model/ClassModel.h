@@ -68,5 +68,19 @@ public:
 		}
 		return res;
 	}
+
+	void removeStudentById(string studentID) {
+		vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+		(*conditions)[this->getIndex("studentid")] = studentID;
+		this->erase(conditions);
+	}
+
+	string getClassOfStudent(string studentID) {
+		vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+		(*conditions)[this->getIndex("studentid")] = studentID;
+		vector<vector<string>> res = this->fetch(conditions);
+		if (res.size() == 0) return "";
+		return res[0][this->getIndex("classname")];
+	}
 };
 #endif // CLASSMODEL_H_INCLUDED

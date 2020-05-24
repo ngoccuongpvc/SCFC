@@ -159,7 +159,26 @@ public:
         if (conditions == nullptr) conditions = getUserInfo();
         this->erase(conditions);
     }
+
+    void findStudentInfo(string studentID) {
+        vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+        (*conditions)[this->getIndex("studentid")] = studentID;
+        vector<vector<string>> res = this->fetch(conditions);
+        if (res.size() != 0) {
+            this->setStudentId(res[0][this->getIndex("studentId")]);
+            this->setFirstName(res[0][this->getIndex("firstName")]);
+            this->setLastName(res[0][this->getIndex("lastName")]);
+            this->setUserGender(res[0][this->getIndex("userGender")]);
+            this->setDOB(res[0][this->getIndex("dob")]);
+        }
+    }
     
+    void saveUser(vector<string>* user = nullptr) {
+        if (user == nullptr) {
+            user = this->getUserInfo();
+        }
+        this->add(user);
+    }
 };
 
 #endif // USERINFOMODEL_H_INCLUDED
