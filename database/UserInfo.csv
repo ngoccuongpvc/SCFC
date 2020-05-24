@@ -6,3 +6,5 @@ id,studentId,firstName,lastName,dob,userGender,username
 5,19125002,Cuong,Nguyen,14052001,Male,19125002
 6,19125002,Cuong,Nguyen,14052001,Male,19125002
 7,,Hung,Nguyen,18102001,male,yauangon
+8,19125064,phat,tu,10-01-2001,male,19125064
+9,,loc,truong,01-01-1990,male,tploc

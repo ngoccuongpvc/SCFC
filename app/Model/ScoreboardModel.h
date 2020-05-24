@@ -70,7 +70,6 @@ public:
 	Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
 	vector<vector<string>> FetchScoreboard() {
 		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("id")] = this->id;
 		conditions[this->getIndex("studentId")] = this->studentId;
 		conditions[this->getIndex("courseId")] = this->studentId;
 		conditions[this->getIndex("term")] = this->term;

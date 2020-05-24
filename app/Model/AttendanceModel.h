@@ -71,7 +71,6 @@ public:
 	vector<vector<string>> FetchAttendance() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("studentId")] = this->studentId;
-		conditions[this->getIndex("id")] = this->id;
 		conditions[this->getIndex("day")] = this->day;
 		conditions[this->getIndex("courseId")] = this->courseId;
 		return this->fetch(&conditions);
