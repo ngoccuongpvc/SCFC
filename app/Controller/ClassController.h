@@ -87,6 +87,8 @@ public:
 		delete classModel;
 	}
 
+
+
 	ClassController() {
 		this->mapMethods["importAction"] = [this]() { importAction(); };
 		this->mapMethods["showClassList"] = [this]() { showClassList(); };
