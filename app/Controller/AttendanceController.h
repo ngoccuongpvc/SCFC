@@ -186,6 +186,7 @@ public:
         string courseId, studentId, day;
         cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
+        vector<vector<string>> temp = cim->FetchCourse();
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             return;

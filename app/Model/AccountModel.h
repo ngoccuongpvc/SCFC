@@ -148,7 +148,6 @@ public:
     Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
     vector<vector<string>> fetchAccount() {
         vector<string> conditions(this->columns.size(), "all");
-        conditions[this->getIndex("id")] = this->id;
         conditions[this->getIndex("username")] = this->username;
         conditions[this->getIndex("password")] = this->password;
         conditions[this->getIndex("role")] = this->role;

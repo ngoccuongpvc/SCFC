@@ -36,7 +36,7 @@ public:
             history.push("student-dashboard");
         }
         else if (role == "lecturer") {
-            history.push("teacher-dashboard");
+            history.push("lecturer-dashboard");
         }
         else if (role == "staff") {
             history.push("staff-dashboard");

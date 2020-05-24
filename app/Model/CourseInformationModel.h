@@ -172,8 +172,7 @@ public:
 	Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
 	vector<vector<string>> FetchCourse() {
 		vector<string> conditions(this->columns.size(), "all");
-		conditions[this->getIndex("id")] = this->id;
-		conditions[this->getIndex("courseId")] = this->id;
+		conditions[this->getIndex("courseId")] = this->courseId;
 		conditions[this->getIndex("courseName")] = this->courseName;
 		conditions[this->getIndex("className")] = this->className;
 		conditions[this->getIndex("lecturerAccount")] = this->lecturerAccount;
@@ -184,7 +183,7 @@ public:
 		conditions[this->getIndex("semester")] = this->semester;
 		conditions[this->getIndex("room")] = this->room;
 		conditions[this->getIndex("year")] = this->year;
-		conditions[this->getIndex("dayOfWeek")] = this->year;
+		conditions[this->getIndex("dayOfWeek")] = this->dayOfWeek;		
 		return this->fetch(&conditions);
 	}
 

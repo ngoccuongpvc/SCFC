@@ -55,6 +55,7 @@ public:
                 extern stack<string> history;
                 history.push("dashboard");
                 createSession(username);
+                role = model->getUserRole(username);
                 break;
             }
             else {
@@ -77,14 +78,18 @@ public:
         UserInfoModel* user = new UserInfoModel();
         AccountModel* am = new AccountModel();
         extern stack<string> history;
-        string firstName, lastName, dob, gender, role, username, password, studentID;
+        string firstName, lastName, dob, gender, role_l, username, password, studentID;
         cout << "Welcome to the register screen" << endl;
         cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
         cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
         cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
         cout << "Gender: "; cin >> gender; user->setUserGender(gender);
-        cout << "Role (student/ staff/ lecturer): "; cin >> role;
-        if (toLowerCase(role) == "student") {
+        role = "";
+        while (role_l != "student" && role_l != "lecturer" && role_l != "staff") {
+            cout << "Role (student/ staff/ lecturer): "; cin >> role_l;
+            role = toLowerCase(role);
+        }
+        if (role_l == "student") {
             cout << "Student ID: "; cin >> studentID; user->setStudentId(studentID);
             user->setUsername(studentID);
             am->setUserName(studentID);
@@ -101,6 +106,7 @@ public:
         user->AddUser();
         am->registerUser();
         createSession(am->getUserName());
+        role = role_l;
         history.push("dashboard");
         delete user;
         delete am;
