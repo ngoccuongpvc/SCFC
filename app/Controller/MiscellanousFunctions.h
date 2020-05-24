@@ -7,6 +7,7 @@
 using namespace std;
 
 string toLowerCase(string s) {
+	s = comaFilter(s);
     for (int i = 0; i < s.length(); ++i) {
         s[i] = tolower(s[i]);
     }
@@ -25,6 +26,17 @@ string capitalize(string str) {
         i++;
     }
     return str;
+}
+
+string comaFilter(string &str)
+{
+	while (true)
+	{
+		int t = str.find(",");
+		if (t == -1) return str;
+		str.erase(t, 1);
+		continue;
+	}
 }
 
 #endif

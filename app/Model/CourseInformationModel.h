@@ -59,57 +59,57 @@ public:
 	}
 
 	void setId(string id) {
-		this->id = id;
+		this->id = toLowerCase(id);
 	}
 
 	void setCourseId(string id)
 	{
-		this->courseId = id;
+		this->courseId = toLowerCase(id);
 	}
 
 	void setCourseName(string courseName) {
-		this->courseName = courseName;
+		this->courseName = toLowerCase(courseName);
 	}
 
 	void setClassName(string className) {
-		this->className = className;
+		this->className = toLowerCase(className);
 	}
 
 	void setLecturerAccount(string lecturerAccount) {
-		this->lecturerAccount = lecturerAccount;
+		this->lecturerAccount = toLowerCase(lecturerAccount);
 	}
 
 	void setStartDay(string startDay) {
-		this->startDay = startDay;
+		this->startDay = toLowerCase(startDay);
 	}
 
 	void setEndDay(string endDay) {
-		this->endDay = endDay;
+		this->endDay = toLowerCase(endDay);
 	}
 
 	void setStartHour(string startHour) {
-		this->startHour = startHour;
+		this->startHour = toLowerCase(startHour);
 	}
 
 	void setEndHour(string endHour) {
-		this->endHour = endHour;
+		this->endHour = toLowerCase(endHour);
 	}
 
 	void setRoom(string room) {
-		this->room = room;
+		this->room = toLowerCase(room);
 	}
 
 	void setSemester(string semester) {
-		this->semester = semester;
+		this->semester = toLowerCase(semester);
 	}
 
 	void setYear(string year) {
-		this->year = year;
+		this->year = toLowerCase(year);
 	}
 
 
 	void setDayOfWeek(string day) {
-		this->dayOfWeek = day;
+		this->dayOfWeek = toLowerCase(day);
 	}
 
 	string getId() {
