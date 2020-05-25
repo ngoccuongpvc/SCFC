@@ -15,15 +15,15 @@ public:
 	}
 
 	void setId(string id) {
-		this->id = id;
+		this->id = toLowerCase(id);
 	}
 
 	void setClassName(string className) {
-		this->className = className;
+		this->className = toLowerCase(className);
 	}
 
 	void setStudentId(string studentId) {
-		this->studentId = studentId;
+		this->studentId = toLowerCase(studentId);
 	}
 	
 	void saveStudent() {
