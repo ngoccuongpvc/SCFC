@@ -29,6 +29,7 @@ public:
         vector<vector<string>> records = user->FetchInfo();
         if (records.size() == 0) {
             cout << "Something wrong with your account, cannot fetch your profile.";
+            delete user;
             return;
         }
         cout << "Student ID: " << records[0][1] << endl;
@@ -44,11 +45,11 @@ public:
         AccountModel* am = new AccountModel();
         string temp;
         uim->setStudentId("");
-        cout << "Lecturer first name: "; cin >> temp; uim->setFirstName(toLowerCase(temp));
-        cout << "Lecturer last name: "; cin >> temp; uim->setLastName(toLowerCase(temp));
-        cout << "Lecturer DOB: "; cin >> temp; uim->setDOB(toLowerCase(temp));
-        cout << "Lecturer gender: "; cin >> temp; uim->setUserGender(toLowerCase(temp));
-        cout << "Lecturer username: "; cin >> temp; uim->setFirstName(toLowerCase(toLowerCase(temp)));
+        cout << "Lecturer first name: ";  getline(cin, temp); uim->setFirstName(toLowerCase(temp));
+        cout << "Lecturer last name: ";  getline(cin, temp); uim->setLastName(toLowerCase(temp));
+        cout << "Lecturer DOB: ";  getline(cin, temp); uim->setDOB(toLowerCase(temp));
+        cout << "Lecturer gender: ";  getline(cin, temp); uim->setUserGender(toLowerCase(temp));
+        cout << "Lecturer username: "; getline(cin, temp); uim->setFirstName(toLowerCase(toLowerCase(temp)));
         am->setUserName(temp);
         am->setPassword(uim->getDOB());
         am->setRole("lecturer");
@@ -66,6 +67,8 @@ public:
         vector<vector<string>> results = am->fetchAccount();
         if (results.size() == 0) {
             cout << "No lecturer was found!" << endl;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> lecturers;
@@ -95,6 +98,7 @@ public:
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The lecturer account you entered does not exist. Please retry." << endl;
+            delete uim;
             return;
         }
         vector<string> record = results[0];
@@ -103,11 +107,11 @@ public:
         vector<string> toUpdate;
         toUpdate.push_back(record[0]);
         toUpdate.push_back("");
-        cout << "First name: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
-        cout << "Last name: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
-        cout << "Date of birth: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
-        cout << "User gender: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
-        cout << "New username: ";  cin >> temp; toUpdate.push_back(toLowerCase(temp));
+        cout << "First name: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Last name: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Date of birth: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "User gender: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "New username: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         uim->UpdateInfo(&record, &toUpdate);
         cout << "Successfully edited the lecturer." << endl;
         delete uim;
@@ -125,6 +129,8 @@ public:
         vector<vector<string>> userResult = uim->FetchInfo();
         if (accountResult.size() == 0 || userResult.size() == 0) {
             cout << "The account you entered may not exist, please recheck." << endl;
+            delete uim;
+            delete am;
             return;
         }
         for (int i = 0; i < accountResult.size(); ++i) {

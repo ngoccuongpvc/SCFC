@@ -21,7 +21,8 @@ public:
         getline(cin, path);
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
-        UserInfoModel* uim = new UserInfoModel();
+        ClassModel* cm = new ClassModel();
+        ScoreboardModel* sm = new ScoreboardModel();
 
         ModelInterface* model = new ModelInterface(path);
         vector<vector<string>> records = model->fetch();
@@ -41,15 +42,24 @@ public:
 
             am->setCourseId(record[1]);
             am->setDay("");
-            vector<vector<string>> students = uim->FetchInfo();
+            sm->setCourseId(record[1]);
+            sm->setScore("");
+            sm->setTerm("");
+            vector<string> students = cm->getStudentInClass(record[3]);
             for (int i = 0; i < students.size(); ++i) {
-                if (students[i][1] != "") {
-                    am->setStudentId(students[i][1]);     
-                    am->AddAttendance();
-                }
+                am->setStudentId(students[i]);  
+                am->AddAttendance();
+                sm->setStudentId(students[i]);
+                sm->AddScore();
             }
 
         }
+
+        delete cim;
+        delete am;
+        delete cm;
+        delete sm;
+        delete model;
 
         cout << "Imported Successfully" << endl;
     }
@@ -62,6 +72,7 @@ public:
         View* view = new View(results, header);
         view->displayTable();
         delete view;
+        delete cim;
     }
 
     void removeCourseByYear() {
@@ -70,43 +81,34 @@ public:
         cout << "Please enter the academic year that you want to remove: "; getline(cin, year);
         cim->setYear(toLowerCase(year));
         vector<vector<string>> results = cim->FetchCourse();
-        for (int i = 0; i < results.size(); ++i) {
-            cim->RemoveCourse(&results[i]);
-        }
+        cim->RemoveCourse();
         cout << "Successfully remove all course in the year " << year;
         delete cim;
     }
 
     void removeCourseBySemester() {
         CourseInformationModel* cim = new CourseInformationModel();
-        string semester;
-        cout << "Please enter the semester that you want to remove: "; getline(cin, semester);
+        string semester, year;
+        cout << "Please enter the academic year that you want to remove: "; cin >> year;
+        cim->setYear(toLowerCase(year));
+        cout << "Please enter the semester that you want to remove: "; cin >> semester;
         cim->setSemester(toLowerCase(semester));
-        vector<vector<string>> results = cim->FetchCourse();
-        for (int i = 0; i < results.size(); ++i) {
-            cim->RemoveCourse(&results[i]);
-        }
+        cim->RemoveCourse();
         cout << "Successfully remove all course in the semester " << semester;
         delete cim;
     }
 
     void addCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
-        AccountModel* am = new AccountModel();
+        AttendanceModel* am = new AttendanceModel();
+        ScoreboardModel* sm = new ScoreboardModel();
+        ClassModel* cm = new ClassModel();
         string temp, temp2;
-        cout << "Course ID: "; getline(cin, temp2);
+        getline(cin, temp2);
+        cout << "Course ID: "; getline(cin, temp); cim->setCourseName(toLowerCase(temp));
         cout << "Course name: "; getline(cin, temp); cim->setCourseName(toLowerCase(temp));
-        cout << "Course id: "; getline(cin, temp); cim->setCourseId(toLowerCase(temp));
         cout << "Class name: "; getline(cin, temp); cim->setClassName(toLowerCase(temp));
-
-        cout << "Lecturer Account: "; getline(cin, temp);
-        // Check if the lecturer account is available
-        am->setUserName(toLowerCase(temp));
-        vector<vector<string>> results = am->fetchAccount();
-        if (results.size() == 0) {
-            cout << "The lecturer account is not found, returning..." << endl;
-            return;
-        }
+        cout << "Lecturer Account: "; getline(cin, temp); cim->setLecturerAccount(toLowerCase(temp));
         cout << "Start day: "; getline(cin, temp); cim->setStartDay(toLowerCase(temp));
         cout << "End day: "; getline(cin, temp); cim->setEndDay(toLowerCase(temp));
         cout << "Start hour: "; getline(cin, temp); cim->setStartHour(toLowerCase(temp));
@@ -115,11 +117,26 @@ public:
         cout << "Room: "; getline(cin, temp); cim->setRoom(toLowerCase(temp));
         cout << "Semester: "; getline(cin, temp); cim->setSemester(toLowerCase(temp));
         cout << "Year: "; getline(cin, temp); cim->setYear(toLowerCase(temp));
-        cim->setCourseName(toLowerCase(temp2));
+
+        am->setCourseId(cim->getCourseId());
+        am->setDay("");
+        sm->setCourseId(cim->getCourseId());
+        sm->setScore("");
+        sm->setTerm("");
+        vector<string> students = cm->getStudentInClass(cim->getClassName());
+        for (int i = 0; i < students.size(); ++i) {
+            am->setStudentId(students[i]);
+            am->AddAttendance();
+            sm->setStudentId(students[i]);
+            sm->AddScore();
+        }
+        
         cim->AddCourse();
         cout << "Successfully added the course." << endl;
         delete cim;
         delete am;
+        delete sm;
+        delete cm;
     }
 
     void editCourse() {
@@ -137,18 +154,19 @@ public:
         string temp, temp2;
         vector<string> toUpdate;
         toUpdate.push_back(record[0]);
-        cout << "Course ID: ";  getline(cin, temp); 
-        cout << "Course name: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));   
-        cout << "Class name: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Lecturer account: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Start hour: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        getline(cin, temp2);
+        cout << "Course ID: ";  getline(cin, temp2);
+        cout << "Course name: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Class name: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Lecturer account: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Start hour: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         cout << "End hour: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         cout << "Start day: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "End day: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "End day: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         cout << "Day of week: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Room: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Semester: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Year: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Room: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Semester: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+        cout << "Year: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         toUpdate.push_back(toLowerCase(temp2));
         cim->UpdateCourse(&record, &toUpdate);
         cout << "Successfully updated the course." << endl;
@@ -162,6 +180,7 @@ public:
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered doesn't exist, please recheck." << endl;
+            delete cim;
             return;
         }
         cim->RemoveCourse(&courseResult[0]);
@@ -177,6 +196,7 @@ public:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
+            delete cim;
             return;
         }
         vector<vector<string>> courses;
@@ -202,6 +222,7 @@ public:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
+            delete cim;
             return;
         }
         vector<vector<string>> courses;
@@ -229,12 +250,20 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         cout << "Please enter the student ID of the student you want to remove from this course: "; getline(cin, studentId);
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setCourseId(courseId);
@@ -266,18 +295,30 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         cout << "Please enter the student ID of the student you want to add into this course: "; getline(cin, studentId);
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setCourseId(courseId);
         am->setStudentId(studentId);
         if (am->FetchAttendance().size() != 0) {
             cout << "The student is already enrolled into this course." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setDay("");
@@ -287,6 +328,10 @@ public:
         sm->setStudentId(studentId);
         if (sm->FetchScoreboard().size() != 0) {
             cout << "The student is already enrolled into this course." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         sm->setTerm("");
@@ -298,6 +343,7 @@ public:
         delete cim;
         delete am;
         delete uim;
+        delete sm;
 
     }
 
@@ -310,6 +356,9 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
+            delete cim;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> students;

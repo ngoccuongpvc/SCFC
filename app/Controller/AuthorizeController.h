@@ -74,8 +74,6 @@ public:
 
     }
 
-
-
     void registerAction() {
         //if (checkLoginStatus()) return;
 
