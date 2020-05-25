@@ -13,10 +13,14 @@ public:
 	void importAction() {
 		cout << "Choose file: ";
 		string path;
-		cin >> path;
+
+		//fflush(0);
+		getline(cin, path);
+		//cin >> path;
+
 		string className;
 		cout << "Class Name: ";
-		cin >> className;
+		getline(cin, className);
 		ClassModel* classModel = new ClassModel();
 		AccountModel* accountModel = new AccountModel();
 		UserInfoModel* userInfoModel = new UserInfoModel();
@@ -63,7 +67,7 @@ public:
 
 		cout << "Input class name: ";
 		string classname;
-		cin >> classname;
+		getline(cin, classname);
 
 		vector<string> students = classModel->getStudentInClass(classname);
 		vector<vector<string>> studentInfo;

@@ -56,8 +56,8 @@ public:
         cout << "Hello Student!" << endl;
     }
     
-    void teacherDashboard() {
-        cout << "Hello Teacher!" << endl;
+    void lecturerDashboard() {
+        cout << "Hello lecturer!" << endl;
     }
     
     void staffDashboard() {
@@ -105,7 +105,7 @@ public:
 
         this->mapMethods["mainAction"] = [this]() { mainAction(); };
         this->mapMethods["studentDashboard"] = [this]() { studentDashboard(); };
-        this->mapMethods["teacherDashboard"] = [this]() { teacherDashboard(); };
+        this->mapMethods["lecturerDashboard"] = [this]() { lecturerDashboard(); };
         this->mapMethods["staffDashboard"] = [this]() { staffDashboard(); };
 
         this->mapMethods["classDashboardStaff"] = [this]() { classDashboardStaff(); };

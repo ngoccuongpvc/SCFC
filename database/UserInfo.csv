@@ -8,3 +8,7 @@ id,studentId,firstName,lastName,dob,userGender,username
 7,,Hung,Nguyen,18102001,male,yauangon
 8,19125064,phat,tu,10-01-2001,male,19125064
 9,,loc,truong,01-01-1990,male,tploc
+10,,yauangon,nguyen,18102001,male,all
+11,,Hung,hung,df,male,yauangon
+12,,Hung,hung,181545,male,hunghung
+13,,Hung,Hihi,164578,male,lala

@@ -31,19 +31,19 @@ public:
 	}
 
 	void setId(string id) {
-		this->id = id;;
+		this->id = toLowerCase(id);;
 	}
 
 	void setCourseId(string id) {
-		this->courseId = id;
+		this->courseId = toLowerCase(id);
 	}
 
 	void setStudentId(string id) {
-		this->studentId = id;
+		this->studentId = toLowerCase(id);
 	}
 
 	void setDay(string day) {
-		this->day = day;
+		this->day = toLowerCase(day);
 	}
 
 	// The incrementing id of this record

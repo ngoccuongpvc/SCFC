@@ -70,7 +70,10 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         string courseName, studentIdentifier, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentId;
+		//fllusing
+		//string temp;
+		//getline(cin, temp);
+        cout << "Please enter your student Id: "; getline(cin, studentId);
         am->setStudentId(studentId);
         am->setDay("");
         uim->setStudentId(toLowerCase(studentId));
