@@ -55,6 +55,12 @@ public:
 
         }
 
+        delete cim;
+        delete am;
+        delete cm;
+        delete sm;
+        delete model;
+
         cout << "Imported Successfully" << endl;
     }
 
@@ -82,7 +88,9 @@ public:
 
     void removeCourseBySemester() {
         CourseInformationModel* cim = new CourseInformationModel();
-        string semester;
+        string semester, year;
+        cout << "Please enter the academic year that you want to remove: "; cin >> year;
+        cim->setYear(toLowerCase(year));
         cout << "Please enter the semester that you want to remove: "; cin >> semester;
         cim->setSemester(toLowerCase(semester));
         cim->RemoveCourse();
@@ -172,6 +180,7 @@ public:
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered doesn't exist, please recheck." << endl;
+            delete cim;
             return;
         }
         cim->RemoveCourse(&courseResult[0]);
@@ -187,6 +196,7 @@ public:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
+            delete cim;
             return;
         }
         vector<vector<string>> courses;
@@ -212,6 +222,7 @@ public:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
+            delete cim;
             return;
         }
         vector<vector<string>> courses;
@@ -239,12 +250,20 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         cout << "Please enter the student ID of the student you want to remove from this course: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setCourseId(courseId);
@@ -276,18 +295,30 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         cout << "Please enter the student ID of the student you want to add into this course: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setCourseId(courseId);
         am->setStudentId(studentId);
         if (am->FetchAttendance().size() != 0) {
             cout << "The student is already enrolled into this course." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         am->setDay("");
@@ -297,6 +328,10 @@ public:
         sm->setStudentId(studentId);
         if (sm->FetchScoreboard().size() != 0) {
             cout << "The student is already enrolled into this course." << endl;
+            delete cim;
+            delete am;
+            delete uim;
+            delete sm;
             return;
         }
         sm->setTerm("");
@@ -308,6 +343,7 @@ public:
         delete cim;
         delete am;
         delete uim;
+        delete sm;
 
     }
 
@@ -320,6 +356,9 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
+            delete cim;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> students;

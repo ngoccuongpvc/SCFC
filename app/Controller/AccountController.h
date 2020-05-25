@@ -29,6 +29,7 @@ public:
         vector<vector<string>> records = user->FetchInfo();
         if (records.size() == 0) {
             cout << "Something wrong with your account, cannot fetch your profile.";
+            delete user;
             return;
         }
         cout << "Student ID: " << records[0][1] << endl;
@@ -66,6 +67,8 @@ public:
         vector<vector<string>> results = am->fetchAccount();
         if (results.size() == 0) {
             cout << "No lecturer was found!" << endl;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> lecturers;
@@ -95,6 +98,7 @@ public:
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The lecturer account you entered does not exist. Please retry." << endl;
+            delete uim;
             return;
         }
         vector<string> record = results[0];
@@ -125,6 +129,8 @@ public:
         vector<vector<string>> userResult = uim->FetchInfo();
         if (accountResult.size() == 0 || userResult.size() == 0) {
             cout << "The account you entered may not exist, please recheck." << endl;
+            delete uim;
+            delete am;
             return;
         }
         for (int i = 0; i < accountResult.size(); ++i) {

@@ -19,6 +19,7 @@ public:
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "No courses was entered in the year you entered." << endl;
+            delete cim;
             return;
         }
         vector<string> years;
@@ -45,6 +46,7 @@ public:
         vector<vector<string>> listCourses = cim->FetchCourse();
         if (listCourses.size() == 0) {
             cout << "No courses found in the semester you entered." << endl;
+            delete cim;
             return;
         }
         vector<string> semesters;
@@ -60,7 +62,6 @@ public:
         View* view = new View(info, header);
         view->displayTable();
         delete view;
-
         delete cim;
     }
 
@@ -76,11 +77,17 @@ public:
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in any course." << endl;
+            delete cim;
+            delete uim;
+            delete am;
             return;
         }
         vector<vector<string>> schedules;
