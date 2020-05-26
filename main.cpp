@@ -81,7 +81,8 @@ int main()
 	/*END TEST SITE*/
     while (true) {
         if (history.empty()) {
-            history.push("access");
+            //history.push("access");
+            break;
         }
         path = history.top();
         string controllerName = route->getController(path);
@@ -96,21 +97,26 @@ int main()
         
         if (path == history.top()) {
             route->showOptions(path);
-            int opt;
+            int opt, nopt = route->getNumberOfOption(path);
             cout << "Choose your option: ";
-            cin >> opt;
+            do {
+                cin >> opt;
 
-			string temp;
-			getline(cin, temp);
+				string temp;
+				getline(cin, temp);
+				system("cls");
 
-			system("cls");
-            if (!opt) {
-                history.pop(); //opt == 0
-            }
-            else {
-                string nextPath = route->getOption(path, opt);
-                history.push(nextPath);
-            }
+                if (!opt) {
+                    history.pop(); //opt == 0
+                    break;
+                }
+                else if (0 < opt && opt <= nopt) {
+                    string nextPath = route->getOption(path, opt);
+                    history.push(nextPath);
+                    break;
+                }
+                cout << "Invalid option! Please try again: ";
+            } while (true);
         }
     }
 
