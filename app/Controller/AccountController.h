@@ -45,6 +45,7 @@ public:
         AccountModel* am = new AccountModel();
         string temp;
         uim->setStudentId("");
+        getline(cin, temp);
         cout << "Lecturer first name: ";  getline(cin, temp); uim->setFirstName(toLowerCase(temp));
         cout << "Lecturer last name: ";  getline(cin, temp); uim->setLastName(toLowerCase(temp));
         cout << "Lecturer DOB: ";  getline(cin, temp); uim->setDOB(toLowerCase(temp));

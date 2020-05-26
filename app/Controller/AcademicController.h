@@ -102,8 +102,8 @@ public:
             vector<string> schedule;
             schedule.push_back(course[1]);
             schedule.push_back(course[11]);
-            string dailyHour = course[6] + "-" + course[7];
-            string studyPeriod = course[4] + "-" + course[5];
+            string dailyHour = course[4] + "-" + course[5];
+            string studyPeriod = course[6] + "-" + course[7];
             schedule.push_back(dailyHour);
             schedule.push_back(studyPeriod);
             schedules.push_back(schedule);

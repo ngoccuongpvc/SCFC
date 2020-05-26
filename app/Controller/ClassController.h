@@ -27,6 +27,14 @@ public:
 
 		ModelInterface* model = new ModelInterface(path);
 		vector<vector<string>> records = model->fetch();
+		if (model->columns.size() != 6) {
+			cout << "Invalid input file format. Please recheck." << endl;
+			delete classModel;
+			delete accountModel;
+			delete userInfoModel;
+			delete model;
+			return;
+		}
 
 		classModel->setClassName(className);
 		for (vector<string> record : records) {
@@ -47,6 +55,11 @@ public:
 			accountModel->registerUser();
 			userInfoModel->AddUser();
 		}
+
+		delete classModel;
+		delete accountModel;
+		delete userInfoModel;
+		delete model;
 
 		cout << "Imported Successfully" << endl;
 	}

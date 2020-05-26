@@ -26,6 +26,15 @@ public:
 
         ModelInterface* model = new ModelInterface(path);
         vector<vector<string>> records = model->fetch();
+        if (model->columns.size() != 6) {
+            cout << "Invalid input file format. Please recheck." << endl;
+            delete cim;
+            delete sm;
+            delete am;
+            delete uim;
+            delete model;
+            return;
+        }
 
         cout << "Please enter the Course ID: "; string courseId; cin >> courseId;
         cim->setCourseId(courseId);
@@ -35,23 +44,24 @@ public:
             delete sm;
             delete am;
             delete uim;
+            delete model;
             return;
         }
         sm->setCourseId(courseId);
 
         for (vector<string> record : records) {
-            sm->setStudentId(record[0]);
+            sm->setStudentId(record[1]);
             sm->setTerm("midterm");
-            sm->setScore(record[1]);
-            sm->AddScore();
-            sm->setTerm("lab");
             sm->setScore(record[2]);
             sm->AddScore();
-            sm->setTerm("final");
+            sm->setTerm("lab");
             sm->setScore(record[3]);
             sm->AddScore();
-            sm->setTerm("bonus");
+            sm->setTerm("final");
             sm->setScore(record[4]);
+            sm->AddScore();
+            sm->setTerm("bonus");
+            sm->setScore(record[5]);
             sm->AddScore();
         }
 
@@ -60,6 +70,7 @@ public:
         delete sm;
         delete am;
         delete uim;
+        delete model;
     }
 
     void searchAndViewScore() {
@@ -67,7 +78,7 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to view score of: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
@@ -231,7 +242,7 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId = globalUsername, day;
-        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to view score of: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -249,8 +260,8 @@ public:
             delete sm;
             return;
         }
-        sm->setStudentId(studentId);
-        sm->setCourseId(courseId);
+        sm->setStudentId(toLowerCase(studentId));
+        sm->setCourseId(toLowerCase(courseId));
         vector<vector<string>> scoreboard = sm->FetchScoreboard();
         if (scoreboard.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
@@ -261,9 +272,12 @@ public:
         }
         vector<vector<string>> scores;
         for (int i = 0; i < scoreboard.size(); ++i) {
-            vector<string> score;
-            score.push_back(scoreboard[i][3]);
-            score.push_back(scoreboard[i][4]);
+            vector<string> score(2, "unmarked");
+            if (scoreboard[i][3] != "" && scoreboard[i][4] != "") {
+                score[0] = scoreboard[i][3];
+                score[1] = scoreboard[i][4];
+            }
+            
             scores.push_back(score);
         }
         vector<string> header; header.push_back("Term"); header.push_back("Score");

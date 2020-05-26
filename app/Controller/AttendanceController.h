@@ -193,7 +193,7 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         string courseId, studentId = globalUsername, day;
-        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to check in: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> temp = cim->FetchCourse();
         if (cim->FetchCourse().size() == 0) {
@@ -223,7 +223,7 @@ public:
             delete cim;
             return;
         }
-        cout << "Please enter the day you are checking in: "; cin >> day;
+        cout << "Please enter the day you are checking in (1-10): "; cin >> day;
         am->setDay(day);
         am->AddAttendance();
         cout << "Successfully added your checkin." << endl;
@@ -261,21 +261,24 @@ public:
         for (int i = 0; i < enrollment.size(); ++i) {
             cim->setCourseId(enrollment[i][2]);
             vector<vector<string>> courses = cim->FetchCourse();
-            vector<string> attendanceOfOne;
-            attendanceOfOne.push_back(courses[0][1]);
+            vector<string> attendanceOfOne(11, "0");
+            attendanceOfOne[0] = courses[0][1];
             am_temp->setCourseId(enrollment[i][2]);
             vector<vector<string>> days = am_temp->FetchAttendance();
             for (int k = 0; k < days.size(); ++k) {
-                attendanceOfOne.push_back(days[k][3]);
+                if (days[k][3] != "")
+                attendanceOfOne[stoi(days[k][3])] = "1";
             }
             attendance.push_back(attendanceOfOne);
         }
-        int max_column = 0;
+        int max_column = 10;
+        /*
         for (int i = 0; i < attendance.size(); ++i) {
             if (attendance[i].size() > max_column) max_column = attendance[i].size();
         }
+        */
         vector<string> header; header.push_back("Course Name");
-        for (int i = 0; i < max_column; ++i) header.push_back(" ");
+        for (int i = 0; i < max_column; ++i) header.push_back("Day" + to_string(i+1));
         View* view = new View(attendance, header);
         view->displayTable();
         delete view;
