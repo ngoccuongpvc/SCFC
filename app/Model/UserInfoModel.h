@@ -13,8 +13,8 @@ The csv file for this model has the following order:
 1. Student ID (19125001...)
 2. First name (john)
 3. Last name (cena)
-4. Gender (male, female)
-5. Date of Birth (01-01-2001)
+4. Date of Birth (01-01-2001)
+5. Gender (male, female)
 6. Username (johncena)
 */
 class UserInfoModel : public ModelInterface

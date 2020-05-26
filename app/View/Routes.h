@@ -201,6 +201,7 @@ public:
 		linkTo("student-dashboard", "view-check-in-result");
 		linkTo("student-dashboard", "view-schedule");
 		linkTo("student-dashboard", "view-score-of-course");
+		linkTo("student-dashboard", "see-profile");
 		linkTo("student-dashboard", "log-out");
 		/****** STAFF DASHBOARD ******/
 		linkTo("staff-dashboard", "class-dashboard-staff");
@@ -208,11 +209,13 @@ public:
 		linkTo("staff-dashboard", "score-dashboard-staff");
 		linkTo("staff-dashboard", "attendance-dashboard-staff");
 		linkTo("staff-dashboard", "lecturer-dashboard-staff");
+		linkTo("staff-dashboard", "see-profile");
 		linkTo("staff-dashboard", "log-out");
 		/****** LECTURE DASHBOARD******/
 		linkTo("lecturer-dashboard", "course-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "score-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "attendance-dashboard-lecturer");
+		linkTo("lecturer-dashboard", "see-profile");
 		linkTo("lecturer-dashboard", "log-out");
 
 		/****** STAFF - CLASS OPERATIONS ******/

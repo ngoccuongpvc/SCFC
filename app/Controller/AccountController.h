@@ -36,7 +36,7 @@ public:
         cout << "First name: " << records[0][2] << endl;
         cout << "Last name: " << records[0][3] << endl;
         cout << "Date of Birth: " << records[0][4] << endl;
-        cout << "Gender: " << records[0][6] << endl;
+        cout << "Gender: " << records[0][5] << endl;
         delete user;
     }
 

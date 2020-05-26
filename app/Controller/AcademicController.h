@@ -73,8 +73,8 @@ public:
 		//fllusing
 		//string temp;
 		//getline(cin, temp);
-        cout << "Please enter your student Id: "; getline(cin, studentId);
-        am->setStudentId(studentId);
+        //cout << "Please enter your student Id: "; getline(cin, studentId);
+        am->setStudentId(globalUsername);
         am->setDay("");
         uim->setStudentId(toLowerCase(studentId));
         vector<vector<string>> results = uim->FetchInfo();

@@ -31,12 +31,14 @@ public:
 
     void createSession(string username) {
         if (checkLoginStatus()) return;
+        globalUsername = username;
         currentSession = username;
         logged_in = true;
     }
 
     void resetSession() {
         currentSession = "";
+        globalUsername = "";
         logged_in = false;
     }
 

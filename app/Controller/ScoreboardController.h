@@ -230,7 +230,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        string courseId, studentId, day;
+        string courseId, studentId = globalUsername, day;
         cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
@@ -240,7 +240,7 @@ public:
             delete sm;
             return;
         }
-        cout << "Please enter your student Id: "; cin >> studentId;
+        //cout << "Please enter your student Id: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;

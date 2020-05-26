@@ -192,7 +192,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
-        string courseId, studentId, day;
+        string courseId, studentId = globalUsername, day;
         cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> temp = cim->FetchCourse();
@@ -203,7 +203,7 @@ public:
             delete cim;
             return;
         }
-        cout << "Please enter your student Id: "; cin >> studentId;
+        //cout << "Please enter your student Id: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
@@ -236,8 +236,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
-        string courseName, courseId, studentId, day;
-        cout << "Please enter your student Id: "; cin >> studentId;
+        string courseName, courseId, studentId = globalUsername, day;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
