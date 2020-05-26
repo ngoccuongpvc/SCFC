@@ -4,6 +4,7 @@
 #include "ModelInterface.h"
 
 class ClassModel : public ModelInterface {
+
 private:
 	string id;
 	string className;

@@ -1,0 +1,7 @@
+No ,Course ID,Course name,Class,Lecturer Account,Start Date,End Date,Date of Week,Start Hour:Minute,End Hour:Minute,Room
+1,CS162,Introduction to Computer Science II,19CTT1,dbtien,02/03/2020,18/05/2020,Mon,7:30,9:10,I24
+2,MTH252,Calculus II,19CTT1,nhanh,03/03/2020,19/05/2020,Mon,9:30,11:10,I34
+3,PH212,General Physics II,19CTT1,nhnha,02/03/2020,20/05/2020,Wed,13:30,15:10,I35
+4,MTH252,Calculus II,19CTT2,nttvan,04/03/2020,20/05/2020,Wed,7:30,9:10,I44
+5,CS162,Introduction to Computer Science II,19CTT2,dbtien,02/03/2020,18/05/2020,Thu,7:30,9:10,I32
+6,PH212,General Physics II,19CTT2,nhnha,02/03/2020,18/05/2020,Thu,9:10,11:10,I45
