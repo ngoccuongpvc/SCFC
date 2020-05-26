@@ -4,7 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <vector>
+#include "../Utils/vector.h"
 #include <map>
 #include <functional>
 #include <cmath>
