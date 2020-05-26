@@ -33,6 +33,11 @@ public:
 		return routes[path].second;
 	}
 
+	int getNumberOfOption(string path)
+	{
+		return this->links[path].size();
+	}
+
 	void showOptions(string path)
 	{
 		cout << "0 - Back" << endl;
