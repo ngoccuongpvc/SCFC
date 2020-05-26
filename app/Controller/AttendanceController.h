@@ -23,6 +23,8 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
+            delete am;
+            delete cim;
             return;
         }
         vector<vector<string>> attendance;
@@ -31,6 +33,8 @@ public:
         vector<vector<string>> results = am->FetchAttendance();
         if (results.size() == 0) {
             cout << "No students attended the given course, please recheck." << endl;
+            delete am;
+            delete cim;
             return;
         }
         AttendanceModel* am_temp = new AttendanceModel();
@@ -62,7 +66,6 @@ public:
         delete view;
         delete am;
         delete cim;
-        delete view;
     }
 
 
@@ -78,6 +81,9 @@ public:
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
+            delete am;
+            delete cim;
+            delete uim;
             return;
         }
         vector<vector<string>> attendance;
@@ -86,6 +92,9 @@ public:
         vector<vector<string>> results = am->FetchAttendance();
         if (results.size() == 0) {
             cout << "No students attended the given course, please recheck." << endl;
+            delete am;
+            delete cim;
+            delete uim;
             return;
         }
         AttendanceModel* am_temp = new AttendanceModel();
@@ -116,8 +125,8 @@ public:
         view->exportTable();
         delete view;
         delete am;
+        delete uim;
         delete cim;
-        delete view;
     }
 
 
@@ -189,12 +198,18 @@ public:
         vector<vector<string>> temp = cim->FetchCourse();
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete uim;
+            delete am;
+            delete cim;
             return;
         }
         cout << "Please enter your student Id: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete uim;
+            delete am;
+            delete cim;
             return;
         }
         am->setStudentId(studentId);
@@ -203,6 +218,9 @@ public:
         vector<vector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
+            delete uim;
+            delete am;
+            delete cim;
             return;
         }
         cout << "Please enter the day you are checking in: "; cin >> day;
@@ -223,6 +241,9 @@ public:
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete uim;
+            delete cim;
+            delete am;
             return;
         }
         am->setStudentId(studentId);
@@ -230,6 +251,9 @@ public:
         vector<vector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in any course." << endl;
+            delete uim;
+            delete cim;
+            delete am;
             return;
         }
         vector<vector<string>> attendance;
