@@ -94,21 +94,6 @@ public:
 		delete classModel;
 	}
 
-	void showStudent() {
-		ClassModel* classModel = new ClassModel();
-
-		cout << "Input class name: ";
-		string classname;
-		getline(cin, classname);
-
-		vector<vector<string>> students = classModel->FetchAll(classname);
-		vector<string> cols = classModel->columns;
-
-		View* view = new View(students, cols);
-		view->displayTable();
-		delete view;
-		delete classModel;
-	}
 
 	void addStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
