@@ -76,7 +76,7 @@ public:
 
 		/****** SCOREBOARD OPERATIONS ******/
 		usage["edit-score"] = "Edit scores of a student";
-		usage["import-score"] = "Import scoreboard for a course";
+		usage["import-scoreboard"] = "Import scoreboard for a course";
 		usage["export-scoreboard"] = "Export scoreboard to a CSV file";
 		usage["search-and-view-score"] = "Search and view scoreboard of a course";
 		usage["view-score-of-course"] = "View scores of an enrolled course";
