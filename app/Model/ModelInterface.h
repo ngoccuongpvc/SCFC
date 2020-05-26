@@ -83,7 +83,7 @@ public:
     void getColumns() {
         ifstream *f = this->readConnection();
         string str;
-        getline((*f), str);
+        getline((*f), str); //exception
         f->close();
 		closeConnection(f);
         columns = split(str);

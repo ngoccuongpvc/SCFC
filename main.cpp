@@ -99,6 +99,11 @@ int main()
             int opt;
             cout << "Choose your option: ";
             cin >> opt;
+
+			string temp;
+			getline(cin, temp);
+
+			system("cls");
             if (!opt) {
                 history.pop(); //opt == 0
             }

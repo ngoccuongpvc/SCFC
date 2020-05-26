@@ -5,6 +5,7 @@
 #include "../Model/ClassModel.h"
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../View/View.h"
 
 class ClassController : public ControllerInterface {
 private:
@@ -70,7 +71,7 @@ public:
 		vector<string> students = classModel->getStudentInClass(classname);
 		vector<vector<string>> studentInfo;
 		vector<string> record;
-
+		vector<string> cols = {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
 		int n = students.size();
 		int id = userInfoModel->getIndex("studentId");
 		int lastname = userInfoModel->getIndex("lastName");
@@ -81,9 +82,29 @@ public:
 		for (int i = 0; i < n; ++i) {
 			userInfoModel->setStudentId(students[i]);
 			record = userInfoModel->FetchInfo()[0];
+			record.pop_back();
 			studentInfo.push_back(record);
-			cout << record[id] << " " << record[firstname] << " " << record[lastname] << " " << record[gender] << " " << record[dob] << endl;
 		}
+
+		View* view = new View(studentInfo, cols);
+		view->displayTable();
+		delete view;
+		delete classModel;
+	}
+
+	void showStudent() {
+		ClassModel* classModel = new ClassModel();
+
+		cout << "Input class name: ";
+		string classname;
+		getline(cin, classname);
+
+		vector<vector<string>> students = classModel->FetchAll(classname);
+		vector<string> cols = classModel->columns;
+
+		View* view = new View(students, cols);
+		view->displayTable();
+		delete view;
 		delete classModel;
 	}
 
