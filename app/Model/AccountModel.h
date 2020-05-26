@@ -49,15 +49,15 @@ private:
 public:
 
     void setUserName(string username) {
-        this->username = username;
+        this->username = toLowerCase(username);
     }
 
     void setPassword(string password) {
-        this->password = password;
+        this->password = toLowerCase(password);
     }
 
     void setRole(string role) {
-        this->role = role;
+        this->role = toLowerCase(role);
     }
 
     string getUserName() {

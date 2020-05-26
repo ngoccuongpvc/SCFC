@@ -35,19 +35,19 @@ public:
 	}
 
 	void setStudentId(string id) {
-		this->studentId = id;
+		this->studentId = toLowerCase(id);
 	}
 
 	void setCourseId(string id) {
-		this->courseId = id;
+		this->courseId = toLowerCase(id);
 	}
 
 	void setTerm(string term) {
-		this->term = term;
+		this->term = toLowerCase(term);
 	}
 
 	void setScore(string score) {
-		this->score = score;
+		this->score = toLowerCase(score);
 	}
 
 	string getStudentId() {

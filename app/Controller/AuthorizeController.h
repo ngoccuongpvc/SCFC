@@ -2,6 +2,7 @@
 #define AUTHORIZECONTROLLER_H_INCLUDED
 
 #include "ControllerInterface.h"
+#include "MiscellanousFunctions.h"
 #include <string.h>
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
@@ -44,10 +45,14 @@ public:
         AccountModel* model = new AccountModel();
 
         while (true) {
+			//fflush
+			string temp;
+			getline(cin, temp);
+
             cout << "User name: ";
-            cin >> username;
+            getline(cin, username);
             cout << "Password: ";
-            cin >> password;
+            getline(cin, password);
             if (model->checkCredential(username, password)) {
                 cout << "Login successful" << endl;
                 cout << "You are login as: " << model->getUserRole(username) << endl;
@@ -69,8 +74,6 @@ public:
 
     }
 
-
-
     void registerAction() {
         //if (checkLoginStatus()) return;
 
@@ -79,30 +82,35 @@ public:
         AccountModel* am = new AccountModel();
         extern stack<string> history;
         string firstName, lastName, dob, gender, role_l, username, password, studentID;
+
+		//fflush
+		string temp;
+		getline(cin, temp);
+
         cout << "Welcome to the register screen" << endl;
-        cout << "First name: "; cin >> firstName; user->setFirstName(firstName);
-        cout << "Last name: "; cin >> lastName; user->setLastName(lastName);
-        cout << "Date of Birth: "; cin >> dob; user->setDOB(dob);
-        cout << "Gender: "; cin >> gender; user->setUserGender(gender);
+        cout << "First name: "; getline(cin, firstName); user->setFirstName(firstName);
+        cout << "Last name: "; getline(cin, lastName); user->setLastName(lastName);
+        cout << "Date of Birth: "; getline(cin, dob); user->setDOB(dob);
+        cout << "Gender: "; getline(cin, gender); user->setUserGender(gender);
         role = "";
         while (role_l != "student" && role_l != "lecturer" && role_l != "staff") {
-            cout << "Role (student/ staff/ lecturer): "; cin >> role_l;
+            cout << "Role (student/ staff/ lecturer): "; getline(cin, role_l);
             role = toLowerCase(role);
         }
         if (role_l == "student") {
-            cout << "Student ID: "; cin >> studentID; user->setStudentId(studentID);
+            cout << "Student ID: "; getline(cin, studentID); user->setStudentId(studentID);
             user->setUsername(studentID);
             am->setUserName(studentID);
-            am->setPassword(dob);
+            am->setPassword(dob); //defualt password of student == thier dob
         }
         else {
             user->setStudentId("");
-            cout << "Username: "; cin >> username; user->setUsername(username);
+            cout << "Username: "; getline(cin, username); user->setUsername(username);
             am->setUserName(username);
-            cout << "Password: "; cin >> password; am->setPassword(password);
-            am->setPassword(password);
+            cout << "Password: "; getline(cin, password); 
+			am->setPassword(password);
         }
-		am->setRole(role);
+		am->setRole(role_l);
         user->AddUser();
         am->registerUser();
         createSession(am->getUserName());
@@ -130,7 +138,7 @@ public:
         {
             string newPass;
             cout << "Pls enter new password: ";
-            cin >> newPass;
+            getline(cin, newPass);
 
             AccountModel* model = new AccountModel();
 

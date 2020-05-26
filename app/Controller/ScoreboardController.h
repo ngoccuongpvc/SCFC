@@ -31,6 +31,10 @@ public:
         cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "There is no such course." << endl;
+            delete cim;
+            delete sm;
+            delete am;
+            delete uim;
             return;
         }
         sm->setCourseId(courseId);
@@ -52,6 +56,10 @@ public:
         }
 
         cout << "Imported Successfully" << endl;
+        delete cim;
+        delete sm;
+        delete am;
+        delete uim;
     }
 
     void searchAndViewScore() {
@@ -64,6 +72,9 @@ public:
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete sm;
+            delete cim;
+            delete uim;
             return;
         }
         sm->setCourseId(courseId);
@@ -72,6 +83,9 @@ public:
         vector<vector<string>> studentResults = sm->FetchScoreboard();
         if (studentResults.size() == 0) {
             cout << "No students was given any score in the given course." << endl;
+            delete sm;
+            delete cim;
+            delete uim;
             return;
         }
         ScoreboardModel* sm_temp = new ScoreboardModel();
@@ -129,6 +143,9 @@ public:
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete sm;
+            delete cim;
+            delete uim;
             return;
         }
         sm->setCourseId(courseId);
@@ -137,6 +154,9 @@ public:
         vector<vector<string>> studentResults = sm->FetchScoreboard();
         if (studentResults.size() == 0) {
             cout << "No students was given any score in the given course." << endl;
+            delete sm;
+            delete cim;
+            delete uim;
             return;
         }
         ScoreboardModel* sm_temp = new ScoreboardModel();
@@ -210,18 +230,23 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        if (role != "student") return;
         string courseId, studentId, day;
         cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
+            delete cim;
+            delete uim;
+            delete sm;
             return;
         }
         cout << "Please enter your student Id: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
+            delete cim;
+            delete uim;
+            delete sm;
             return;
         }
         sm->setStudentId(studentId);
@@ -229,6 +254,9 @@ public:
         vector<vector<string>> scoreboard = sm->FetchScoreboard();
         if (scoreboard.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
+            delete cim;
+            delete uim;
+            delete sm;
             return;
         }
         vector<vector<string>> scores;

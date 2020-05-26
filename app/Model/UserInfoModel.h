@@ -32,31 +32,31 @@ private:
 public:
 
     void setId(string id) {
-        this->id = id;
+        this->id = toLowerCase(id);
     }
 
     void setStudentId(string studentID) {
-        this->studentID = studentID;
+        this->studentID = toLowerCase(studentID);
     }
 
     void setLastName(string lastName) {
-        this->lastName = lastName;
+        this->lastName = toLowerCase(lastName);
     }
 
     void setFirstName(string firstName) {
-        this->firstName = firstName;
+        this->firstName = toLowerCase(firstName);
     }
 
     void setUserGender(string userGender) {
-        this->userGender = userGender;
+        this->userGender = toLowerCase(userGender);
     }
 
     void setDOB(string dob) {
-        this->dob = dob;
+        this->dob = toLowerCase(dob);
     }
 
     void setUsername(string username) {
-        this->username = username;
+        this->username = toLowerCase(username);
     }
 
     string getId() {

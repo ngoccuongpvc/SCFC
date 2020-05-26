@@ -120,6 +120,14 @@
     <ClInclude Include="app\Model\UserInfoModel.h" />
     <ClInclude Include="app\view\Routes.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="database\Account.csv" />
+    <None Include="database\CheckInList.csv" />
+    <None Include="database\Class.csv" />
+    <None Include="database\CourseInfo.csv" />
+    <None Include="database\ScoreList.csv" />
+    <None Include="database\UserInfo.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
