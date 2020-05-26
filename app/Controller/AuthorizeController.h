@@ -46,8 +46,8 @@ public:
 
         while (true) {
 			//fflush
-			string temp;
-			getline(cin, temp);
+			//string temp;
+			//getline(cin, temp);
 
             cout << "User name: ";
             getline(cin, username);
@@ -84,8 +84,8 @@ public:
         string firstName, lastName, dob, gender, role_l, username, password, studentID;
 
 		//fflush
-		string temp;
-		getline(cin, temp);
+		//string temp;
+		//getline(cin, temp);
 
         cout << "Welcome to the register screen" << endl;
         cout << "First name: "; getline(cin, firstName); user->setFirstName(firstName);

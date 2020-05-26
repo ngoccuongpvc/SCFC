@@ -17,13 +17,14 @@ private:
 	vector<string> colHeader;
 	vector<int> maxWidth;
 	int rowWidth = 0;
+	bool matchedData = false;
 
 	//CALCULATE MAX WIDTH OF EACH COL
-	string calculateMaxWidth()
+	bool calculateMaxWidth()
 	{
-		if (this->data.size() == 0 || this->colHeader.size() == 0) return "null data";
-		else if (this->data[0].size() != this->colHeader.size()) return "unmatched data and collumn header";
-		else if (this->maxWidth.size() != 0) return "maxWidth initialized before used"; //maxWidth should not be initialized before this
+		if (this->data.size() == 0 || this->colHeader.size() == 0) return false;
+		else if (this->data[0].size() != this->colHeader.size()) return false;
+		else if (this->maxWidth.size() != 0) return false; //maxWidth should not be initialized before this
 		
 		cout << this->data[0].size() << endl;
 		this->data.push_back(this->colHeader);
@@ -35,12 +36,12 @@ private:
 			for (j; j < this->data[0].size(); j++)
 			{
 				int temp = this->data[i][j].size();
-				if (this->maxWidth[j] < temp) this->maxWidth[j] = temp + 4; //extra 4 space
+				if (this->maxWidth[j] < temp) this->maxWidth[j] = temp;
 				if (i == this->data.size() - 1) this->rowWidth += this->maxWidth[j];
 			}
 		}
 		this->data.pop_back();
-		return "successfully init maxWidth";
+		return true;
 	}
 
 	//ALIGN CENTER FOR EACH CELL
@@ -127,6 +128,7 @@ private:
 public:
 	void displayTable()
 	{
+		if (!this->matchedData) return;
 		//collumn format
 		this->headerPrint();
 		//data format
@@ -144,7 +146,7 @@ public:
 	View(vector<vector<string>> data, vector<string> colHeader) {
 		this->data = data;
 		this->colHeader = colHeader;
-		this->calculateMaxWidth();
+		this->matchedData = this->calculateMaxWidth();
 	}
 };
 

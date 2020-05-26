@@ -101,6 +101,11 @@ int main()
             cout << "Choose your option: ";
             do {
                 cin >> opt;
+              
+                string temp;
+			          getline(cin, temp);
+
+        			  system("cls");
                 if (!opt) {
                     history.pop(); //opt == 0
                     break;
@@ -112,8 +117,6 @@ int main()
                 }
                 cout << "Invalid option! Please try again: ";
             } while (true);
-            
-            
         }
     }
 
