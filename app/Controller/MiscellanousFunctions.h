@@ -18,14 +18,6 @@ string comaFilter(string& str)
 }
 
 string toLowerCase(string s) {
-	while (true)
-	{
-		int t = s.find(",");
-		if (t == -1) return s;
-		s.erase(t, 1);
-		continue;
-	}
-
     for (int i = 0; i < s.length(); ++i) {
         s[i] = tolower(s[i]);
     }
