@@ -37,26 +37,26 @@ public:
         }
 
         for (vector<string> record : records) {
-            cim->setCourseId(record[1]);
-            cim->setCourseName(record[2]);
-            cim->setClassName(record[3]);
-            cim->setLecturerAccount(record[4]);
-            cim->setStartDay(record[5]);
-            cim->setEndDay(record[6]);
-            cim->setDayOfWeek(record[7]);
-            cim->setStartHour(record[8]);
-            cim->setEndHour(record[9]);
-            cim->setRoom(record[10]);
+            cim->setCourseId(toLowerCase(record[1]));
+            cim->setCourseName(toLowerCase(record[2]));
+            cim->setClassName(toLowerCase(record[3]));
+            cim->setLecturerAccount(toLowerCase(record[4]));
+            cim->setStartDay(toLowerCase(record[5]));
+            cim->setEndDay(toLowerCase(record[6]));
+            cim->setDayOfWeek(toLowerCase(record[7]));
+            cim->setStartHour(toLowerCase(record[8]));
+            cim->setEndHour(toLowerCase(record[9]));
+            cim->setRoom(toLowerCase(record[10]));
             cim->setSemester(getSemester());
             cim->setYear(getYear());
             cim->AddCourse();
 
-            am->setCourseId(record[1]);
+            am->setCourseId(toLowerCase(record[1]));
             am->setDay("");
-            sm->setCourseId(record[1]);
+            sm->setCourseId(toLowerCase(record[1]));
             sm->setScore("");
             sm->setTerm("");
-            vector<string> students = cm->getStudentInClass(record[3]);
+            vector<string> students = cm->getStudentInClass(toLowerCase(record[3]));
             for (int i = 0; i < students.size(); ++i) {
                 am->setStudentId(students[i]);  
                 am->AddAttendance();

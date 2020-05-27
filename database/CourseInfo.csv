@@ -1,8 +1,8 @@
 id,courseName,className,lecturerAccount,startHour,endHour,startDay,endDay,room,semester,year,dayOfWeek,courseId
-1,introduction to computer science iii,19ctt2,dbtien,8:00,10:00,21-02-2020,23-02-2020,i52,2,2020,wed-thur,cs163
-2,Introduction to Computer Science II,19CTT1,dbtien,7:30,9:10,02/03/2020,18/05/2020,I24,all,all,Mon,CS162
-3,Calculus II,19CTT1,nhanh,9:30,11:10,03/03/2020,19/05/2020,I34,all,all,Mon,MTH252
-4,General Physics II,19CTT1,nhnha,13:30,15:10,02/03/2020,20/05/2020,I35,all,all,Wed,PH212
-5,Calculus II,19CTT2,nttvan,7:30,9:10,04/03/2020,20/05/2020,I44,all,all,Wed,MTH252
-6,Introduction to Computer Science II,19CTT2,dbtien,7:30,9:10,02/03/2020,18/05/2020,I32,all,all,Thu,CS162
-7,General Physics II,19CTT2,nhnha,9:10,11:10,02/03/2020,18/05/2020,I45,all,all,Thu,PH212
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

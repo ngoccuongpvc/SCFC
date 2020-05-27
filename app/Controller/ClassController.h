@@ -39,18 +39,18 @@ public:
 
 		classModel->setClassName(className);
 		for (vector<string> record : records) {
-			classModel->setStudentId(record[1]);
+			classModel->setStudentId(toLowerCase(record[1]));
 
-			accountModel->setUserName(record[1]);
-			accountModel->setPassword(record[5]);
+			accountModel->setUserName(toLowerCase(record[1]));
+			accountModel->setPassword(toLowerCase(record[5]));
 			accountModel->setRole("student");
 
-			userInfoModel->setStudentId(record[1]);
-			userInfoModel->setLastName(record[2]);
-			userInfoModel->setFirstName(record[3]);
-			userInfoModel->setUserGender(record[4]);
-			userInfoModel->setDOB(record[5]);
-			userInfoModel->setUsername(record[1]);
+			userInfoModel->setStudentId(toLowerCase(record[1]));
+			userInfoModel->setLastName(toLowerCase(record[2]));
+			userInfoModel->setFirstName(toLowerCase(record[3]));
+			userInfoModel->setUserGender(toLowerCase(record[4]));
+			userInfoModel->setDOB(toLowerCase(record[5]));
+			userInfoModel->setUsername(toLowerCase(record[1]));
 
 			classModel->saveStudent();
 			accountModel->registerUser();
