@@ -115,7 +115,10 @@ int main()
                     history.push(nextPath);
                     break;
                 }
-                cout << "Invalid option! Please try again: ";
+				cout << "Invalid option! Please try again: " << endl;
+				route->showOptions(path);
+				nopt = route->getNumberOfOption(path);
+				cout << "Choose your option: ";
             } while (true);
         }
     }
