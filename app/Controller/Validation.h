@@ -58,7 +58,7 @@ public:
 		regList["hour"] = regex("[0-2][0-9]:[0-6][0-9]");
 		regList["year"] = regex("20\\d\\d-20\\d\\d");
 
-		regList["day"] = regex("\\d+");
+		regList["day"] = regex("\d\d");
 		regList["score"] = regex("\\d+");
 
 		regList["gender"] = regex("male|female");
