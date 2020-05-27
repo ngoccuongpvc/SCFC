@@ -271,10 +271,7 @@ public:
 		linkTo("score-dashboard-lecturer", "search-and-view-score");
 
 		linkTo("access", "login");
-		linkTo("access", "register");
-
-		
-				
+		linkTo("access", "register");			
 	}
 };
 #endif // ROUTES_H_INCLUDED

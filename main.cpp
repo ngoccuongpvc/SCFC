@@ -12,6 +12,7 @@
 #include "app/Controller/CourseController.h"
 #include "app/Controller/ScoreboardController.h"
 #include "app/Controller/UserController.h"
+#include "app/Controller/Validation.h"
 
 #include "app/View/Routes.h"
 #include "app/View/View.h"
@@ -71,12 +72,11 @@ int main()
 
 	/*TEST SITE FOR VIEW
 
-	vector<string> col = { "col1", "col2", "col3" };
-	vector<vector<string>> data = { {"19", "hung","18"}, {"579844", "welll this must be the shortest","18"}, {"1", "hu","hu"} };
-
-	View viewModel = View(data, col);
-	viewModel.displayTable();
-	viewModel.exportTable();
+	Validation *valid = new Validation();
+	string day;
+	valid->read(day, "term");
+	cout << day;
+	delete valid;
 
 	/*END TEST SITE*/
     while (true) {
@@ -101,11 +101,11 @@ int main()
             cout << "Choose your option: ";
             do {
                 cin >> opt;
-              
-                string temp;
-			    getline(cin, temp);
 
-        			  system("cls");
+				string temp;
+				getline(cin, temp);
+				system("cls");
+
                 if (!opt) {
                     history.pop(); //opt == 0
                     break;
@@ -115,7 +115,10 @@ int main()
                     history.push(nextPath);
                     break;
                 }
-                cout << "Invalid option! Please try again: ";
+				cout << "Invalid option! Please try again: " << endl;
+				route->showOptions(path);
+				nopt = route->getNumberOfOption(path);
+				cout << "Choose your option: ";
             } while (true);
         }
     }
