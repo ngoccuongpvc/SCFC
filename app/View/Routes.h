@@ -84,7 +84,7 @@ public:
 		/****** ATTENDANCE OPERATIONS ******/
 		usage["check-in"] = "Check in a course study day";
 		usage["delete-attendance"] = "Delete attendance of a student";
-		usage["edit-attendance"] = "Edit attendance of a student";
+		usage["edit-attendance"] = "Add attendance of a student";
 		usage["export-attendance"] = "Export attendance board to a CSV file";
 		usage["view-attendance-list"] = "View attendance list of a course";
 		usage["view-check-in-result"] = "View your check-in result of a course";
@@ -262,12 +262,13 @@ public:
 		linkTo("course-dashboard-lecturer", "list-of-course-current-semester");
 		linkTo("course-dashboard-lecturer", "view-list-of-students-of-course");
 		/****** LECTURER - ATTENDANCE OPERATIONS ******/
-		linkTo("course-dashboard-lecturer", "view-attendance-list");
-		linkTo("course-dashboard-lecturer", "edit-attendance");
+		linkTo("attendance-dashboard-lecturer", "view-attendance-list");
+		linkTo("attendance-dashboard-lecturer", "edit-attendance");
+		linkTo("attendance-dashboard-lecturer", "delete-attendance");
 		/****** LECTURER - SCORE OPERATIONS ******/
-		linkTo("course-dashboard-lecturer", "import-scoreboard");
-		linkTo("course-dashboard-lecturer", "edit-score");
-		linkTo("course-dashboard-lecturer", "search-and-view-score");
+		linkTo("score-dashboard-lecturer", "import-scoreboard");
+		linkTo("score-dashboard-lecturer", "edit-score");
+		linkTo("score-dashboard-lecturer", "search-and-view-score");
 
 		linkTo("access", "login");
 		linkTo("access", "register");

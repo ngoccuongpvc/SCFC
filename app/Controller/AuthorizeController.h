@@ -48,9 +48,6 @@ public:
 
         while (true) {
 			//fflush
-			//string temp;
-			//getline(cin, temp);
-
             cout << "User name: ";
             getline(cin, username);
             cout << "Password: ";
@@ -69,7 +66,8 @@ public:
                 cout << "Wrong username or password" << endl;
                 cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
                 bool tryAgain = false;
-                cin >> tryAgain;
+                string temp;
+                getline(cin, temp);
                 if (!tryAgain) break;
             }
         }

@@ -103,7 +103,7 @@ int main()
                 cin >> opt;
               
                 string temp;
-			          getline(cin, temp);
+			    getline(cin, temp);
 
         			  system("cls");
                 if (!opt) {

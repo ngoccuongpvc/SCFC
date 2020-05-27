@@ -37,7 +37,7 @@ public:
 			return;
 		}
 
-		classModel->setClassName(className);
+		classModel->setClassName(toLowerCase(className));
 		for (vector<string> record : records) {
 			classModel->setStudentId(toLowerCase(record[1]));
 
@@ -51,7 +51,7 @@ public:
 			userInfoModel->setUserGender(toLowerCase(record[4]));
 			userInfoModel->setDOB(toLowerCase(record[5]));
 			userInfoModel->setUsername(toLowerCase(record[1]));
-
+			
 			classModel->saveStudent();
 			accountModel->registerUser();
 			userInfoModel->AddUser();

@@ -109,7 +109,6 @@ public:
     void removeCourseByYear() {
         CourseInformationModel* cim = new CourseInformationModel();
         string year;
-        getline(cin, year);
         cout << "Please enter the academic year that you want to remove: "; getline(cin, year);
         cim->setYear(toLowerCase(year));
         vector<vector<string>> results = cim->FetchCourse();
@@ -123,9 +122,9 @@ public:
     void removeCourseBySemester() {
         CourseInformationModel* cim = new CourseInformationModel();
         string semester, year;
-        cout << "Please enter the academic year that you want to remove: "; cin >> year;
+        cout << "Please enter the academic year that you want to remove: "; getline(cin, year);
         cim->setYear(toLowerCase(year));
-        cout << "Please enter the semester that you want to remove: "; cin >> semester;
+        cout << "Please enter the semester that you want to remove: "; getline(cin, semester);
         cim->setSemester(toLowerCase(semester));
         vector<vector<string>> results = cim->FetchCourse();
         for (int i = 0; i < results.size(); ++i) {
@@ -141,7 +140,6 @@ public:
         ScoreboardModel* sm = new ScoreboardModel();
         ClassModel* cm = new ClassModel();
         string temp, temp2;
-        getline(cin, temp2);
         cout << "Course ID: "; getline(cin, temp); cim->setCourseName(toLowerCase(temp));
         cout << "Course name: "; getline(cin, temp); cim->setCourseName(toLowerCase(temp));
         cout << "Class name: "; getline(cin, temp); cim->setClassName(toLowerCase(temp));
@@ -178,7 +176,7 @@ public:
 
     void editCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
-        cout << "Please enter the ID of the course that you want to edit: "; string courseId; getline(cin, courseId); getline(cin, courseId);
+        cout << "Please enter the ID of the course that you want to edit: "; string courseId; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
@@ -205,13 +203,13 @@ public:
         cout << "Semester: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         cout << "Year: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
         toUpdate.push_back(toLowerCase(temp2));
-        if (record[2] != toUpdate[2]) {
+        if (record[2] != toUpdate[2] && toUpdate[2] != "") {
             // Remove all students from the old class and all of their records
             // Add all students of the new class and add their records
             emptyCourse(courseId);
             enrollStudentsOfClass(toUpdate[2], courseId);
         }
-        if (record[12] != toUpdate[12]) {
+        if (record[12] != toUpdate[12] && toUpdate[12] != "") {
             updateCourseId(record[12], toUpdate[12]);
         }
         cim->UpdateCourse(&record, &toUpdate);
@@ -284,7 +282,7 @@ public:
 
     void removeCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
-        cout << "Please enter the ID of the course that you want to edit: "; string courseId; getline(cin, courseId); getline(cin, courseId);
+        cout << "Please enter the ID of the course that you want to remove: "; string courseId; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
@@ -299,10 +297,11 @@ public:
 
     void listOfCourseCurrentSemester() {
         CourseInformationModel* cim = new CourseInformationModel();
-        string semester;
-        getline(cin, semester);
+        string semester, year;
+        cout << "Please enter the year of the semester: "; getline(cin, year);
         cout << "Please enter the semester that you want to view the list of courses of: "; getline(cin, semester);
         cim->setSemester(toLowerCase(semester));
+        cim->setYear(toLowerCase(year));
         vector<vector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
@@ -327,7 +326,6 @@ public:
     void listOfCourseCurrentYear() {
         CourseInformationModel* cim = new CourseInformationModel();
         string year;
-        getline(cin, year);
         cout << "Please enter the year that you want to view the list of courses of: "; getline(cin, year);
         cim->setYear(toLowerCase(year));
         vector<vector<string>> results = cim->FetchCourse();
@@ -357,8 +355,7 @@ public:
         AttendanceModel* am = new AttendanceModel();
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId;
-        getline(cin, courseId);
-        cout << "Please enter the ID of the course that you want to edit: "; getline(cin, courseId);
+        cout << "Please enter the ID of the course that you want to remove a student from: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -403,7 +400,6 @@ public:
         AttendanceModel* am = new AttendanceModel();
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId;
-        getline(cin, courseId);
         cout << "Please enter the ID of the course that you want to add: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
@@ -465,8 +461,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AttendanceModel* am = new AttendanceModel();
         string temp, courseId;
-        getline(cin, courseId);
-        cout << "Please enter the ID of the course that you want to edit: "; getline(cin, courseId);
+        cout << "Please enter the ID of the course that you want to list of students: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;

@@ -1,8 +1,8 @@
 id,courseName,className,lecturerAccount,startHour,endHour,startDay,endDay,room,semester,year,dayOfWeek,courseId
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
+1,test,test,test,test,test,test,test,test,test,test,test,test
+2,introduction to computer science ii,19ctt1,dbtien,7:30,9:10,02/03/2020,18/05/2020,i24,summer,2019-2020,mon,cs162
+3,calculus ii,19ctt1,nhanh,9:30,11:10,03/03/2020,19/05/2020,i34,summer,2019-2020,mon,mth252
+4,general physics ii,19ctt1,nhnha,13:30,15:10,02/03/2020,20/05/2020,i35,summer,2019-2020,wed,ph212
+5,calculus ii,19ctt2,nttvan,7:30,9:10,04/03/2020,20/05/2020,i44,summer,2019-2020,wed,mth252
+6,introduction to computer science ii,19ctt2,dbtien,7:30,9:10,02/03/2020,18/05/2020,i32,summer,2019-2020,thu,cs162
+7,general physics ii,19ctt2,nhnha,9:10,11:10,02/03/2020,18/05/2020,i45,summer,2019-2020,thu,ph212
