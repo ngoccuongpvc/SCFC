@@ -3,13 +3,15 @@
 
 #include <map>
 #include <string>
+#include <iostream>
 
 using namespace std;
+
 
 class Routes {
 private:
 	map<string, pair<string, string>> routes;
-	map<string, vector<string>> links;
+	map<string, std::vector<string>> links;
 	map<string, string> usage;
 
 public:

@@ -72,7 +72,7 @@ public:
     }
 
     ~vector() {
-        delete[]A;
+        //delete[]A;
     }
 };
 

@@ -24,8 +24,19 @@ private:
     string password;
     string role;
 
+    string filterPassword(string password) {
+        cout << "Please be aware that all characters in password aside from A-Za-z0-9 will be eliminated." << endl;
+        string newPassword = "";
+        for (int i = 0; i < password.length(); ++i) {
+            if (isalnum(password[i])) newPassword += password[i];
+        }
+        return newPassword;
+
+    }
+
 	string SHF(string input) //SHF = simple hash function
 	{
+        input = filterPassword(input);
 		unsigned int magic = 5674356;
 		unsigned int hash = 1234564352;
 		for (int i = 0; i < input.length(); i++)

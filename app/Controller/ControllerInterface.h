@@ -7,6 +7,7 @@
 #include <ctime>
 #include <functional>
 #include "../History.h"
+#include "../Utils/vector.h"
 
 using namespace std;
 

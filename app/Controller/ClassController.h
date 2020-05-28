@@ -2,9 +2,14 @@
 #define CLASSCONTROLLER_H_INCLUDED
 
 #include "ControllerInterface.h"
-#include "../Model/ClassModel.h"
+#include "MiscellanousFunctions.h"
+#include "AuthorizeController.h"
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/CourseInformationModel.h"
+#include "../Model/ScoreboardModel.h"
+#include "../Model/AttendanceModel.h"
+#include "../Model/ClassModel.h"
 #include "../View/View.h"
 
 class ClassController : public ControllerInterface {
@@ -86,7 +91,13 @@ public:
 		vector<string> students = classModel->getStudentInClass(classname);
 		vector<vector<string>> studentInfo;
 		vector<string> record;
-		vector<string> cols = {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
+		vector<string> cols; // {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
+		cols.push_back(" No. ");
+		cols.push_back("Student ID");
+		cols.push_back("Last Name");
+		cols.push_back("First Name");
+		cols.push_back("DoB");
+		cols.push_back(" Gender ");
 		int n = students.size();
 		int id = userInfoModel->getIndex("studentId");
 		int lastname = userInfoModel->getIndex("lastName");

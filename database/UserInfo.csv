@@ -99,3 +99,5 @@ id,studentId,firstName,lastName,dob,userGender,username
 98,19125097,tai,van huu ,24/07/1998,female,19125097
 99,19125098,thanh,phan nhut ,05/07/1996,female,19125098
 100,19125099,thao,tran thi xuan ,02/01/1997,male,19125099
+101,,phat,phat,10-01-2001,male,ttphat
+102,,tester,tester,01-01-2001,male,tester
