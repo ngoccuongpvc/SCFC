@@ -107,21 +107,53 @@ public:
 		delete classModel;
 	}
 
+	void deleteRecordsOfStudent(string studentId) {
+		AttendanceModel* am = new AttendanceModel();
+		ScoreboardModel* sm = new ScoreboardModel();
+		am->setStudentId(studentId);
+		sm->setStudentId(studentId);
+		am->RemoveAttendance();
+		sm->DeleteScore();
+		delete am;
+		delete sm;
+	}
+
+	void addRecordsOfStudent(string studentId, string className) {
+		CourseInformationModel* cim = new CourseInformationModel();
+		AttendanceModel* am = new AttendanceModel();
+		ScoreboardModel* sm = new ScoreboardModel();
+		am->setStudentId(studentId);
+		sm->setStudentId(studentId);
+		am->setDay("");
+		sm->setScore("");
+		sm->setTerm("");
+		cim->setClassName(className);
+		vector<vector<string>> courses = cim->FetchCourse();
+		for (int i = 0; i < courses.size(); ++i) {
+			am->setCourseId(courses[i][12]);
+			sm->setCourseId(courses[i][12]);
+			am->AddAttendance();
+			sm->AddScore();
+		}
+		delete cim;
+		delete am;
+		delete sm;
+	}
 
 	void addStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
-		cout << "Add new student to class: ";
-		cin >> className;
+		cout << "Class of the student: ";
+		getline(cin, className);
 		cout << "Student ID: ";
-		cin >> studentID;
+		getline(cin, studentID);
 		cout << "First Name: ";
-		cin >> firstName;
+		getline(cin, firstName);;
 		cout << "Last Name: ";
-		cin >> lastName;
+		getline(cin, lastName);
 		cout << "Gender: ";
-		cin >> gender;
+		getline(cin, gender);
 		cout << "DOB: ";
-		cin >> DOB;
+		getline(cin, DOB);
 
 		ClassModel* classModel = new ClassModel();
 		AccountModel* accountModel = new AccountModel();
@@ -142,9 +174,16 @@ public:
 		classModel->setClassName(className);
 		classModel->setStudentId(studentID);
 
+		addRecordsOfStudent(studentID, className);
 		userInfoModel->AddUser();
 		accountModel->registerUser();
 		classModel->saveStudent();
+
+		delete classModel;
+		delete userInfoModel;
+		delete accountModel;
+
+		cout << "Successfully added the student." << endl;
 	}
 
 	void studentManipulate() {
@@ -165,12 +204,17 @@ public:
 		userInfoModel->RemoveUser();
 		accountModel->setUserName(studentID);
 		accountModel->removeAccount();
+		deleteRecordsOfStudent(studentID);
+		delete classModel;
+		delete userInfoModel;
+		delete accountModel;
+		cout << "Successfully removed the student." << endl;
 	}
 
 	void editStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
 		cout << "Input the ID of student that you want to edit: ";
-		cin >> studentID;
+		getline(cin, studentID);
 
 		ClassModel* classModel = new ClassModel();
 		UserInfoModel* userInfoModel = new UserInfoModel();
@@ -195,14 +239,17 @@ public:
 		
 		userInfoModel->AddUser();
 
-		cout << "Modify Succesfully" << endl;
+		delete classModel;
+		delete userInfoModel;
+
+		cout << "Modified the student succesfully" << endl;
 	}
 
 	void changeStudentClass() {
 		string studentID, currentClass, newClass;
 
 		cout << "Please input the ID of student: ";
-		cin >> studentID;
+		getline(cin, studentID);
 
 		ClassModel* classModel = new ClassModel();
 		currentClass = classModel->getClassOfStudent(studentID);
@@ -210,11 +257,16 @@ public:
 
 		cout << "The current class is: " << currentClass << endl;
 		cout << "Please enter the new class: ";
-		cin >> newClass;
+		getline(cin, newClass);
 
 		classModel->setStudentId(studentID);
 		classModel->setClassName(newClass);
 		classModel->saveStudent();
+		if (currentClass != newClass) {
+			deleteRecordsOfStudent(studentID);
+			addRecordsOfStudent(studentID, newClass);
+		}
+		
 
 		cout << "The student has been assign to " << newClass << endl;
 	}
