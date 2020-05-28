@@ -71,7 +71,7 @@ public:
 	vector<vector<string>> FetchScoreboard() {
 		vector<string> conditions(this->columns.size(), "all");
 		conditions[this->getIndex("studentId")] = this->studentId;
-		conditions[this->getIndex("courseId")] = this->studentId;
+		conditions[this->getIndex("courseId")] = this->courseId;
 		conditions[this->getIndex("term")] = this->term;
 		conditions[this->getIndex("score")] = this->score;
 		return this->fetch(&conditions);
@@ -111,7 +111,8 @@ public:
 	The 'toUpdate' vector contains the fields (in the correct order) you want to update in those records. The remaining fields that you don't want to change may be left empty or same as the original record.
 	In case you want to update the current record already set in the model, please provide 'nullptr' in 'conditions' field. Please do not leave the 'toUupdate' field blank.*/
 	void UpdateScore(vector<string>* conditions = nullptr, vector<string>* toUpdate = nullptr) {
-		if (toUpdate == nullptr) return;
+		if (toUpdate == nullptr || toUpdate->size() != this->columns.size()) return;
+		if (conditions != nullptr && conditions->size() != this->columns.size()) return;
 		if (conditions == nullptr) conditions = getScoreboardInfo();
 		this->update(conditions, toUpdate);
 	}
@@ -119,7 +120,7 @@ public:
 	/*The 'toDelete' vector is the conditions of the records you want to delete.
 	In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'conditions' parameter.*/
 	void DeleteScore(vector<string>* conditions = nullptr) {
-		if (conditions == nullptr) conditions = getScoreboardInfo();
+		if (conditions == nullptr || conditions->size() != this->columns.size()) conditions = getScoreboardInfo();
 		this->erase(conditions);
 	}
 	

@@ -76,7 +76,7 @@ public:
 
 		/****** SCOREBOARD OPERATIONS ******/
 		usage["edit-score"] = "Edit scores of a student";
-		usage["import-score"] = "Import scoreboard for a course";
+		usage["import-scoreboard"] = "Import scoreboard for a course";
 		usage["export-scoreboard"] = "Export scoreboard to a CSV file";
 		usage["search-and-view-score"] = "Search and view scoreboard of a course";
 		usage["view-score-of-course"] = "View scores of an enrolled course";
@@ -84,7 +84,7 @@ public:
 		/****** ATTENDANCE OPERATIONS ******/
 		usage["check-in"] = "Check in a course study day";
 		usage["delete-attendance"] = "Delete attendance of a student";
-		usage["edit-attendance"] = "Edit attendance of a student";
+		usage["edit-attendance"] = "Add attendance of a student";
 		usage["export-attendance"] = "Export attendance board to a CSV file";
 		usage["view-attendance-list"] = "View attendance list of a course";
 		usage["view-check-in-result"] = "View your check-in result of a course";
@@ -206,6 +206,7 @@ public:
 		linkTo("student-dashboard", "view-check-in-result");
 		linkTo("student-dashboard", "view-schedule");
 		linkTo("student-dashboard", "view-score-of-course");
+		linkTo("student-dashboard", "see-profile");
 		linkTo("student-dashboard", "log-out");
 		/****** STAFF DASHBOARD ******/
 		linkTo("staff-dashboard", "class-dashboard-staff");
@@ -213,11 +214,13 @@ public:
 		linkTo("staff-dashboard", "score-dashboard-staff");
 		linkTo("staff-dashboard", "attendance-dashboard-staff");
 		linkTo("staff-dashboard", "lecturer-dashboard-staff");
+		linkTo("staff-dashboard", "see-profile");
 		linkTo("staff-dashboard", "log-out");
 		/****** LECTURE DASHBOARD******/
 		linkTo("lecturer-dashboard", "course-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "score-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "attendance-dashboard-lecturer");
+		linkTo("lecturer-dashboard", "see-profile");
 		linkTo("lecturer-dashboard", "log-out");
 
 		/****** STAFF - CLASS OPERATIONS ******/
@@ -259,12 +262,13 @@ public:
 		linkTo("course-dashboard-lecturer", "list-of-course-current-semester");
 		linkTo("course-dashboard-lecturer", "view-list-of-students-of-course");
 		/****** LECTURER - ATTENDANCE OPERATIONS ******/
-		linkTo("course-dashboard-lecturer", "view-attendance-list");
-		linkTo("course-dashboard-lecturer", "edit-attendance");
+		linkTo("attendance-dashboard-lecturer", "view-attendance-list");
+		linkTo("attendance-dashboard-lecturer", "edit-attendance");
+		linkTo("attendance-dashboard-lecturer", "delete-attendance");
 		/****** LECTURER - SCORE OPERATIONS ******/
-		linkTo("course-dashboard-lecturer", "import-scoreboard");
-		linkTo("course-dashboard-lecturer", "edit-score");
-		linkTo("course-dashboard-lecturer", "search-and-view-score");
+		linkTo("score-dashboard-lecturer", "import-scoreboard");
+		linkTo("score-dashboard-lecturer", "edit-score");
+		linkTo("score-dashboard-lecturer", "search-and-view-score");
 
 		linkTo("access", "login");
 		linkTo("access", "register");			

@@ -36,7 +36,7 @@ public:
         cout << "First name: " << records[0][2] << endl;
         cout << "Last name: " << records[0][3] << endl;
         cout << "Date of Birth: " << records[0][4] << endl;
-        cout << "Gender: " << records[0][6] << endl;
+        cout << "Gender: " << records[0][5] << endl;
         delete user;
     }
 
@@ -49,7 +49,7 @@ public:
         cout << "Lecturer last name: ";  getline(cin, temp); uim->setLastName(toLowerCase(temp));
         cout << "Lecturer DOB: ";  getline(cin, temp); uim->setDOB(toLowerCase(temp));
         cout << "Lecturer gender: ";  getline(cin, temp); uim->setUserGender(toLowerCase(temp));
-        cout << "Lecturer username: "; getline(cin, temp); uim->setFirstName(toLowerCase(toLowerCase(temp)));
+        cout << "Lecturer username: "; getline(cin, temp); uim->setUsername(toLowerCase(temp));
         am->setUserName(temp);
         am->setPassword(uim->getDOB());
         am->setRole("lecturer");
@@ -73,7 +73,7 @@ public:
         }
         vector<vector<string>> lecturers;
         for (int i = 0; i < results.size(); ++i) {
-            uim->setUsername(results[i][7]);
+            uim->setUsername(results[i][1]);
             vector<vector<string>> getBack = uim->FetchInfo();
             if (getBack.size() != 0) {
                 lecturers.push_back(getBack[0]);
@@ -93,7 +93,7 @@ public:
 
     void editLecturer() {
         UserInfoModel* uim = new UserInfoModel();
-        cout << "Please enter the username of the lecturer that you want to edit: "; string username; cin >> username;
+        cout << "Please enter the username of the lecturer that you want to edit: "; string username; getline(cin, username);
         uim->setUsername(toLowerCase(username));
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
@@ -121,7 +121,7 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         string lecturer;
-        cout << "Enter the account of the lecturer that you want to remove: "; cin >> lecturer;
+        cout << "Enter the account of the lecturer that you want to remove: "; getline(cin, lecturer);
         uim->setUsername(lecturer);
         am->setUserName(lecturer);
         am->setRole("lecturer");

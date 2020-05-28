@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <ctime>
 #include <functional>
 #include "../History.h"
 
