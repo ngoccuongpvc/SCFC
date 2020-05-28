@@ -104,3 +104,4 @@ id,studentId,firstName,lastName,dob,userGender,username
 103,,tien,dinh,01-01-1990,male,dbtien
 104,,htthanh,ho tuan,01-01-1990,male,all
 105,,phat,tu tan,10-01-2001,male,ttphat
+106,19121810,hung,nguyen,2001/10/18,male,19121810

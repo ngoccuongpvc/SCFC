@@ -20,6 +20,7 @@ using namespace std;
 class AccountController : public ControllerInterface
 {
 private:
+	Validation* valid = new Validation();
 
 public:
 
@@ -45,11 +46,11 @@ public:
         AccountModel* am = new AccountModel();
         string temp;
         uim->setStudentId("");
-        cout << "Lecturer first name: ";  getline(cin, temp); uim->setFirstName(toLowerCase(temp));
-        cout << "Lecturer last name: ";  getline(cin, temp); uim->setLastName(toLowerCase(temp));
-        cout << "Lecturer DOB: ";  getline(cin, temp); uim->setDOB(toLowerCase(temp));
-        cout << "Lecturer gender: ";  getline(cin, temp); uim->setUserGender(toLowerCase(temp));
-        cout << "Lecturer username: "; getline(cin, temp); uim->setUsername(toLowerCase(temp));
+		cout << "Lecturer first name: "; valid->read(temp, "all");   uim->setFirstName(temp);
+		cout << "Lecturer last name: ";  valid->read(temp, "all");   uim->setLastName(temp);
+        cout << "Lecturer DOB: ";        valid->read(temp, "date");  uim->setDOB(temp);
+		cout << "Lecturer gender: ";     valid->read(temp, "gender");uim->setUserGender(temp);
+        cout << "Lecturer username: ";   valid->read(temp, "nospc"); uim->setUsername(temp);
         am->setUserName(temp);
         am->setPassword(uim->getDOB());
         am->setRole("lecturer");
@@ -93,8 +94,10 @@ public:
 
     void editLecturer() {
         UserInfoModel* uim = new UserInfoModel();
-        cout << "Please enter the username of the lecturer that you want to edit: "; string username; getline(cin, username);
-        uim->setUsername(toLowerCase(username));
+        cout << "Please enter the username of the lecturer that you want to edit: ";
+		string username; valid->read(username, "nospc");;
+        uim->setUsername(username);
+
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The lecturer account you entered does not exist. Please retry." << endl;
@@ -107,11 +110,11 @@ public:
         vector<string> toUpdate;
         toUpdate.push_back(record[0]);
         toUpdate.push_back("");
-        cout << "First name: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Last name: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "Date of birth: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "User gender: ";  getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
-        cout << "New username: "; getline(cin, temp); toUpdate.push_back(toLowerCase(temp));
+		cout << "First name: ";    valid->read(temp, "all");    toUpdate.push_back(temp);
+		cout << "Last name: ";     valid->read(temp, "all");    toUpdate.push_back(temp);
+		cout << "Date of birth: "; valid->read(temp, "date");   toUpdate.push_back(temp);
+		cout << "User gender: ";   valid->read(temp, "gender"); toUpdate.push_back(temp);
+		cout << "New username: ";  valid->read(temp, "nospc");  toUpdate.push_back(temp);
         uim->UpdateInfo(&record, &toUpdate);
         cout << "Successfully edited the lecturer." << endl;
         delete uim;
@@ -121,7 +124,8 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         string lecturer;
-        cout << "Enter the account of the lecturer that you want to remove: "; getline(cin, lecturer);
+        cout << "Enter the account of the lecturer that you want to remove: ";
+		valid->read(lecturer, "nospc");
         uim->setUsername(lecturer);
         am->setUserName(lecturer);
         am->setRole("lecturer");
@@ -151,6 +155,11 @@ public:
         this->mapMethods["seeProfile"] = [this]() { seeProfile(); };
         this->mapMethods["viewAllLecturer"] = [this]() { viewAllLecturer(); };
     }
+
+	~AccountController()
+	{
+		delete valid;
+	}
 
     
 };

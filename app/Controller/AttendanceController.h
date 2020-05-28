@@ -10,17 +10,20 @@
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
+#include "Validation.h"
 
 class AttendanceController : public ControllerInterface {
 private:
+	Validation* valid = new Validation();
 public:
     void viewAttendanceList() {
         AttendanceModel* am = new AttendanceModel();
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to view attendance list: "; getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        cout << "Please enter the ID of the course that you want to view attendance list: "; 
+		valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
             delete am;
@@ -76,8 +79,8 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to edit: "; getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        cout << "Please enter the ID of the course that you want to edit: "; valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
             delete am;
@@ -133,8 +136,8 @@ public:
         cout << "Please be aware that you can add one attendance of a student at a time" << endl;
         AttendanceModel* am = new AttendanceModel();
         string courseID, studentID;
-        cout << "Please enter the course ID: "; getline(cin, courseID); am->setCourseId(toLowerCase(courseID));
-        cout << "Please enter the student ID: "; getline(cin, studentID); am->setStudentId(toLowerCase(studentID));
+        cout << "Please enter the course ID: ";  valid->read(courseID, "nospc");  am->setCourseId(courseID);
+        cout << "Please enter the student ID: "; valid->read(studentID, "nospc"); am->setStudentId(studentID);
         vector<vector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
@@ -145,7 +148,7 @@ public:
         }
 
         cout << "Please enter the day of attendance for this student(1-10): ";
-        string day; cin >> day;
+		string day; valid->read(day, "day");
         am->setDay(day);
         am->AddAttendance();
         delete am;
@@ -172,9 +175,9 @@ public:
         */
         AttendanceModel* am = new AttendanceModel();
         string courseID, studentID, day;
-        cout << "Please enter the course ID: "; getline(cin, courseID); am->setCourseId(toLowerCase(courseID));
-        cout << "Please enter the student ID: "; getline(cin, studentID); am->setStudentId(toLowerCase(studentID));
-        cout << "Please enter the day to delete attendance of this student(1-10): "; cin >> day; am->setDay(toLowerCase(day));
+        cout << "Please enter the course ID: ";   valid->read(courseID, "nospc");  am->setCourseId(courseID);
+		cout << "Please enter the student ID: ";  valid->read(studentID, "nospc"); am->setStudentId(studentID);
+		cout << "Please enter the day to delete attendance of this student(1-10): "; valid->read(day, "day"); am->setDay(day);
         vector<vector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
@@ -194,8 +197,8 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         string courseId, studentId = globalUsername, day;
-        cout << "Please enter the ID of the course that you want to check in: ";  getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        cout << "Please enter the ID of the course that you want to check in: ";   valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
         vector<vector<string>> temp = cim->FetchCourse();
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -205,7 +208,7 @@ public:
             return;
         }
         //cout << "Please enter your student Id: "; cin >> studentId;
-        uim->setStudentId(toLowerCase(studentId));
+        uim->setStudentId(studentId);
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             delete uim;
@@ -224,7 +227,7 @@ public:
             delete cim;
             return;
         }
-        cout << "Please enter the day you are checking in (1-10): ";  getline(cin, day);
+        cout << "Please enter the day you are checking in (1-10): ";  valid->read(day, "day");
         am->setDay(day);
         am->AddAttendance();
         cout << "Successfully added your checkin." << endl;
@@ -238,7 +241,7 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         string courseName, courseId, studentId = globalUsername, day;
-        uim->setStudentId(toLowerCase(studentId));
+        uim->setStudentId(studentId);
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             delete uim;
@@ -297,6 +300,11 @@ public:
         this->mapMethods["viewAttendanceList"] = [this]() { viewAttendanceList(); };
         this->mapMethods["viewCheckInResult"] = [this]() { viewCheckInResult(); };
     }
+
+	~AttendanceController()
+	{
+		delete valid;
+	}
 
 };
 
