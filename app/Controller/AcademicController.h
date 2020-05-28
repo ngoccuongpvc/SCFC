@@ -76,7 +76,7 @@ public:
         //cout << "Please enter your student Id: "; getline(cin, studentId);
         am->setStudentId(globalUsername);
         am->setDay("");
-        uim->setStudentId(toLowerCase(studentId));
+        uim->setStudentId(globalUsername);
         vector<vector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
