@@ -74,6 +74,12 @@
     <ClInclude Include="app\Controller\ScoreboardController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="app\View\View.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Controller\Validation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="database\Account.csv">

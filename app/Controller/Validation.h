@@ -62,7 +62,7 @@ public:
 		regList["score"] = regex("\\d+");
 
 		regList["gender"] = regex("male|female");
-		regList["term"] = regex("mid|final|bonus|lab");
+		regList["term"] = regex("midterm|final|bonus|lab");
 		regList["sem"] = regex("spring|summer|fall|winter");
 	}
 
