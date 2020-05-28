@@ -64,13 +64,13 @@ public:
             }
             else {
                 cout << "Wrong username or password" << endl;
-                /*
+                
                 cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
                 bool tryAgain = false;
                 string temp;
                 getline(cin, temp);
                 if (!tryAgain) break;
-                */
+                
             }
         }
 

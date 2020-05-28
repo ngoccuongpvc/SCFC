@@ -271,6 +271,8 @@ public:
 		cout << "The student has been assign to " << newClass << endl;
 	}
 
+	
+
 	ClassController() {
 		this->mapMethods["importAction"] = [this]() { importAction(); };
 		this->mapMethods["showClassList"] = [this]() { showClassList(); };

@@ -59,6 +59,8 @@ public:
 		usage["login"] = "Log in";
 		usage["register"] = "Register a new account";
 		usage["change-password"] = "Change password";
+		usage["import-database"] = "Add a database";
+		usage["drop-database"] = "Drop all databases";
 
 		/****** COURSE OPERATIONS ******/
 		usage["add-course"] = "Manually add a new course";
@@ -169,6 +171,8 @@ public:
 		addRoute("show-semester", "AcademicController", "showSemester");
 		addRoute("show-year", "AcademicController", "showYear");
 		addRoute("view-schedule", "AcademicController", "viewSchedule");
+		addRoute("import-database", "AcademicController", "importDatabase");
+		addRoute("drop-database", "AcademicController", "dropDatabase");
 
 		/****** USER OPERATIONS ******/
 		addRoute("dashboard", "UserController", "mainAction");
@@ -272,6 +276,8 @@ public:
 
 		linkTo("access", "login");
 		linkTo("access", "register");			
+		linkTo("access", "import-database");			
+		linkTo("access", "drop-database");			
 	}
 };
 #endif // ROUTES_H_INCLUDED

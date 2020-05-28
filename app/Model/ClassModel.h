@@ -12,7 +12,9 @@ private:
 
 public:
 	ClassModel() : ModelInterface("database/Class.csv") {
-
+		this->id = "all";
+		this->className = "all";
+		this->studentId = "all";
 	}
 
 	void setId(string id) {
@@ -68,6 +70,29 @@ public:
 			res.push_back(records[i][col]);
 		}
 		return res;
+	}
+
+	/*Set the values in the model using a vector.
+	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
+	void setClassInfo(vector<string>* info) {
+		if (info->size() != this->columns.size()) return;
+		this->studentId = (*info)[this->getIndex("studentid")];
+		this->className = (*info)[this->getIndex("classname")];
+	}
+
+	/*Get the values in the model and return as a vector.
+	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
+	vector<string>* getClassInfo() {
+		vector<string>* info = new vector<string>();
+		info->push_back(this->id);
+		info->push_back(this->className);
+		info->push_back(this->studentId);
+		return info;
+	}
+
+	void RemoveClass(vector<string>* conditions = nullptr) {
+		if (conditions == nullptr || conditions->size() != this->columns.size()) conditions = getClassInfo();
+		this->erase(conditions);
 	}
 
 	void removeStudentById(string studentID) {

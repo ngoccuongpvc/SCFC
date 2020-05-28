@@ -115,7 +115,7 @@ public:
         for (int i = 0; i < results.size(); ++i) {
             removeAllRecordsOfCourse(results[i][12]);
         }
-        cout << "Successfully remove all course in the year " << year;
+        cout << "Successfully remove all course in the year " << year << endl;
         delete cim;
     }
 
@@ -130,7 +130,7 @@ public:
         for (int i = 0; i < results.size(); ++i) {
             removeAllRecordsOfCourse(results[i][12]);
         }
-        cout << "Successfully remove all course in the semester " << semester;
+        cout << "Successfully remove all course in the semester " << semester << endl;
         delete cim;
     }
 

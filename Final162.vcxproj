@@ -115,6 +115,7 @@
     <ClInclude Include="app\History.h" />
     <ClInclude Include="app\model\AccountModel.h" />
     <ClInclude Include="app\Model\AttendanceModel.h" />
+    <ClInclude Include="app\Model\ClassModel.h" />
     <ClInclude Include="app\Model\CourseInformationModel.h" />
     <ClInclude Include="app\model\ModelInterface.h" />
     <ClInclude Include="app\Model\ScoreboardModel.h" />
