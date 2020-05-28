@@ -26,8 +26,17 @@ public:
 
         ModelInterface* model = new ModelInterface(path);
         vector<vector<string>> records = model->fetch();
+        if (model->columns.size() != 6) {
+            cout << "Invalid input file format. Please recheck." << endl;
+            delete cim;
+            delete sm;
+            delete am;
+            delete uim;
+            delete model;
+            return;
+        }
 
-        cout << "Please enter the Course ID: "; string courseId; cin >> courseId;
+        cout << "Please enter the Course ID: "; string courseId;  getline(cin, courseId);
         cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "There is no such course." << endl;
@@ -35,23 +44,24 @@ public:
             delete sm;
             delete am;
             delete uim;
+            delete model;
             return;
         }
         sm->setCourseId(courseId);
 
         for (vector<string> record : records) {
-            sm->setStudentId(record[0]);
+            sm->setStudentId(record[1]);
             sm->setTerm("midterm");
-            sm->setScore(record[1]);
-            sm->AddScore();
-            sm->setTerm("lab");
             sm->setScore(record[2]);
             sm->AddScore();
-            sm->setTerm("final");
+            sm->setTerm("lab");
             sm->setScore(record[3]);
             sm->AddScore();
-            sm->setTerm("bonus");
+            sm->setTerm("final");
             sm->setScore(record[4]);
+            sm->AddScore();
+            sm->setTerm("bonus");
+            sm->setScore(record[5]);
             sm->AddScore();
         }
 
@@ -60,6 +70,7 @@ public:
         delete sm;
         delete am;
         delete uim;
+        delete model;
     }
 
     void searchAndViewScore() {
@@ -67,7 +78,7 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        cout << "Please enter the ID of the course that you want to view score of: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
@@ -101,9 +112,9 @@ public:
             midterm = lab = final = bonus = "";
             for (int k = 0; k < scoreResult.size(); k++) {
                 if (scoreResult[k][3] == "midterm") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "lab") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "final") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "bonus") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "lab") lab = scoreResult[k][4];
+                else if (scoreResult[k][3] == "final") final = scoreResult[k][4];
+                else if (scoreResult[k][3] == "bonus") bonus = scoreResult[k][4];
             }
             score.push_back(midterm);
             score.push_back(lab);
@@ -138,8 +149,10 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course whose scoreboard you want to export: "; cin >> courseId;
+        cout << "Please enter the ID of the course whose scoreboard you want to export: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
+        sm->setTerm("");
+        sm->setScore("");
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -149,8 +162,6 @@ public:
             return;
         }
         sm->setCourseId(courseId);
-        sm->setScore("");
-        sm->setTerm("");
         vector<vector<string>> studentResults = sm->FetchScoreboard();
         if (studentResults.size() == 0) {
             cout << "No students was given any score in the given course." << endl;
@@ -172,9 +183,9 @@ public:
             midterm = lab = final = bonus = "";
             for (int k = 0; k < scoreResult.size(); k++) {
                 if (scoreResult[k][3] == "midterm") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "lab") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "final") midterm = scoreResult[k][4];
-                else if (scoreResult[k][3] == "bonus") midterm = scoreResult[k][4];
+                else if (scoreResult[k][3] == "lab") lab = scoreResult[k][4];
+                else if (scoreResult[k][3] == "final") final = scoreResult[k][4];
+                else if (scoreResult[k][3] == "bonus") bonus = scoreResult[k][4];
             }
             score.push_back(midterm);
             score.push_back(lab);
@@ -182,16 +193,13 @@ public:
             score.push_back(bonus);
             scores.push_back(score);
         }
-        int max_column = 0;
-        for (int i = 0; i < scores.size(); ++i) {
-            if (scores[i].size() > max_column) max_column = scores[i].size();
-        }
         vector<string> header; header.push_back("Student ID");
         header.push_back("Midterm");
         header.push_back("Lab");
         header.push_back("Final");
         header.push_back("Bonus");
         View* view = new View(scores, header);
+        view->setPath(path);
         view->exportTable();
         delete view;
         delete sm;
@@ -205,8 +213,8 @@ public:
         cout << "Please be aware that you can only edit only one score at a time." << endl;
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId, term;
-        cout << "Please enter course id: "; cin >> courseId; sm->setCourseId(courseId);
-        cout << "Please enter student id "; cin >> studentId; sm->setStudentId(studentId);
+        cout << "Please enter course id: "; getline(cin, courseId);; sm->setCourseId(courseId);
+        cout << "Please enter student id "; getline(cin, studentId);; sm->setStudentId(studentId);
         cout << "Pleasee enter the term (midterm/final/bonus/lab)"; cin >> term; sm->setTerm(term);
 
         vector<vector<string>> conditions = sm->FetchScoreboard();
@@ -230,8 +238,8 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        string courseId, studentId, day;
-        cout << "Please enter the ID of the course that you want to edit: "; cin >> courseId;
+        string courseId, studentId = globalUsername, day;
+        cout << "Please enter the ID of the course that you want to view score of: "; getline(cin, courseId);
         cim->setCourseId(toLowerCase(courseId));
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -240,7 +248,7 @@ public:
             delete sm;
             return;
         }
-        cout << "Please enter your student Id: "; cin >> studentId;
+        //cout << "Please enter your student Id: "; cin >> studentId;
         uim->setStudentId(toLowerCase(studentId));
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
@@ -249,8 +257,8 @@ public:
             delete sm;
             return;
         }
-        sm->setStudentId(studentId);
-        sm->setCourseId(courseId);
+        sm->setStudentId(toLowerCase(studentId));
+        sm->setCourseId(toLowerCase(courseId));
         vector<vector<string>> scoreboard = sm->FetchScoreboard();
         if (scoreboard.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
@@ -261,9 +269,12 @@ public:
         }
         vector<vector<string>> scores;
         for (int i = 0; i < scoreboard.size(); ++i) {
-            vector<string> score;
-            score.push_back(scoreboard[i][3]);
-            score.push_back(scoreboard[i][4]);
+            vector<string> score(2, "unmarked");
+            if (scoreboard[i][3] != "" && scoreboard[i][4] != "") {
+                score[0] = scoreboard[i][3];
+                score[1] = scoreboard[i][4];
+            }
+            
             scores.push_back(score);
         }
         vector<string> header; header.push_back("Term"); header.push_back("Score");

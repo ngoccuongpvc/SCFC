@@ -94,7 +94,13 @@ private:
 
 	void dataExport()
 	{
-		ofstream* f = writeConnection();
+		ofstream* f = this->writeConnection();
+		for (int i = 0; i < this->colHeader.size(); i++)
+		{
+			(*f) << this->colHeader[i];
+			if (i < this->data.size() - 1) (*f) << ',';
+		}
+		(*f) << endl;
 		for (int i = 0; i < this->data.size(); i++)
 		{
 			for (int j = 0; j < this->data[i].size(); j++)
@@ -136,9 +142,13 @@ public:
 		return;
 	}
 
+	void setPath(string path) {
+		this->path = path;
+	}
+
 	void exportTable()
 	{
-		this->headerExport();
+		//this->headerExport();
 		this->dataExport();
 	}
 

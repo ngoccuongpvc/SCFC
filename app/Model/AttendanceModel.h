@@ -108,7 +108,8 @@ public:
 	The 'toUpdate' vector contains the fields (in the correct order) you want to update in those records. The remaining fields that you don't want to change may be left empty or same as the original record.
 	In case you want to update the current record already set in the model, please provide 'nullptr' in 'conditions' field. Please do not leave the 'toUupdate' field blank.*/
 	void UpdateAttendance(vector<string>* conditions = nullptr, vector<string>* toUpdate = nullptr) {
-		if (toUpdate == nullptr) return ;
+		if (toUpdate == nullptr || toUpdate->size() != this->columns.size()) return;
+		if (conditions != nullptr && conditions->size() != this->columns.size()) return;
 		if (conditions == nullptr) conditions = getAttendanceInfo();
 		this->update(conditions, toUpdate);
 	}
@@ -116,7 +117,7 @@ public:
 	/*The 'toDelete' vector is the conditions of the records you want to delete.
 	In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'conditions' parameter.*/
 	void RemoveAttendance(vector<string>* conditions = nullptr) {
-		if (conditions == nullptr) conditions = getAttendanceInfo();
+		if (conditions == nullptr || conditions->size() != this->columns.size()) conditions = getAttendanceInfo();
 		this->erase(conditions);
 	}
 	
