@@ -11,9 +11,11 @@
 #include "../Model/AttendanceModel.h"
 #include "../Model/ClassModel.h"
 #include "../View/View.h"
+#include "Validation.h"
 
 class ClassController : public ControllerInterface {
 private:
+	Validation* valid = new Validation();
 public:
 
 	void importAction() {
@@ -26,7 +28,7 @@ public:
 
 		string className;
 		cout << "Class Name: ";
-		getline(cin, className);
+		valid->read(className, "nospc");
 		ClassModel* classModel = new ClassModel();
 		AccountModel* accountModel = new AccountModel();
 		UserInfoModel* userInfoModel = new UserInfoModel();
@@ -42,7 +44,7 @@ public:
 			return;
 		}
 
-		classModel->setClassName(toLowerCase(className));
+		classModel->setClassName(className);
 		for (vector<string> record : records) {
 			classModel->setStudentId(toLowerCase(record[1]));
 
@@ -86,7 +88,7 @@ public:
 
 		cout << "Input class name: ";
 		string classname;
-		getline(cin, classname);
+		valid->read(classname, "nospc");
 
 		vector<string> students = classModel->getStudentInClass(classname);
 		vector<vector<string>> studentInfo;
@@ -153,18 +155,18 @@ public:
 
 	void addStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
-		cout << "Class of the student: ";
-		getline(cin, className);
+		cout << "Add new student to class: ";
+		valid->read(className, "nospc");
 		cout << "Student ID: ";
-		getline(cin, studentID);
+		valid->read(studentID, "nospc");
 		cout << "First Name: ";
-		getline(cin, firstName);;
+		valid->read(firstName, "nospc");
 		cout << "Last Name: ";
-		getline(cin, lastName);
+		valid->read(lastName, "nospc");
 		cout << "Gender: ";
-		getline(cin, gender);
+		valid->read(gender, "gender");
 		cout << "DOB: ";
-		getline(cin, DOB);
+		valid->read(DOB, "date");
 
 		ClassModel* classModel = new ClassModel();
 		AccountModel* accountModel = new AccountModel();
@@ -204,7 +206,7 @@ public:
 	void removeStudent() {
 		string studentID;
 		cout << "Input the ID of student that you want to remove: ";
-		cin >> studentID;
+		valid->read(studentID, "nospc");
 
 		ClassModel* classModel = new ClassModel();
 		UserInfoModel* userInfoModel = new UserInfoModel();
@@ -225,7 +227,7 @@ public:
 	void editStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
 		cout << "Input the ID of student that you want to edit: ";
-		getline(cin, studentID);
+		valid->read(studentID, "nospc");
 
 		ClassModel* classModel = new ClassModel();
 		UserInfoModel* userInfoModel = new UserInfoModel();
@@ -235,13 +237,13 @@ public:
 
 		cout << "Please input the following fields (press enter to skip): " << endl;
 		cout << "First Name: [current: " << userInfoModel->getFirstName() << "]: ";
-		getline(cin, firstName);
+		valid->read(firstName, "all");
 		cout << "Last Name: [current: " << userInfoModel->getLastName() << "]: ";
-		getline(cin, lastName);
+		valid->read(lastName, "all");
 		cout << "Gender: [current: " << userInfoModel->getUserGender() << "]: ";
-		getline(cin, gender);
+		valid->read(gender, "gender");
 		cout << "DOB: [current: " << userInfoModel->getDOB() << "]: ";
-		getline(cin, DOB);
+		valid->read(DOB, "date");
 
 		if (firstName.size()) userInfoModel->setFirstName(firstName);
 		if (lastName.size()) userInfoModel->setLastName(lastName);
@@ -260,7 +262,7 @@ public:
 		string studentID, currentClass, newClass;
 
 		cout << "Please input the ID of student: ";
-		getline(cin, studentID);
+		valid->read(studentID, "nospc");
 
 		ClassModel* classModel = new ClassModel();
 		currentClass = classModel->getClassOfStudent(studentID);
@@ -268,7 +270,7 @@ public:
 
 		cout << "The current class is: " << currentClass << endl;
 		cout << "Please enter the new class: ";
-		getline(cin, newClass);
+		valid->read(newClass, "nospc");
 
 		classModel->setStudentId(studentID);
 		classModel->setClassName(newClass);
@@ -293,6 +295,11 @@ public:
 		this->mapMethods["removeStudent"] = [this]() { removeStudent(); };
 		this->mapMethods["editStudent"] = [this]() { editStudent(); };
 		this->mapMethods["changeStudentClass"] = [this]() { changeStudentClass(); };
+	}
+
+	~ClassController()
+	{
+		delete valid;
 	}
 
 };

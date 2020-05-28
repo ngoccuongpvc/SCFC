@@ -10,9 +10,11 @@
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
+#include "Validation.h"
 
 class ScoreboardController : public ControllerInterface {
 private:
+	Validation* valid = new Validation();
 public:
 
     void importScoreboard() {
@@ -36,7 +38,7 @@ public:
             return;
         }
 
-        cout << "Please enter the Course ID: "; string courseId;  getline(cin, courseId);
+        cout << "Please enter the Course ID: "; string courseId;  valid->read(courseId, "nospc");
         cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "There is no such course." << endl;
@@ -78,8 +80,9 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course that you want to view score of: "; getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        cout << "Please enter the ID of the course that you want to view score of: "; 
+		valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
         vector<vector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered does not exist." << endl;
@@ -149,8 +152,9 @@ public:
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string courseId, studentId;
-        cout << "Please enter the ID of the course whose scoreboard you want to export: "; getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        cout << "Please enter the ID of the course whose scoreboard you want to export: "; 
+		valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
         sm->setTerm("");
         sm->setScore("");
         vector<vector<string>> courseResult = cim->FetchCourse();
@@ -213,9 +217,9 @@ public:
         cout << "Please be aware that you can only edit only one score at a time." << endl;
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId, term;
-        cout << "Please enter course id: "; getline(cin, courseId);; sm->setCourseId(courseId);
-        cout << "Please enter student id "; getline(cin, studentId);; sm->setStudentId(studentId);
-        cout << "Pleasee enter the term (midterm/final/bonus/lab)"; cin >> term; sm->setTerm(term);
+        cout << "Please enter course id: "; valid->read(courseId, "nospc");; sm->setCourseId(courseId);
+        cout << "Please enter student id "; valid->read(studentId, "nospc"); sm->setStudentId(studentId);
+        cout << "Pleasee enter the term (midterm/final/bonus/lab)"; valid->read(term, "term"); sm->setTerm(term);
 
         vector<vector<string>> conditions = sm->FetchScoreboard();
         if (conditions.size() == 0)
@@ -226,7 +230,7 @@ public:
         }
 
         string score;
-        cout << "Please enter the score: "; cin >> score;
+        cout << "Please enter the score: "; valid->read(score, "score");
         vector<string> record = conditions[0];
         record[4] = score;
         sm->UpdateScore(&conditions[0], &record);
@@ -238,9 +242,11 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         CourseInformationModel* cim = new CourseInformationModel();
         ScoreboardModel* sm = new ScoreboardModel();
-        string courseId, studentId = globalUsername, day;
-        cout << "Please enter the ID of the course that you want to view score of: "; getline(cin, courseId);
-        cim->setCourseId(toLowerCase(courseId));
+        string courseId, studentId = globalUsername;
+        cout << "Please enter the ID of the course that you want to view score of: "; 
+		valid->read(courseId, "nospc");
+        cim->setCourseId(courseId);
+
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             delete cim;
@@ -249,7 +255,7 @@ public:
             return;
         }
         //cout << "Please enter your student Id: "; cin >> studentId;
-        uim->setStudentId(toLowerCase(studentId));
+        uim->setStudentId(studentId);
         if (uim->FetchInfo().size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             delete cim;
@@ -257,8 +263,8 @@ public:
             delete sm;
             return;
         }
-        sm->setStudentId(toLowerCase(studentId));
-        sm->setCourseId(toLowerCase(courseId));
+        sm->setStudentId(studentId);
+        sm->setCourseId(courseId);
         vector<vector<string>> scoreboard = sm->FetchScoreboard();
         if (scoreboard.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
@@ -294,6 +300,10 @@ public:
         this->mapMethods["searchAndViewScore"] = [this]() { searchAndViewScore(); };
         this->mapMethods["viewScoreOfCourse"] = [this]() { viewScoreOfCourse(); };
     }
+
+	~ScoreboardController() {
+		delete valid;
+	}
 };
 
 #endif
