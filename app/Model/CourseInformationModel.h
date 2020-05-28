@@ -20,7 +20,7 @@ The csv file for this model has the following order:
 8. Room (i52)
 9. Semester (fall)
 10. Year (2020)
-11. Day of Week (wed, thur, fri)
+11. Day of Week (wed, thu, fri)
 12. Course ID (cs162, mth252)
 */
 class CourseInformationModel : public ModelInterface

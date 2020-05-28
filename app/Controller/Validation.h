@@ -26,7 +26,7 @@ public:
 	in the constructor of each Controller.
 	*/
 
-	void read(string variable, string varName)
+	void read(string &variable, string varName)
 	{
 		while (true)
 		{
@@ -51,7 +51,7 @@ public:
 	{
 		//map variable's name to its regular expression
 		regList["all"] = regex("[^\,]+");
-		regList["nospc"] = regex("[^\s]+"); //No space
+		regList["nospc"] = regex("[^\\s]+"); //No space
 
 		//TIME FORMAT
 		regList["date"] = regex("[0-4]{4}\/[0-1][0-2]\/[0-3][0-9]"); // yyyy/mm/dd
@@ -64,6 +64,8 @@ public:
 		regList["gender"] = regex("male|female");
 		regList["term"] = regex("mid|final|bonus|lab");
 		regList["sem"] = regex("spring|summer|fall|winter");
+		regList["role"] = regex("student|staff|lecturer");
+		regList["dow"] = regex("mon|tue|wed|thu|fri|sat|sun"); //day of week
 	}
 
 };
