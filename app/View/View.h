@@ -26,7 +26,7 @@ private:
 		else if (this->data[0].size() != this->colHeader.size()) return false;
 		else if (this->maxWidth.size() != 0) return false; //maxWidth should not be initialized before this
 		
-		cout << this->data[0].size() << endl;
+		//cout << this->data[0].size() << endl;
 		this->data.push_back(this->colHeader);
 		this->maxWidth = myVector<int>(this->data[0].size(), 0);
 
