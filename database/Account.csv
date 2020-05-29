@@ -8,7 +8,7 @@ id,username,password,role
 7,hunghung,C7417AA8,lecturer
 8,19125000,A62F70B0,student
 9,19125001,3F6A8F9C,student
-10,19125003,B5182F9C,student
+10,19125003,F380DFE0,student
 11,19125004,1ECD0A28,student
 12,19125005,8667FA28,student
 13,19125006,ED690A28,student
@@ -108,4 +108,6 @@ id,username,password,role
 107,dbtien,363AF6C8,lecturer
 108,htthanh,83B6FD10,lecturer
 109,ttphat,CD82DC34,lecturer
-110,19121810,C7417AA8,student
+110,19125999,866BA8B0,student
+111,tester,6BB42EC4,staff
+112,19121810,C7417AA8,student

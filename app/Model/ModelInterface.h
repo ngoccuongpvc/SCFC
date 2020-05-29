@@ -4,7 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <vector>
+//#include "../Utils/vector.h"
 #include <map>
 #include <functional>
 #include <cmath>
@@ -160,6 +160,9 @@ public:
         vector<vector<string>> records = this->fetch();
         int maxId = 0, temp;
         for (int i = 0; i < (int)records.size(); ++i) {
+            if (records[i][0] == "") {
+                maxId = 0; break;
+            }
             temp = stoi(records[i][0]);
             if (temp > maxId) maxId = temp;
         }

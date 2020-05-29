@@ -66,6 +66,7 @@ public:
             }
             else {
                 cout << "Wrong username or password" << endl;
+                
                 cout << "Wrong username or password!! Wanna try again (0:false, 1: true): ";
                 bool tryAgain = false;
 				//fflush
@@ -73,6 +74,7 @@ public:
                 getline(cin, temp);
 
                 if (!tryAgain) break;
+                
             }
         }
 
@@ -135,12 +137,12 @@ public:
         cout << "Change password here!";
         if (globalUsername == "null")
         {
-            cout << "Login 1st!!" << endl;
+            cout << "You have to login before changing password." << endl;
         }
         else
         {
             string newPass;
-            cout << "Pls enter new password: ";
+            cout << "Please enter new password: ";
             valid->read(newPass, "nospc");
 
             AccountModel* model = new AccountModel();

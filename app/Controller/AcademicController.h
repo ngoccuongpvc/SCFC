@@ -4,6 +4,11 @@
 #include "ControllerInterface.h"
 #include "MiscellanousFunctions.h"
 #include "AuthorizeController.h"
+#include "ClassController.h"
+#include "CourseController.h"
+#include "ScoreboardController.h"
+
+
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
 #include "../Model/CourseInformationModel.h"
@@ -124,10 +129,57 @@ public:
         delete view;
     }
 
+    void importDatabase() {
+        ClassController* classC = new ClassController();
+        CourseController* courseC = new CourseController();
+        ScoreboardController* scoreC = new ScoreboardController();
+        string opt = "";
+        cout << "Import the list of students(Y/N): "; getline(cin, opt);
+        if (opt == "Y" || opt == "y")
+        classC->importAction();
+        cout << "Import the list of courses(Y/N): "; getline(cin, opt);
+        if (opt == "Y" || opt == "y")
+        courseC->importCourse();
+        cout << "Import the list of scores(Y/N): "; getline(cin, opt);
+        if (opt == "Y" || opt == "y")
+        scoreC->importScoreboard();
+
+        delete classC;
+        delete courseC;
+        delete scoreC;
+
+    }
+
+    void dropDatabase() {
+        //AccountModel* acm = new AccountModel();
+        AttendanceModel* atm = new AttendanceModel();
+        CourseInformationModel* cim = new CourseInformationModel();
+        UserInfoModel* uim = new UserInfoModel();
+        ScoreboardModel* sm = new ScoreboardModel();
+        ClassModel* cm = new ClassModel();
+
+        //acm->removeAccount();
+        atm->RemoveAttendance();
+        cim->RemoveCourse();
+        uim->RemoveUser();
+        sm->DeleteScore();
+        cm->RemoveClass();
+
+        delete atm;
+        delete cim;
+        delete uim;
+        delete sm;
+        delete cm;
+
+        cout << "Successfully dropped all databases. You can now import safely." << endl;
+    }
+
     AcademicController() {
         this->mapMethods["showSemester"] = [this]() { showSemester(); };
         this->mapMethods["showYear"] = [this]() { showYear(); };
         this->mapMethods["viewSchedule"] = [this]() { viewSchedule(); };
+        this->mapMethods["importDatabase"] = [this]() {importDatabase(); };
+        this->mapMethods["dropDatabase"] = [this]() {dropDatabase(); };
     }
 };
 

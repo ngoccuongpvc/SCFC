@@ -20,7 +20,7 @@ public:
     void importScoreboard() {
         cout << "Choose file: ";
         string path;
-        cin >> path;
+        getline(cin, path);
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         UserInfoModel* uim = new UserInfoModel();

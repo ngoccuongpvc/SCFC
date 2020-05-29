@@ -2,9 +2,14 @@
 #define CLASSCONTROLLER_H_INCLUDED
 
 #include "ControllerInterface.h"
-#include "../Model/ClassModel.h"
+#include "MiscellanousFunctions.h"
+#include "AuthorizeController.h"
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/CourseInformationModel.h"
+#include "../Model/ScoreboardModel.h"
+#include "../Model/AttendanceModel.h"
+#include "../Model/ClassModel.h"
 #include "../View/View.h"
 #include "Validation.h"
 
@@ -88,7 +93,13 @@ public:
 		vector<string> students = classModel->getStudentInClass(classname);
 		vector<vector<string>> studentInfo;
 		vector<string> record;
-		vector<string> cols = {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
+		vector<string> cols; // {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
+		cols.push_back(" No. ");
+		cols.push_back("Student ID");
+		cols.push_back("Last Name");
+		cols.push_back("First Name");
+		cols.push_back("DoB");
+		cols.push_back(" Gender ");
 		int n = students.size();
 		int id = userInfoModel->getIndex("studentId");
 		int lastname = userInfoModel->getIndex("lastName");
@@ -109,6 +120,38 @@ public:
 		delete classModel;
 	}
 
+	void deleteRecordsOfStudent(string studentId) {
+		AttendanceModel* am = new AttendanceModel();
+		ScoreboardModel* sm = new ScoreboardModel();
+		am->setStudentId(studentId);
+		sm->setStudentId(studentId);
+		am->RemoveAttendance();
+		sm->DeleteScore();
+		delete am;
+		delete sm;
+	}
+
+	void addRecordsOfStudent(string studentId, string className) {
+		CourseInformationModel* cim = new CourseInformationModel();
+		AttendanceModel* am = new AttendanceModel();
+		ScoreboardModel* sm = new ScoreboardModel();
+		am->setStudentId(studentId);
+		sm->setStudentId(studentId);
+		am->setDay("");
+		sm->setScore("");
+		sm->setTerm("");
+		cim->setClassName(className);
+		vector<vector<string>> courses = cim->FetchCourse();
+		for (int i = 0; i < courses.size(); ++i) {
+			am->setCourseId(courses[i][12]);
+			sm->setCourseId(courses[i][12]);
+			am->AddAttendance();
+			sm->AddScore();
+		}
+		delete cim;
+		delete am;
+		delete sm;
+	}
 
 	void addStudent() {
 		string studentID, firstName, lastName, gender, DOB, className;
@@ -144,9 +187,16 @@ public:
 		classModel->setClassName(className);
 		classModel->setStudentId(studentID);
 
+		addRecordsOfStudent(studentID, className);
 		userInfoModel->AddUser();
 		accountModel->registerUser();
 		classModel->saveStudent();
+
+		delete classModel;
+		delete userInfoModel;
+		delete accountModel;
+
+		cout << "Successfully added the student." << endl;
 	}
 
 	void studentManipulate() {
@@ -167,6 +217,11 @@ public:
 		userInfoModel->RemoveUser();
 		accountModel->setUserName(studentID);
 		accountModel->removeAccount();
+		deleteRecordsOfStudent(studentID);
+		delete classModel;
+		delete userInfoModel;
+		delete accountModel;
+		cout << "Successfully removed the student." << endl;
 	}
 
 	void editStudent() {
@@ -197,7 +252,10 @@ public:
 		
 		userInfoModel->AddUser();
 
-		cout << "Modify Succesfully" << endl;
+		delete classModel;
+		delete userInfoModel;
+
+		cout << "Modified the student succesfully" << endl;
 	}
 
 	void changeStudentClass() {
@@ -217,9 +275,16 @@ public:
 		classModel->setStudentId(studentID);
 		classModel->setClassName(newClass);
 		classModel->saveStudent();
+		if (currentClass != newClass) {
+			deleteRecordsOfStudent(studentID);
+			addRecordsOfStudent(studentID, newClass);
+		}
+		
 
 		cout << "The student has been assign to " << newClass << endl;
 	}
+
+	
 
 	ClassController() {
 		this->mapMethods["importAction"] = [this]() { importAction(); };

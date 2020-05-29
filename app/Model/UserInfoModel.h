@@ -162,7 +162,7 @@ public:
 
     void findStudentInfo(string studentID) {
         vector<string>* conditions = new vector<string>((this->columns).size(), "all");
-        (*conditions)[this->getIndex("studentid")] = studentID;
+        (*conditions)[this->getIndex("studentId")] = studentID;
         vector<vector<string>> res = this->fetch(conditions);
         if (res.size() != 0) {
             this->setStudentId(res[0][this->getIndex("studentId")]);

@@ -111,13 +111,16 @@
     <ClInclude Include="app\Controller\MiscellanousFunctions.h" />
     <ClInclude Include="app\Controller\ScoreboardController.h" />
     <ClInclude Include="app\controller\UserController.h" />
+    <ClInclude Include="app\Controller\Validation.h" />
     <ClInclude Include="app\History.h" />
     <ClInclude Include="app\model\AccountModel.h" />
     <ClInclude Include="app\Model\AttendanceModel.h" />
+    <ClInclude Include="app\Model\ClassModel.h" />
     <ClInclude Include="app\Model\CourseInformationModel.h" />
     <ClInclude Include="app\model\ModelInterface.h" />
     <ClInclude Include="app\Model\ScoreboardModel.h" />
     <ClInclude Include="app\Model\UserInfoModel.h" />
+    <ClInclude Include="app\Utils\vector.h" />
     <ClInclude Include="app\view\Routes.h" />
     <ClInclude Include="app\View\View.h" />
   </ItemGroup>
