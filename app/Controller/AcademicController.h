@@ -21,13 +21,13 @@ private:
 public:
     void showYear() {
         CourseInformationModel* cim = new CourseInformationModel();
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "No courses was entered in the year you entered." << endl;
             delete cim;
             return;
         }
-        vector<string> years;
+        myVector<string> years;
         for (int i = 0; i < results.size(); ++i) {
             for (int k = 0; k < years.size(); ++k) {
                 if (years[k] != results[i][10]) {
@@ -36,9 +36,9 @@ public:
                 }
             }
         }
-        vector<vector<string>> info;
+        myVector<myVector<string>> info;
         info.push_back(years);
-        vector<string> header; header.push_back("Year");
+        myVector<string> header; header.push_back("Year");
         View* view = new View(info, header);
         view->displayTable();
         delete view;
@@ -48,22 +48,22 @@ public:
     void showSemester() {
         if (role != "staff") return;
         CourseInformationModel* cim = new CourseInformationModel();
-        vector<vector<string>> listCourses = cim->FetchCourse();
+        myVector<myVector<string>> listCourses = cim->FetchCourse();
         if (listCourses.size() == 0) {
             cout << "No courses found in the semester you entered." << endl;
             delete cim;
             return;
         }
-        vector<string> semesters;
+        myVector<string> semesters;
         for (int i = 0; i < listCourses.size(); ++i) {
             for (int k = 0; k < semesters.size(); ++k) {
                 if (listCourses[i][9] != semesters[k])
                     semesters.push_back(listCourses[i][9]);
             }
         }
-        vector<vector<string>> info;
+        myVector<myVector<string>> info;
         info.push_back(semesters);
-        vector<string> header; header.push_back("Semester");
+        myVector<string> header; header.push_back("Semester");
         View* view = new View(info, header);
         view->displayTable();
         delete view;
@@ -82,7 +82,7 @@ public:
         am->setStudentId(globalUsername);
         am->setDay("");
         uim->setStudentId(globalUsername);
-        vector<vector<string>> results = uim->FetchInfo();
+        myVector<myVector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The student ID you entered does not exist." << endl;
             delete cim;
@@ -90,7 +90,7 @@ public:
             delete am;
             return;
         }
-        vector<vector<string>> enrollment = am->FetchAttendance();
+        myVector<myVector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in any course." << endl;
             delete cim;
@@ -98,13 +98,13 @@ public:
             delete am;
             return;
         }
-        vector<vector<string>> schedules;
+        myVector<myVector<string>> schedules;
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setStudentId(studentId);
         for (int i = 0; i < enrollment.size(); ++i) {
             cim->setCourseId(enrollment[i][2]);
-            vector<string> course = cim->FetchCourse()[0];
-            vector<string> schedule;
+            myVector<string> course = cim->FetchCourse()[0];
+            myVector<string> schedule;
             schedule.push_back(course[1]);
             schedule.push_back(course[11]);
             string dailyHour = course[4] + "-" + course[5];
@@ -117,7 +117,7 @@ public:
         for (int i = 0; i < schedules.size(); ++i) {
             if (schedules[i].size() > max_column) max_column = schedules[i].size();
         }
-        vector<string> header; header.push_back("Course Name");
+        myVector<string> header; header.push_back("Course Name");
         header.push_back("Day Of Week"); header.push_back("Daily Hour");
         header.push_back("Study Period");
         View* view = new View(schedules, header);

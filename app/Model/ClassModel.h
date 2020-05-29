@@ -30,15 +30,15 @@ public:
 	}
 	
 	void saveStudent() {
-		vector<string> record((this->columns).size());
+		myVector<string> record((this->columns).size());
 		record[this->getIndex("classname")] = this->className;
 		record[this->getIndex("studentid")] = this->studentId;
 		this->add(&record);
 	}
 
-	vector<string> getClassList() {
-		vector<vector<string>> records = this->fetch();
-		vector<string> res;
+	myVector<string> getClassList() {
+		myVector<myVector<string>> records = this->fetch();
+		myVector<string> res;
 
 		int n = records.size();
 		int col = this->getIndex("classname");
@@ -58,12 +58,12 @@ public:
 		return res;
 	}
 
-	vector<string> getStudentInClass(string classname) {
-		vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+	myVector<string> getStudentInClass(string classname) {
+		myVector<string>* conditions = new myVector<string>((this->columns).size(), "all");
 		(*conditions)[this->getIndex("classname")] = classname;
 
-		vector<vector<string>> records = this->fetch(conditions);
-		vector<string> res;
+		myVector<myVector<string>> records = this->fetch(conditions);
+		myVector<string> res;
 		int n = records.size();
 		int col = this->getIndex("studentid");
 		for (int i = 0; i < n; ++i) {
@@ -72,39 +72,39 @@ public:
 		return res;
 	}
 
-	/*Set the values in the model using a vector.
+	/*Set the values in the model using a myVector.
 	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
-	void setClassInfo(vector<string>* info) {
+	void setClassInfo(myVector<string>* info) {
 		if (info->size() != this->columns.size()) return;
 		this->studentId = (*info)[this->getIndex("studentid")];
 		this->className = (*info)[this->getIndex("classname")];
 	}
 
-	/*Get the values in the model and return as a vector.
+	/*Get the values in the model and return as a myVector.
 	Please provide all required fields for this model in order, including a blank at the start for an ID.*/
-	vector<string>* getClassInfo() {
-		vector<string>* info = new vector<string>();
+	myVector<string>* getClassInfo() {
+		myVector<string>* info = new myVector<string>();
 		info->push_back(this->id);
 		info->push_back(this->className);
 		info->push_back(this->studentId);
 		return info;
 	}
 
-	void RemoveClass(vector<string>* conditions = nullptr) {
+	void RemoveClass(myVector<string>* conditions = nullptr) {
 		if (conditions == nullptr || conditions->size() != this->columns.size()) conditions = getClassInfo();
 		this->erase(conditions);
 	}
 
 	void removeStudentById(string studentID) {
-		vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+		myVector<string>* conditions = new myVector<string>((this->columns).size(), "all");
 		(*conditions)[this->getIndex("studentid")] = studentID;
 		this->erase(conditions);
 	}
 
 	string getClassOfStudent(string studentID) {
-		vector<string>* conditions = new vector<string>((this->columns).size(), "all");
+		myVector<string>* conditions = new myVector<string>((this->columns).size(), "all");
 		(*conditions)[this->getIndex("studentid")] = studentID;
-		vector<vector<string>> res = this->fetch(conditions);
+		myVector<myVector<string>> res = this->fetch(conditions);
 		if (res.size() == 0) return "";
 		return res[0][this->getIndex("classname")];
 	}

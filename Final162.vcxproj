@@ -120,7 +120,7 @@
     <ClInclude Include="app\model\ModelInterface.h" />
     <ClInclude Include="app\Model\ScoreboardModel.h" />
     <ClInclude Include="app\Model\UserInfoModel.h" />
-    <ClInclude Include="app\Utils\vector.h" />
+    <ClInclude Include="app\Utils\myVector.h" />
     <ClInclude Include="app\view\Routes.h" />
     <ClInclude Include="app\View\View.h" />
   </ItemGroup>

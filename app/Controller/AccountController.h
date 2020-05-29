@@ -27,7 +27,7 @@ public:
     void seeProfile() {
         UserInfoModel* user = new UserInfoModel();
         user->setUsername(globalUsername);
-        vector<vector<string>> records = user->FetchInfo();
+        myVector<myVector<string>> records = user->FetchInfo();
         if (records.size() == 0) {
             cout << "Something wrong with your account, cannot fetch your profile.";
             delete user;
@@ -65,22 +65,22 @@ public:
         UserInfoModel* uim = new UserInfoModel();
         AccountModel* am = new AccountModel();
         am->setRole("lecturer");
-        vector<vector<string>> results = am->fetchAccount();
+        myVector<myVector<string>> results = am->fetchAccount();
         if (results.size() == 0) {
             cout << "No lecturer was found!" << endl;
             delete uim;
             delete am;
             return;
         }
-        vector<vector<string>> lecturers;
+        myVector<myVector<string>> lecturers;
         for (int i = 0; i < results.size(); ++i) {
             uim->setUsername(results[i][1]);
-            vector<vector<string>> getBack = uim->FetchInfo();
+            myVector<myVector<string>> getBack = uim->FetchInfo();
             if (getBack.size() != 0) {
                 lecturers.push_back(getBack[0]);
             }
         }
-        vector<string> header = uim->columns;
+        myVector<string> header = uim->columns;
         for (int i = 0; i < header.size(); ++i) {
             header[i] = capitalize(header[i]);
         }
@@ -98,16 +98,16 @@ public:
 		string username; valid->read(username, "nospc");;
         uim->setUsername(username);
 
-        vector<vector<string>> results = uim->FetchInfo();
+        myVector<myVector<string>> results = uim->FetchInfo();
         if (results.size() == 0) {
             cout << "The lecturer account you entered does not exist. Please retry." << endl;
             delete uim;
             return;
         }
-        vector<string> record = results[0];
+        myVector<string> record = results[0];
         cout << "Please enter the information that you want to change about this course. Press enter if you don't want to change that info.." << endl;
         string temp;
-        vector<string> toUpdate;
+        myVector<string> toUpdate;
         toUpdate.push_back(record[0]);
         toUpdate.push_back("");
 		cout << "First name: ";    valid->read(temp, "all");    toUpdate.push_back(temp);
@@ -129,8 +129,8 @@ public:
         uim->setUsername(lecturer);
         am->setUserName(lecturer);
         am->setRole("lecturer");
-        vector<vector<string>> accountResult = am->fetchAccount();
-        vector<vector<string>> userResult = uim->FetchInfo();
+        myVector<myVector<string>> accountResult = am->fetchAccount();
+        myVector<myVector<string>> userResult = uim->FetchInfo();
         if (accountResult.size() == 0 || userResult.size() == 0) {
             cout << "The account you entered may not exist, please recheck." << endl;
             delete uim;

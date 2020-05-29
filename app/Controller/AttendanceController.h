@@ -30,10 +30,10 @@ public:
             delete cim;
             return;
         }
-        vector<vector<string>> attendance;
+        myVector<myVector<string>> attendance;
         am->setCourseId(courseId);
         am->setDay("");
-        vector<vector<string>> results = am->FetchAttendance();
+        myVector<myVector<string>> results = am->FetchAttendance();
         if (results.size() == 0) {
             cout << "No students attended the given course, please recheck." << endl;
             delete am;
@@ -45,13 +45,13 @@ public:
         for (int i = 0; i < results.size(); ++i) {
             am_temp->setStudentId(results[i][1]);
             uim->setStudentId(results[i][1]);
-            vector<vector<string>> users = uim->FetchInfo();
-            vector<string> attendanceOfOne(11, "0");
+            myVector<myVector<string>> users = uim->FetchInfo();
+            myVector<string> attendanceOfOne(11, "0");
             if (users.size() != 0) {
                 attendanceOfOne[0] = users[0][1];
             }
             else attendanceOfOne.push_back("");
-            vector<vector<string>> getBack = am_temp->FetchAttendance();
+            myVector<myVector<string>> getBack = am_temp->FetchAttendance();
 
             for (int k = 0; k < getBack.size(); ++k) {
                 if (getBack[k][3] != "")
@@ -60,7 +60,7 @@ public:
             attendance.push_back(attendanceOfOne);
         }
         int max_column = 10;
-        vector<string> header; header.push_back("Student ID");
+        myVector<string> header; header.push_back("Student ID");
         for (int i = 0; i < max_column; ++i) header.push_back("Day " + to_string(i + 1));
         View* view = new View(attendance, header);
         view->displayTable();
@@ -88,10 +88,10 @@ public:
             delete uim;
             return;
         }
-        vector<vector<string>> attendance;
+        myVector<myVector<string>> attendance;
         am->setCourseId(courseId);
         am->setDay("");
-        vector<vector<string>> results = am->FetchAttendance();
+        myVector<myVector<string>> results = am->FetchAttendance();
         if (results.size() == 0) {
             cout << "No students attended the given course, please recheck." << endl;
             delete am;
@@ -104,13 +104,13 @@ public:
         for (int i = 0; i < results.size(); ++i) {
             am_temp->setStudentId(results[i][1]);
             uim->setStudentId(results[i][1]);
-            vector<vector<string>> users = uim->FetchInfo();
-            vector<string> attendanceOfOne(11, "0");
+            myVector<myVector<string>> users = uim->FetchInfo();
+            myVector<string> attendanceOfOne(11, "0");
             if (users.size() != 0) {
                 attendanceOfOne[0] = users[0][1];
             }
             else attendanceOfOne.push_back("");
-            vector<vector<string>> getBack = am_temp->FetchAttendance();
+            myVector<myVector<string>> getBack = am_temp->FetchAttendance();
 
             for (int k = 0; k < getBack.size(); ++k) {
                 if (getBack[k][3] != "")
@@ -119,7 +119,7 @@ public:
             attendance.push_back(attendanceOfOne);
         }
         int max_column = 10;
-        vector<string> header; header.push_back("Student ID");
+        myVector<string> header; header.push_back("Student ID");
         for (int i = 0; i < max_column; ++i) header.push_back("Day " + to_string(i + 1));
         View* view = new View(attendance, header);
         view->setPath(path);
@@ -138,7 +138,7 @@ public:
         string courseID, studentID;
         cout << "Please enter the course ID: ";  valid->read(courseID, "nospc");  am->setCourseId(courseID);
         cout << "Please enter the student ID: "; valid->read(studentID, "nospc"); am->setStudentId(studentID);
-        vector<vector<string>> conditions = am->FetchAttendance();
+        myVector<myVector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
         {
@@ -178,7 +178,7 @@ public:
         cout << "Please enter the course ID: ";   valid->read(courseID, "nospc");  am->setCourseId(courseID);
 		cout << "Please enter the student ID: ";  valid->read(studentID, "nospc"); am->setStudentId(studentID);
 		cout << "Please enter the day to delete attendance of this student(1-10): "; valid->read(day, "day"); am->setDay(day);
-        vector<vector<string>> conditions = am->FetchAttendance();
+        myVector<myVector<string>> conditions = am->FetchAttendance();
 
         if (conditions.size() == 0)
         {
@@ -199,7 +199,7 @@ public:
         string courseId, studentId = globalUsername, day;
         cout << "Please enter the ID of the course that you want to check in: ";   valid->read(courseId, "nospc");
         cim->setCourseId(courseId);
-        vector<vector<string>> temp = cim->FetchCourse();
+        myVector<myVector<string>> temp = cim->FetchCourse();
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered does not exist." << endl;
             delete uim;
@@ -219,7 +219,7 @@ public:
         am->setStudentId(studentId);
         am->setCourseId(courseId);
         am->setDay("");
-        vector<vector<string>> enrollment = am->FetchAttendance();
+        myVector<myVector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in this course." << endl;
             delete uim;
@@ -251,7 +251,7 @@ public:
         }
         am->setStudentId(studentId);
         am->setDay("");
-        vector<vector<string>> enrollment = am->FetchAttendance();
+        myVector<myVector<string>> enrollment = am->FetchAttendance();
         if (enrollment.size() == 0) {
             cout << "You are not enrolled in any course." << endl;
             delete uim;
@@ -259,16 +259,16 @@ public:
             delete am;
             return;
         }
-        vector<vector<string>> attendance;
+        myVector<myVector<string>> attendance;
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setStudentId(studentId);
         for (int i = 0; i < enrollment.size(); ++i) {
             cim->setCourseId(enrollment[i][2]);
-            vector<vector<string>> courses = cim->FetchCourse();
-            vector<string> attendanceOfOne(11, "0");
+            myVector<myVector<string>> courses = cim->FetchCourse();
+            myVector<string> attendanceOfOne(11, "0");
             attendanceOfOne[0] = courses[0][1];
             am_temp->setCourseId(enrollment[i][2]);
-            vector<vector<string>> days = am_temp->FetchAttendance();
+            myVector<myVector<string>> days = am_temp->FetchAttendance();
             for (int k = 0; k < days.size(); ++k) {
                 if (days[k][3] != "")
                 attendanceOfOne[stoi(days[k][3])] = "1";
@@ -281,7 +281,7 @@ public:
             if (attendance[i].size() > max_column) max_column = attendance[i].size();
         }
         */
-        vector<string> header; header.push_back("Course Name");
+        myVector<string> header; header.push_back("Course Name");
         for (int i = 0; i < max_column; ++i) header.push_back("Day" + to_string(i+1));
         View* view = new View(attendance, header);
         view->displayTable();

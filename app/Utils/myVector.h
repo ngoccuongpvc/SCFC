@@ -1,12 +1,12 @@
-#ifndef VECTOR_H_INCLUDED
-#define VECTOR_H_INCLUDED
+#ifndef myVector_H_INCLUDED
+#define myVector_H_INCLUDED
 
 #include <cstring>
 
 using namespace std;
 
 template <class Type>
-class vector {
+class myVector {
 private:
     Type* A;
     int _size, _current;
@@ -43,19 +43,19 @@ public:
         return this->_current;
     }
 
-    vector() {
+    myVector() {
         this->A = new Type[1];
         this->_size = 1;
         this->_current = 0;
     }
 
-    vector(int _size) {
+    myVector(int _size) {
         this->A = new Type[_size];
         this->_size = _size;
         this->_current = 0;
     }
 
-    vector(int _size, Type temp) {
+    myVector(int _size, Type temp) {
         this->_size = _size;
         this->_current = _size;
         this->A = new Type[_size];
@@ -71,9 +71,9 @@ public:
         return (&this->A[this->_current]);
     }
 
-    ~vector() {
+    ~myVector() {
         //delete[]A;
     }
 };
 
-#endif // VECTOR_H_INCLUDED
+#endif // myVector_H_INCLUDED

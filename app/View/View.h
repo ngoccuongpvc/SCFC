@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "../Utils/vector.h"
+#include "../Utils/myVector.h"
 #include <iomanip>
 #include <fstream>
 
@@ -13,9 +13,9 @@ class View
 {
 private:
 	string path = "database/exported.csv";
-	vector<vector<string>> data;
-	vector<string> colHeader;
-	vector<int> maxWidth;
+	myVector<myVector<string>> data;
+	myVector<string> colHeader;
+	myVector<int> maxWidth;
 	int rowWidth = 0;
 	bool matchedData = false;
 
@@ -28,7 +28,7 @@ private:
 		
 		cout << this->data[0].size() << endl;
 		this->data.push_back(this->colHeader);
-		this->maxWidth = vector<int>(this->data[0].size(), 0);
+		this->maxWidth = myVector<int>(this->data[0].size(), 0);
 
 		for (int i = 0; i < this->data.size(); i++)
 		{
@@ -153,7 +153,7 @@ public:
 	}
 
 	//init function
-	View(vector<vector<string>> data, vector<string> colHeader) {
+	View(myVector<myVector<string>> data, myVector<string> colHeader) {
 		this->data = data;
 		this->colHeader = colHeader;
 		this->matchedData = this->calculateMaxWidth();
