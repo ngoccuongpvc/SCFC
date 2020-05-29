@@ -217,7 +217,7 @@ public:
         viewInfoOfCourse(courseId);
 
         myVector<string> record = results[0];
-        cout << "Please enter the information that you want to change about this course. Press enter (leave blank) if you don't want to change that info.." << endl;
+        cout << "Please enter the information that you want to change about this course." << endl;
         string temp, temp2;
         myVector<string> toUpdate;
         toUpdate.push_back(record[0]);

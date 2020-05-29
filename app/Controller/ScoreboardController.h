@@ -218,7 +218,7 @@ public:
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId, term;
         cout << "Please enter course id: "; valid->read(courseId, "nospc");; sm->setCourseId(courseId);
-        cout << "Please enter student id "; valid->read(studentId, "nospc"); sm->setStudentId(studentId);
+        cout << "Please enter student id: "; valid->read(studentId, "nospc"); sm->setStudentId(studentId);
 
         cout << "Below is the current score of that student in the course: " << endl;
         myVector<string> score;
@@ -244,9 +244,6 @@ public:
         View* view = new View(scores, header);
         view->displayTable();
 
-        cout << "Below is the current score of the student enrolled in the entered course." << endl;
-        showScore(courseId, studentId);
-
         cout << "Please enter the term (midterm/final/bonus/lab)"; valid->read(term, "term"); sm->setTerm(term);
 
         myVector<myVector<string>> conditions = sm->FetchScoreboard();
@@ -258,45 +255,17 @@ public:
         }
 
         string scoreT;
-        cout << "Please enter the score: "; valid->read(scoreT, "score");
+        cout << "Please enter the score (0.00 - 10.00): "; valid->read(scoreT, "score");
         cout << "Successfully updated the score." << endl;
+        sm->setScoreboardInfo(&conditions[0]);
         myVector<string> record = conditions[0];
+        cout << conditions[0][4] << endl;
         record[4] = scoreT;
-        sm->UpdateScore(&conditions[0], &record);
+        cout << conditions[0][4] << endl;
+        sm->UpdateScore(nullptr, &record);
         delete sm;
         delete view;
         return;
-    }
-
-    void showScore(string courseId, string studentId) {
-        CourseInformationModel* cim = new CourseInformationModel();
-        ScoreboardModel* sm = new ScoreboardModel();
-        sm->setStudentId(studentId);
-        sm->setCourseId(courseId);
-        myVector<myVector<string>> scoreboard = sm->FetchScoreboard();
-        if (scoreboard.size() == 0) {
-            cout << "No scores were entered for this student yet." << endl;
-            delete cim;
-            delete sm;
-            return;
-        }
-        myVector<myVector<string>> scores;
-        for (int i = 0; i < scoreboard.size(); ++i) {
-            myVector<string> score(2, "unmarked");
-            if (scoreboard[i][3] != "" && scoreboard[i][4] != "") {
-                score[0] = scoreboard[i][3];
-                score[1] = scoreboard[i][4];
-            }
-
-            scores.push_back(score);
-        }
-        myVector<string> header; header.push_back("Term"); header.push_back("Score");
-        View* view = new View(scores, header);
-        view->displayTable();
-
-        delete cim;
-        delete sm;
-        delete view;
     }
 
     void viewScoreOfCourse() {

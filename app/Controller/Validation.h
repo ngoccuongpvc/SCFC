@@ -59,7 +59,7 @@ public:
 		regList["year"] = regex("20\\d\\d-20\\d\\d");
 
 		regList["day"] = regex("^([1-9]?|10)$");
-		regList["score"] = regex("\\d+");
+		regList["score"] = regex("^(10|\\d)(\.\\d{1,2})?$");
 
 		regList["gender"] = regex("male|female");
 		regList["term"] = regex("midterm|final|bonus|lab");
