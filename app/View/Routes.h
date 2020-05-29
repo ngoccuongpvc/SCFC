@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <iostream>
-#include "../Utils/vector.h"
+#include "../Utils/myVector.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ using namespace std;
 class Routes {
 private:
 	map<string, pair<string, string>> routes;
-	map<string, std::vector<string>> links;
+	map<string, myVector<string>> links;
 	map<string, string> usage;
 
 public:

@@ -41,6 +41,7 @@ public:
             delete cim;
             return;
         }
+        cout << "The attendance list will be given below, in which '0' indicates absence, '1' for having checked in." << endl;
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setCourseId(courseId);
         for (int i = 0; i < results.size(); ++i) {
@@ -55,8 +56,10 @@ public:
             myVector<myVector<string>> getBack = am_temp->FetchAttendance();
 
             for (int k = 0; k < getBack.size(); ++k) {
-                if (getBack[k][3] != "")
-                    attendanceOfOne[stoi(getBack[k][3])] = "1";
+                if (getBack[k][3] != "") {
+                    int dayT = stoi(getBack[k][3]);
+                    if (dayT >= 1 && dayT <= 10) attendanceOfOne[dayT] = "1";
+                }
             }
             attendance.push_back(attendanceOfOne);
         }
@@ -100,6 +103,7 @@ public:
             delete uim;
             return;
         }
+        cout << "The attendance list will be given below, in which '0' indicates absence, '1' for having checked in." << endl;
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setCourseId(courseId);
         for (int i = 0; i < results.size(); ++i) {
@@ -114,8 +118,10 @@ public:
             myVector<myVector<string>> getBack = am_temp->FetchAttendance();
 
             for (int k = 0; k < getBack.size(); ++k) {
-                if (getBack[k][3] != "")
-                    attendanceOfOne[stoi(getBack[k][3])] = "1";
+                if (getBack[k][3] != "") {
+                    int dayT = stoi(getBack[k][3]);
+                    if (dayT >= 1 && dayT <= 10) attendanceOfOne[dayT] = "1";
+                }
             }
             attendance.push_back(attendanceOfOne);
         }
@@ -129,6 +135,31 @@ public:
         delete am;
         delete uim;
         delete cim;
+    }
+
+    void showAttendance(string courseId, string studentId) {
+        myVector<myVector<string>> attendance;
+        AttendanceModel* am = new AttendanceModel();
+        am->setCourseId(courseId);
+        am->setStudentId(studentId);
+   
+        myVector<string> attendanceOfOne(10, "0");
+        myVector<myVector<string>> days = am->FetchAttendance();
+        for (int k = 0; k < days.size(); ++k) {
+            if (days[k][3] != "") {
+                int dayT = stoi(days[k][3]);
+                if (dayT >= 1 && dayT <= 10) attendanceOfOne[dayT-1] = "1";
+            }
+        }
+        attendance.push_back(attendanceOfOne);
+        
+        int max_column = 10;
+        myVector<string> header;
+        for (int i = 0; i < max_column; ++i) header.push_back("Day" + to_string(i + 1));
+        View* view = new View(attendance, header);
+        view->displayTable();
+        delete view;
+        delete am;
     }
 
 
@@ -147,11 +178,15 @@ public:
             delete am;
             return;
         }
+        cout << "Below is the list of attendance for this student in the entered course:" << endl;
+
+        showAttendance(courseID, studentID);
 
         cout << "Please enter the day of attendance for this student(1-10): ";
 		string day; valid->read(day, "day");
         am->setDay(day);
         am->AddAttendance();
+        cout << "Successfully updated the attendance." << endl;
         delete am;
         return;
     }
@@ -160,24 +195,13 @@ public:
     {
         
         cout << "Provide information to delete attendance of a student" << endl;
-        /*
-        string opt; cin >> opt;
-
-        while (true)
-        {
-            if (opt == "Y") break;
-            else if (opt == "N") return;
-            else
-            {
-                cout << "Invalid input. Please try again" << endl;
-                cin >> opt;
-            }
-        }
-        */
         AttendanceModel* am = new AttendanceModel();
         string courseID, studentID, day;
         cout << "Please enter the course ID: ";   valid->read(courseID, "nospc");  am->setCourseId(courseID);
 		cout << "Please enter the student ID: ";  valid->read(studentID, "nospc"); am->setStudentId(studentID);
+        cout << "Below is the list of attendance for this student in the entered course:" << endl;
+
+        showAttendance(courseID, studentID);
 		cout << "Please enter the day to delete attendance of this student(1-10): "; valid->read(day, "day"); am->setDay(day);
         myVector<myVector<string>> conditions = am->FetchAttendance();
 
@@ -186,10 +210,11 @@ public:
             cout << "Unable to find this course/student/day!" << endl;
             delete am;
             return;
-        } 
+        }    
 
         am->RemoveAttendance(&conditions[0]);
         delete am;
+        cout << "Successfully deleted the attendance." << endl;
         return;
     }
 
@@ -230,6 +255,10 @@ public:
         }
         cout << "Please enter the day you are checking in (1-10): ";  valid->read(day, "day");
         am->setDay(day);
+        enrollment = am->FetchAttendance();
+        if (enrollment.size() != 0) {
+            cout << "You have already checked in for this day in the course, please try again." << endl;
+        }
         am->AddAttendance();
         cout << "Successfully added your checkin." << endl;
         delete uim;
@@ -260,6 +289,7 @@ public:
             delete am;
             return;
         }
+        cout << "The attendance list will be given below, in which '0' indicates absence, '1' for having checked in." << endl;
         myVector<myVector<string>> attendance;
         AttendanceModel* am_temp = new AttendanceModel();
         am_temp->setStudentId(studentId);
@@ -271,8 +301,10 @@ public:
             am_temp->setCourseId(enrollment[i][2]);
             myVector<myVector<string>> days = am_temp->FetchAttendance();
             for (int k = 0; k < days.size(); ++k) {
-                if (days[k][3] != "")
-                attendanceOfOne[stoi(days[k][3])] = "1";
+                if (days[k][3] != "") {
+                    int dayT = stoi(days[k][3]);
+                    if (dayT >= 1 && dayT <= 10) attendanceOfOne[dayT] = "1";
+                }
             }
             attendance.push_back(attendanceOfOne);
         }

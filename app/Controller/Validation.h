@@ -34,12 +34,12 @@ public:
 
 			if (!regex_match(variable, regList["all"]))
 			{
-				cout << "Our program does not accept coma!! Plz try again" << endl;
+				cout << "Our program does not accept comma! Please try again." << endl;
 				continue;
 			}
 			else if (!regex_match(variable, regList[varName]))
 			{
-				cout << "Invalid input or input does not match the required format!! Plz try again" << endl;
+				cout << "Invalid input or input does not match the required format! Please try again." << endl;
 				continue;
 			}
 			variable = toLowerCase(variable);
@@ -58,8 +58,8 @@ public:
 		regList["hour"] = regex("[0-2][0-9]:[0-6][0-9]");
 		regList["year"] = regex("20\\d\\d-20\\d\\d");
 
-		regList["day"] = regex("\d\d");
-		regList["score"] = regex("\\d+");
+		regList["day"] = regex("^([1-9]?|10)$");
+		regList["score"] = regex("^(10|\\d)(\.\\d{1,2})?$");
 
 		regList["gender"] = regex("male|female");
 		regList["term"] = regex("midterm|final|bonus|lab");

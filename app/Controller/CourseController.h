@@ -177,6 +177,31 @@ public:
         delete cm;
     }
 
+    void viewInfoOfCourse(string courseId) {
+        CourseInformationModel* cim = new CourseInformationModel();
+        cim->setCourseId(courseId);
+        myVector<myVector<string>> results = cim->FetchCourse();
+        if (results.size() == 0) {
+            delete cim;
+            return;
+        }
+
+        cout << "Course ID: " << results[0][12] << endl;
+        cout << "Course name: " << results[0][1] << endl;
+        cout << "Class name: " << results[0][2] << endl;
+        cout << "Lecturer account: " << results[0][3] << endl;
+        cout << "Start hour: " << results[0][4] << endl;
+        cout << "End hour: " << results[0][5] << endl;
+        cout << "Start day: " << results[0][6] << endl;
+        cout << "End day: " << results[0][7] << endl;
+        cout << "Day of week: " << results[0][8] << endl;
+        cout << "Room: " << results[0][9] << endl;
+        cout << "Semester: " << results[0][10] << endl;
+        cout << "Year: " << results[0][11] << endl;
+        
+        delete cim;
+    }
+
     void editCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
         cout << "Please enter the ID of the course that you want to edit: "; 
@@ -188,8 +213,12 @@ public:
             delete cim; //check if crash
             return;
         }
+
+        cout << "Below is the current information about the course: " << endl;
+        viewInfoOfCourse(courseId);
+
         myVector<string> record = results[0];
-        cout << "Please enter the information that you want to change about this course. Press enter (leave blank) if you don't want to change that info.." << endl;
+        cout << "Please enter the information that you want to change about this course." << endl;
         string temp, temp2;
         myVector<string> toUpdate;
         toUpdate.push_back(record[0]);

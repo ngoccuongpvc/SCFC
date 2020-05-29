@@ -1,5 +1,5 @@
-#ifndef Vector_H_INCLUDED
-#define Vector_H_INCLUDED
+#ifndef myVector_H_INCLUDED
+#define myVector_H_INCLUDED
 
 #include <cstring>
 
@@ -76,4 +76,4 @@ public:
     }
 };
 
-#endif // Vector_H_INCLUDED
+#endif // myVector_H_INCLUDED

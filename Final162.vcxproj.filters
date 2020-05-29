@@ -83,7 +83,7 @@
     <ClInclude Include="app\Model\ClassModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\Utils\vector.h">
+    <ClInclude Include="app\Utils\myVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

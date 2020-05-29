@@ -246,7 +246,7 @@ public:
 		valid->read(gender, "gender");
 		cout << "DOB: [current: " << userInfoModel->getDOB() << "]: ";
 		valid->read(DOB, "date");
-
+		
 		if (firstName.size()) userInfoModel->setFirstName(firstName);
 		if (lastName.size()) userInfoModel->setLastName(lastName);
 		if (gender.size()) userInfoModel->setUserGender(gender);

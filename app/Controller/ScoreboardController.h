@@ -219,8 +219,33 @@ public:
         ScoreboardModel* sm = new ScoreboardModel();
         string courseId, studentId, term;
         cout << "Please enter course id: "; valid->read(courseId, "nospc");; sm->setCourseId(courseId);
-        cout << "Please enter student id "; valid->read(studentId, "nospc"); sm->setStudentId(studentId);
-        cout << "Pleasee enter the term (midterm/final/bonus/lab)"; valid->read(term, "term"); sm->setTerm(term);
+        cout << "Please enter student id: "; valid->read(studentId, "nospc"); sm->setStudentId(studentId);
+
+        cout << "Below is the current score of that student in the course: " << endl;
+        myVector<string> score;
+        myVector<myVector<string>> scoreResult = sm->FetchScoreboard();
+        string midterm, lab, final, bonus;
+        midterm = lab = final = bonus = "";
+        for (int k = 0; k < scoreResult.size(); k++) {
+            if (scoreResult[k][3] == "midterm") midterm = scoreResult[k][4];
+            else if (scoreResult[k][3] == "lab") lab = scoreResult[k][4];
+            else if (scoreResult[k][3] == "final") final = scoreResult[k][4];
+            else if (scoreResult[k][3] == "bonus") bonus = scoreResult[k][4];
+        }
+        score.push_back(midterm);
+        score.push_back(lab);
+        score.push_back(final);
+        score.push_back(bonus);
+        myVector<myVector<string>> scores; scores.push_back(score);
+        myVector<string> header;
+        header.push_back("Midterm");
+        header.push_back("Lab");
+        header.push_back("Final");
+        header.push_back("Bonus");
+        View* view = new View(scores, header);
+        view->displayTable();
+
+        cout << "Please enter the term (midterm/final/bonus/lab)"; valid->read(term, "term"); sm->setTerm(term);
 
         myVector<myVector<string>> conditions = sm->FetchScoreboard();
         if (conditions.size() == 0)
@@ -230,12 +255,17 @@ public:
             return;
         }
 
-        string score;
-        cout << "Please enter the score: "; valid->read(score, "score");
+        string scoreT;
+        cout << "Please enter the score (0.00 - 10.00): "; valid->read(scoreT, "score");
+        cout << "Successfully updated the score." << endl;
+        sm->setScoreboardInfo(&conditions[0]);
         myVector<string> record = conditions[0];
-        record[4] = score;
-        sm->UpdateScore(&conditions[0], &record);
+        cout << conditions[0][4] << endl;
+        record[4] = scoreT;
+        cout << conditions[0][4] << endl;
+        sm->UpdateScore(nullptr, &record);
         delete sm;
+        delete view;
         return;
     }
 
@@ -268,7 +298,7 @@ public:
         sm->setCourseId(courseId);
         myVector<myVector<string>> scoreboard = sm->FetchScoreboard();
         if (scoreboard.size() == 0) {
-            cout << "You are not enrolled in this course." << endl;
+            cout << "You are not enrolled in this course or there hasn't been any score added." << endl;
             delete cim;
             delete uim;
             delete sm;
