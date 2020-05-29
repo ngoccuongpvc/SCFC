@@ -4,7 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-//#include "../Utils/vector.h"
+#include "../Utils/vector.h"
 #include <map>
 #include <functional>
 #include <cmath>
@@ -18,8 +18,8 @@ class ModelInterface
 public:
     string source;
     map<string, function<void()>> mapMethods;
-    vector<string> columns;
-    vector<string> values;
+    myVector<string> columns;
+    myVector<string> values;
 
     ifstream *readConnection() {
         ifstream *f = new ifstream(this->source, std::ifstream::in);
@@ -62,8 +62,8 @@ public:
     /**
     split the string into many strings separated by ","
     */
-    vector<string> split(string str) {
-        vector<string> v;
+    myVector<string> split(string str) {
+        myVector<string> v;
         string temp = "";
         for (int i=0; i<(int)str.size(); ++i) {
             if (str[i] == ',') {
@@ -92,7 +92,7 @@ public:
     /**
     Just responsible for assert 2 array
     */
-    bool isMeetConditions(vector<string> *expected, vector<string> *actual) {
+    bool isMeetConditions(myVector<string> *expected, myVector<string> *actual) {
         if (expected->size() != actual->size()) {
             return false;
         }
@@ -109,10 +109,10 @@ public:
     For fields that is set = "all", it will be skipped
     if no arguments is passed into fetch, it will return all records
     */
-    vector<vector<string>> fetch (vector<string> *conditions = nullptr) {
+    myVector<myVector<string>> fetch (myVector<string> *conditions = nullptr) {
         string str;
-        vector<vector<string>> result;
-        vector<string> temp;
+        myVector<myVector<string>> result;
+        myVector<string> temp;
         ifstream *f = this->readConnection();
         bool getAll = (conditions == nullptr);
         getline((*f), str);
@@ -129,7 +129,7 @@ public:
         return result;
     }
 
-    void save(vector<vector<string>>* records) {
+    void save(myVector<myVector<string>>* records) {
         ofstream* f = this->writeConnection();
         for (int i = 0; i < (int)this->columns.size(); ++i) {
             (*f) << this->columns[i];
@@ -156,8 +156,8 @@ public:
         add a new record to the end of file
         the first element will be automatically increasing
     */
-    void add(vector<string> *record) {
-        vector<vector<string>> records = this->fetch();
+    void add(myVector<string> *record) {
+        myVector<myVector<string>> records = this->fetch();
         int maxId = 0, temp;
         for (int i = 0; i < (int)records.size(); ++i) {
             if (records[i][0] == "") {
@@ -172,12 +172,12 @@ public:
     }
 
     /*
-        conditions should be initialized by vector<string> conditions(size, "all"), then specify columns that you want to restrict
-        record should be initialized by vector<string> record(size), then fill to columns that you want to update for ALL records
+        conditions should be initialized by myVector<string> conditions(size, "all"), then specify columns that you want to restrict
+        record should be initialized by myVector<string> record(size), then fill to columns that you want to update for ALL records
         that meet the conditions above
     */
-    void update(vector<string>* conditions, vector<string>* record) {
-        vector<vector<string>> records = this->fetch();
+    void update(myVector<string>* conditions, myVector<string>* record) {
+        myVector<myVector<string>> records = this->fetch();
         for (int i = 0; i < (int)records.size(); ++i) {
             if (this->isMeetConditions(conditions, &records[i])) {
                 for (int j = 0; j < (int)records[i].size(); ++j) {
@@ -190,9 +190,9 @@ public:
         this->save(&records);
     }
 
-    void erase(vector<string>* conditions) {
-        vector<vector<string>> records = this->fetch();
-        vector<vector<string>> newRecords;
+    void erase(myVector<string>* conditions) {
+        myVector<myVector<string>> records = this->fetch();
+        myVector<myVector<string>> newRecords;
         for (int i = 0; i < (int)records.size(); ++i) {
             if (!this->isMeetConditions(conditions, &records[i])) {
                 newRecords.push_back(records[i]);

@@ -11,6 +11,7 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
+#include "../Utils/vector.h"
 
 class CourseController : public ControllerInterface {
 private:
@@ -27,7 +28,7 @@ public:
         ScoreboardModel* sm = new ScoreboardModel();
 
         ModelInterface* model = new ModelInterface(path);
-        vector<vector<string>> records = model->fetch();
+        myVector<myVector<string>> records = model->fetch();
         if (model->columns.size() != 11) {
             cout << "Invalid input file format. Please recheck." << endl;
             delete cim;
@@ -38,7 +39,7 @@ public:
             return;
         }
 
-        for (vector<string> record : records) {
+        for (myVector<string> record : records) {
             cim->setCourseId(toLowerCase(record[1]));
             cim->setCourseName(toLowerCase(record[2]));
             cim->setClassName(toLowerCase(record[3]));
@@ -58,7 +59,7 @@ public:
             sm->setCourseId(toLowerCase(record[1]));
             sm->setScore("");
             sm->setTerm("");
-            vector<string> students = cm->getStudentInClass(toLowerCase(record[3]));
+            myVector<string> students = cm->getStudentInClass(toLowerCase(record[3]));
             for (int i = 0; i < students.size(); ++i) {
                 am->setStudentId(students[i]);  
                 am->AddAttendance();
@@ -99,8 +100,8 @@ public:
 
     void viewAllCourse() {
         CourseInformationModel* cim = new CourseInformationModel();
-        vector<vector<string>> results = cim->FetchCourse();
-        vector<string> header = cim->columns;
+        myVector<myVector<string>> results = cim->FetchCourse();
+        myVector<string> header = cim->columns;
         for (int i = 0; i < header.size(); ++i) header[i] = capitalize(header[i]);
         View* view = new View(results, header);
         view->displayTable();
@@ -113,7 +114,7 @@ public:
         string year;
         cout << "Please enter the academic year that you want to remove: "; valid->read(year, "year");
         cim->setYear(year);
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         for (int i = 0; i < results.size(); ++i) {
             removeAllRecordsOfCourse(results[i][12]);
         }
@@ -128,7 +129,7 @@ public:
         cim->setYear(year);
         cout << "Please enter the semester that you want to remove: "; valid->read(semester, "sem");
         cim->setSemester(semester);
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         for (int i = 0; i < results.size(); ++i) {
             removeAllRecordsOfCourse(results[i][12]);
         }
@@ -160,7 +161,7 @@ public:
         sm->setCourseId(cim->getCourseId());
         sm->setScore("");
         sm->setTerm("");
-        vector<string> students = cm->getStudentInClass(cim->getClassName());
+        myVector<string> students = cm->getStudentInClass(cim->getClassName());
         for (int i = 0; i < students.size(); ++i) {
             am->setStudentId(students[i]);
             am->AddAttendance();
@@ -181,16 +182,16 @@ public:
         cout << "Please enter the ID of the course that you want to edit: "; 
 		string courseId; valid->read(courseId, "nospc");
         cim->setCourseId(courseId);
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The course you entered does not exist. Please retry." << endl;
             delete cim; //check if crash
             return;
         }
-        vector<string> record = results[0];
+        myVector<string> record = results[0];
         cout << "Please enter the information that you want to change about this course. Press enter (leave blank) if you don't want to change that info.." << endl;
         string temp, temp2;
-        vector<string> toUpdate;
+        myVector<string> toUpdate;
         toUpdate.push_back(record[0]);
 
         cout << "Course ID: ";       valid->read(temp2, "nospc");
@@ -225,8 +226,8 @@ public:
         ScoreboardModel* sm = new ScoreboardModel();
         am->setCourseId(oldCourseId);
         sm->setCourseId(oldCourseId);
-        vector<string> updateAttendance(4, "all");
-        vector<string> updateScore(5, "all");
+        myVector<string> updateAttendance(4, "all");
+        myVector<string> updateScore(5, "all");
         am->UpdateAttendance(nullptr, &updateAttendance);
         sm->UpdateScore(nullptr, &updateScore);
 
@@ -255,7 +256,7 @@ public:
         sm->setCourseId(courseId);
         sm->setTerm("");
         sm->setScore("");
-        vector<string> students = cm->getStudentInClass(className);
+        myVector<string> students = cm->getStudentInClass(className);
         for (int i = 0; i < students.size(); ++i) {
             am->setStudentId(students[i]);
             sm->setStudentId(students[i]);
@@ -288,7 +289,7 @@ public:
         cout << "Please enter the ID of the course that you want to remove: "; 
 		string courseId; valid->read(courseId, "nospc");
         cim->setCourseId(courseId);
-        vector<vector<string>> courseResult = cim->FetchCourse();
+        myVector<myVector<string>> courseResult = cim->FetchCourse();
         if (courseResult.size() == 0) {
             cout << "The course you entered doesn't exist, please recheck." << endl;
             delete cim;
@@ -306,20 +307,20 @@ public:
         cout << "Please enter the semester that you want to view the list of courses of: "; valid->read(semester, "sem");
         cim->setSemester(semester);
         cim->setYear(year);
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
             delete cim;
             return;
         }
-        vector<vector<string>> courses;
+        myVector<myVector<string>> courses;
         for (int i = 0; i < results.size(); ++i) {
-            vector<string> info;
+            myVector<string> info;
             info.push_back(results[i][1]);
             info.push_back(results[i][12]);
             courses.push_back(info);
         }
-        vector<string> header; header.push_back("Course Name");
+        myVector<string> header; header.push_back("Course Name");
         header.push_back("Course ID");
         View* view = new View(courses, header);
         view->displayTable();
@@ -332,20 +333,20 @@ public:
         string year;
         cout << "Please enter the year that you want to view the list of courses of: "; valid->read(year, "nospc");
         cim->setYear(year);
-        vector<vector<string>> results = cim->FetchCourse();
+        myVector<myVector<string>> results = cim->FetchCourse();
         if (results.size() == 0) {
             cout << "The semester doesn't exist or you haven't added any course to this semester yet!" << endl;
             delete cim;
             return;
         }
-        vector<vector<string>> courses;
+        myVector<myVector<string>> courses;
         for (int i = 0; i < results.size(); ++i) {
-            vector<string> info;
+            myVector<string> info;
             info.push_back(results[i][1]);
             info.push_back(results[i][12]);
             courses.push_back(info);
         }
-        vector<string> header; header.push_back("Course Name");
+        myVector<string> header; header.push_back("Course Name");
         header.push_back("Course ID");
         View* view = new View(courses, header);
         view->displayTable();
@@ -381,13 +382,13 @@ public:
         }
         am->setCourseId(courseId);
         am->setStudentId(studentId);
-        vector<vector<string>> attendance = am->FetchAttendance();
+        myVector<myVector<string>> attendance = am->FetchAttendance();
         for (int i = 0; i < attendance.size(); ++i) {
             am->RemoveAttendance(&attendance[i]);
         }
         sm->setCourseId(courseId);
         sm->setStudentId(studentId);
-        vector<vector<string>> scoreboard = sm->FetchScoreboard();
+        myVector<myVector<string>> scoreboard = sm->FetchScoreboard();
         for (int i = 0; i < scoreboard.size(); ++i) {
             sm->DeleteScore(&scoreboard[i]);
         }
@@ -476,19 +477,19 @@ public:
             delete am;
             return;
         }
-        vector<vector<string>> students;
+        myVector<myVector<string>> students;
         am->setCourseId(courseId);
         am->setDay("");
-        vector<vector<string>> results = am->FetchAttendance();
+        myVector<myVector<string>> results = am->FetchAttendance();
         for (int i = 0; i < results.size(); ++i) {
             uim->setStudentId(results[i][1]);
-            vector<vector<string>> getBack = uim->FetchInfo();
+            myVector<myVector<string>> getBack = uim->FetchInfo();
             if (getBack.size() != 0) {
                 students.push_back(getBack[0]);
             }
         }
 
-        vector<string> header = uim->columns;
+        myVector<string> header = uim->columns;
         for (int i = 0; i < header.size(); ++i) {
             header[i] = capitalize(header[i]);
         }

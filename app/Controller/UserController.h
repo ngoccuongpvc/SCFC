@@ -13,6 +13,7 @@
 #include "../View/View.h"
 
 #include "MiscellanousFunctions.h"
+#include "../Utils/vector.h"
 
 #include "AuthorizeController.h"
 #include "AcademicController.h"
