@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string.h>
+#include "../Utils/vector.h"
 
 using namespace std;
 

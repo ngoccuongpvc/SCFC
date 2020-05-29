@@ -4,6 +4,7 @@
 #include "ModelInterface.h"
 #include <sstream>
 #include <algorithm>
+#include "../Utils/vector.h"
 
 using namespace std;
 

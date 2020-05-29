@@ -2,6 +2,7 @@
 #define CLASSMODEL_H_INCLUDED
 
 #include "ModelInterface.h"
+#include "../Utils/vector.h"
 
 class ClassModel : public ModelInterface {
 

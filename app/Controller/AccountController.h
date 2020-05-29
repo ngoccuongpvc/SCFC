@@ -12,10 +12,10 @@
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
+#include "Validation.h"
+#include "../Utils/vector.h"
 
-using namespace std;
-
-
+//using namespace std;
 
 class AccountController : public ControllerInterface
 {

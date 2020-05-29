@@ -12,6 +12,8 @@
 #include "../Model/ClassModel.h"
 #include "../View/View.h"
 #include "Validation.h"
+#include "../Utils/vector.h"
+ 
 
 class ClassController : public ControllerInterface {
 private:

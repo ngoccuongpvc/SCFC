@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-using namespace std;
+//using namespace std;
 
 template <class Type>
 class myVector {
