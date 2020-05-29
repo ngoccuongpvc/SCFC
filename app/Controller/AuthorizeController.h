@@ -11,7 +11,6 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 string role;
 bool logged_in = false;

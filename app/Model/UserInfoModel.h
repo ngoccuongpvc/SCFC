@@ -3,7 +3,6 @@
 
 #include "ModelInterface.h"
 #include <algorithm>
-#include "../Utils/vector.h"
 
 using namespace std;
 

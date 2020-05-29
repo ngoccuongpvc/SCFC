@@ -11,7 +11,6 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 class AttendanceController : public ControllerInterface {
 private:

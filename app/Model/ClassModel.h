@@ -2,7 +2,6 @@
 #define CLASSMODEL_H_INCLUDED
 
 #include "ModelInterface.h"
-#include "../Utils/vector.h"
 
 class ClassModel : public ModelInterface {
 
@@ -31,7 +30,7 @@ public:
 	}
 	
 	void saveStudent() {
-		myVector<string> record((this->columns).size());
+		myVector<string> record((this->columns).size(), "all");
 		record[this->getIndex("classname")] = this->className;
 		record[this->getIndex("studentid")] = this->studentId;
 		this->add(&record);
