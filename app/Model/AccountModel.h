@@ -4,6 +4,7 @@
 #include "ModelInterface.h"
 #include <sstream>
 #include <algorithm>
+#include "../Utils/vector.h"
 
 using namespace std;
 
@@ -97,7 +98,7 @@ public:
     check if both username and password are both existed in database
     */
     bool checkCredential(string username, string password) {
-        vector<string> conditions (this->columns.size(), "all");
+        myVector<string> conditions (this->columns.size(), "all");
         conditions[this->getIndex(getName(username))] = username;
         conditions[this->getIndex(getName(password))] = SHF(password); //hashing password
 
@@ -110,9 +111,9 @@ public:
 
     string getUserRole(string username) {
         try {
-            vector<string> conditions (this->columns.size(), "all");
+            myVector<string> conditions (this->columns.size(), "all");
             conditions[this->getIndex("username")] = username;
-            vector<string> record = fetch(&conditions)[0];
+            myVector<string> record = fetch(&conditions)[0];
             return record[this->getIndex("role")];
         } catch (exception e) {
             cout << "An exception has occurred" << endl;
@@ -123,10 +124,10 @@ public:
     /*Before adding, please provide all necessary information for the model using the 'set' functions.
     Except that the 'id' of the model (the incrementing id) is not needed.*/
     void registerUser() {
-        vector<string> conditions(this->columns.size(), "all");
+        myVector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("username")] = this->username;
         if ((this->fetch(&conditions)).size() != 0) return;
-        vector<string> account;
+        myVector<string> account;
         account.push_back(this->id);
         account.push_back(this->username);
         account.push_back(SHF(this->password));
@@ -142,9 +143,9 @@ public:
     bool changePassword(string username, string newPass)
     {
         try {
-            vector<string> conditions(this->columns.size(), "all");
+            myVector<string> conditions(this->columns.size(), "all");
             conditions[this->getIndex("username")] = username;
-            vector<string> record = fetch(&conditions)[0];
+            myVector<string> record = fetch(&conditions)[0];
             record[this->getIndex("password")] = SHF(newPass);
             this->update(&conditions, &record);
             return true;
@@ -157,19 +158,19 @@ public:
 
     /*Before fetching, please ensure that all parameters that are required as conditions are set in model using 'set' functions
     Example: if you want to fetch records with id 69, please set it using Model->setId(69) before fetching.*/
-    vector<vector<string>> fetchAccount() {
-        vector<string> conditions(this->columns.size(), "all");
+    myVector<myVector<string>> fetchAccount() {
+        myVector<string> conditions(this->columns.size(), "all");
         conditions[this->getIndex("username")] = this->username;
         conditions[this->getIndex("password")] = this->password;
         conditions[this->getIndex("role")] = this->role;
         return fetch(&conditions);
     }
 
-    /*The 'toDelete' vector is the conditions of the records you want to delete.
+    /*The 'toDelete' myVector is the conditions of the records you want to delete.
     In case you want to delete the current record already set in the model, please provide 'nullptr' as the 'toDelete' parameter.*/
-    void removeAccount(vector<string>* toDelete = nullptr) {
+    void removeAccount(myVector<string>* toDelete = nullptr) {
         if (toDelete == nullptr) {
-            toDelete = new vector<string>((this->columns).size(), "all");
+            toDelete = new myVector<string>((this->columns).size(), "all");
             (*toDelete)[this->getIndex("username")] = this->username;
         }
         this->erase(toDelete);

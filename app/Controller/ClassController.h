@@ -12,6 +12,8 @@
 #include "../Model/ClassModel.h"
 #include "../View/View.h"
 #include "Validation.h"
+#include "../Utils/vector.h"
+ 
 
 class ClassController : public ControllerInterface {
 private:
@@ -34,7 +36,7 @@ public:
 		UserInfoModel* userInfoModel = new UserInfoModel();
 
 		ModelInterface* model = new ModelInterface(path);
-		vector<vector<string>> records = model->fetch();
+		myVector<myVector<string>> records = model->fetch();
 		if (model->columns.size() != 6) {
 			cout << "Invalid input file format. Please recheck." << endl;
 			delete classModel;
@@ -45,7 +47,7 @@ public:
 		}
 
 		classModel->setClassName(className);
-		for (vector<string> record : records) {
+		for (myVector<string> record : records) {
 			classModel->setStudentId(toLowerCase(record[1]));
 
 			accountModel->setUserName(toLowerCase(record[1]));
@@ -74,7 +76,7 @@ public:
 
 	void showClassList() {
 		ClassModel* classModel = new ClassModel();
-		vector<string> classes = classModel->getClassList();
+		myVector<string> classes = classModel->getClassList();
 		cout << "List of classes: " << endl;
 		for (int i = 0; i < (int)classes.size(); ++i) {
 			cout << i + 1 << " " << classes[i] << endl;
@@ -90,10 +92,10 @@ public:
 		string classname;
 		valid->read(classname, "nospc");
 
-		vector<string> students = classModel->getStudentInClass(classname);
-		vector<vector<string>> studentInfo;
-		vector<string> record;
-		vector<string> cols; // {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
+		myVector<string> students = classModel->getStudentInClass(classname);
+		myVector<myVector<string>> studentInfo;
+		myVector<string> record;
+		myVector<string> cols; // {" No. ", "Student ID", "Last Name", "First Name", "DoB", "  Gender  "};
 		cols.push_back(" No. ");
 		cols.push_back("Student ID");
 		cols.push_back("Last Name");
@@ -141,7 +143,7 @@ public:
 		sm->setScore("");
 		sm->setTerm("");
 		cim->setClassName(className);
-		vector<vector<string>> courses = cim->FetchCourse();
+		myVector<myVector<string>> courses = cim->FetchCourse();
 		for (int i = 0; i < courses.size(); ++i) {
 			am->setCourseId(courses[i][12]);
 			sm->setCourseId(courses[i][12]);
