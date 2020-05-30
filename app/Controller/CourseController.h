@@ -6,12 +6,12 @@
 #include "AuthorizeController.h"
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/ClassModel.h"
 #include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 class CourseController : public ControllerInterface {
 private:
@@ -22,6 +22,14 @@ public:
         cout << "Choose file: ";
         string path;
         getline(cin, path);
+
+        ofstream of(path);
+        if (!of.is_open()) {
+            cout << "File not found, please recheck." << endl;
+            return;
+        }
+        of.close();
+
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         ClassModel* cm = new ClassModel();
@@ -82,10 +90,10 @@ public:
         time_t t = time(0);
         tm* now = localtime(&t);
         int month = now->tm_mon + 1;
-        if (month >= 1 && month <= 3) return "Spring";
-        if (month >= 4 && month <= 6) return "Summer";
-        if (month >= 7 && month <= 9) return "Fall";
-        if (month >= 10 && month <= 12) return "Winter";
+        if (month >= 1 && month <= 3) return "spring";
+        if (month >= 4 && month <= 6) return "summer";
+        if (month >= 7 && month <= 9) return "fall";
+        if (month >= 10 && month <= 12) return "winter";
     }
 
     string getYear() {
@@ -93,7 +101,7 @@ public:
         tm* now = localtime(&t);
         int year = now->tm_year + 1900;
         string sem = getSemester();
-        if (sem == "Fall" || sem == "Winter")
+        if (sem == "fall" || sem == "winter")
         return to_string(year) + "-" + to_string(year+1);
         else return to_string(year-1) + "-" + to_string(year);
     }

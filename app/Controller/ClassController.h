@@ -8,11 +8,10 @@
 #include "../Model/UserInfoModel.h"
 #include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
-#include "../Model/AttendanceModel.h"
 #include "../Model/ClassModel.h"
+#include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
  
 
 class ClassController : public ControllerInterface {
@@ -27,6 +26,13 @@ public:
 		//fflush(0);
 		getline(cin, path);
 		//cin >> path;
+
+		ofstream of(path);
+		if (!of.is_open()) {
+			cout << "File not found, please recheck." << endl;
+			return;
+		}
+		of.close();
 
 		string className;
 		cout << "Class Name: ";
@@ -71,7 +77,7 @@ public:
 		delete userInfoModel;
 		delete model;
 
-		cout << "Imported Successfully" << endl;
+		cout << "Imported successfully" << endl;
 	}
 
 	void showClassList() {

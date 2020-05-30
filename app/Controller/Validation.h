@@ -54,7 +54,7 @@ public:
 		regList["nospc"] = regex("[^\\s]+"); //No space
 
 		//TIME FORMAT
-		regList["date"] = regex("[0-4]{4}\/[0-1][0-2]\/[0-3][0-9]"); // yyyy/mm/dd
+		regList["date"] = regex("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"); // yyyy/mm/dd
 		regList["hour"] = regex("[0-2][0-9]:[0-6][0-9]");
 		regList["year"] = regex("20\\d\\d-20\\d\\d");
 

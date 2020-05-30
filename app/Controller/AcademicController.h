@@ -15,7 +15,6 @@
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
-#include "../Utils/vector.h"
 
 class AcademicController : public ControllerInterface {
 private:

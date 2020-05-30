@@ -4,7 +4,6 @@
 #include "ModelInterface.h"
 #include <sstream>
 #include <algorithm>
-#include "../Utils/vector.h"
 
 using namespace std;
 
@@ -26,11 +25,12 @@ private:
     string role;
 
     string filterPassword(string password) {
-        cout << "Please be aware that all characters in password aside from A-Za-z0-9 will be eliminated." << endl;
+        
         string newPassword = "";
         for (int i = 0; i < password.length(); ++i) {
             if (isalnum(password[i])) newPassword += password[i];
         }
+        //cout << newPassword << endl;
         return newPassword;
 
     }
@@ -146,8 +146,11 @@ public:
             myVector<string> conditions(this->columns.size(), "all");
             conditions[this->getIndex("username")] = username;
             myVector<string> record = fetch(&conditions)[0];
-            record[this->getIndex("password")] = SHF(newPass);
-            this->update(&conditions, &record);
+            myVector<string> newRecord;
+            newRecord.push_back(record[0]);
+            newRecord.push_back(record[1]);
+            newRecord.push_back(SHF(newPass));
+            this->update(&conditions, &newRecord);
             return true;
         }
         catch (exception e) {
