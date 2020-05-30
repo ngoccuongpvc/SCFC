@@ -6,12 +6,12 @@
 #include "AuthorizeController.h"
 #include "../Model/AccountModel.h"
 #include "../Model/UserInfoModel.h"
+#include "../Model/ClassModel.h"
 #include "../Model/CourseInformationModel.h"
 #include "../Model/ScoreboardModel.h"
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 class AttendanceController : public ControllerInterface {
 private:
@@ -78,12 +78,12 @@ public:
     void exportAttendance() {
         cout << "Choose file to export to: ";
         string path;
-        cin >> path;
+        getline(cin, path);
         AttendanceModel* am = new AttendanceModel();
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
         string temp, courseId;
-        cout << "Please enter the ID of the course that you want to edit: "; valid->read(courseId, "nospc");
+        cout << "Please enter the ID of the course that you want to export attendance: "; valid->read(courseId, "nospc");
         cim->setCourseId(courseId);
         if (cim->FetchCourse().size() == 0) {
             cout << "The course you entered could not be found." << endl;
@@ -131,6 +131,7 @@ public:
         View* view = new View(attendance, header);
         view->setPath(path);
         view->exportTable();
+        cout << "Successfully exported table to " << path << endl;
         delete view;
         delete am;
         delete uim;

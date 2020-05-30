@@ -216,6 +216,7 @@ public:
 		linkTo("student-dashboard", "see-profile");
 		linkTo("student-dashboard", "log-out");
 		/****** STAFF DASHBOARD ******/
+		linkTo("staff-dashboard", "change-password");
 		linkTo("staff-dashboard", "class-dashboard-staff");
 		linkTo("staff-dashboard", "course-dashboard-staff");
 		linkTo("staff-dashboard", "score-dashboard-staff");
@@ -224,6 +225,7 @@ public:
 		linkTo("staff-dashboard", "see-profile");
 		linkTo("staff-dashboard", "log-out");
 		/****** LECTURE DASHBOARD******/
+		linkTo("lecturer-dashboard", "change-password");
 		linkTo("lecturer-dashboard", "course-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "score-dashboard-lecturer");
 		linkTo("lecturer-dashboard", "attendance-dashboard-lecturer");

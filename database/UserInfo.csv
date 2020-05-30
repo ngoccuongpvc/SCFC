@@ -1,108 +1,105 @@
 id,studentId,firstName,lastName,dob,userGender,username
-1,test,test,test,test,test,test
-2,19125000,linh,hoang chi ,6/8/1998,female,19125000
-3,19125001,tin,nguyen khanh ,20/12/1997,female,19125001
-4,19125002,thanh,nguyen tan ,22/10/1997,female,19125002
-5,19125003,xen,cao thi ,27/08/1997,male,19125003
-6,19125004,anh,vu nguyen kim ,7/7/1996,male,19125004
-7,19125005,liem,le nho ,29/12/1996,male,19125005
-8,19125006,thoa,vo thi ,2/7/1996,female,19125006
-9,19125007,thuan,phan van ,28/02/1998,female,19125007
-10,19125008,an,phan pham tri ,9/2/1998,male,19125008
-11,19125009,chung,chiu van ,10/2/1996,male,19125009
-12,19125010,tan,nguyen duy ,22/11/1997,male,19125010
-13,19125011,kha,vo hoang ,9/1/1998,female,19125011
-14,19125012,phi,pham thi yen ,1/1/1997,male,19125012
-15,19125013,thanh,vu van ,26/08/1998,female,19125013
-16,19125014,toan,ngo van sinh ,21/10/1997,male,19125014
-17,19125015,tai,chau le ,16/02/1996,female,19125015
-18,19125016,hieu,mai xuan ,6/10/1997,male,19125016
-19,19125017,truc,tran thanh ,28/08/1998,female,19125017
-20,19125018,vy,vo thuy ,14/07/1997,female,19125018
-21,19125019,anh,do ngoc lan ,8/1/1998,male,19125019
-22,19125020,phong,duong van ,22/02/1998,male,19125020
-23,19125021,phuong,nguyen thu ,7/9/1996,female,19125021
-24,19125022,trung,vo thanh ,28/11/1996,male,19125022
-25,19125023,anh,nguyen my ,18/02/1996,male,19125023
-26,19125024,anh,nguyen thi tram ,11/2/1996,female,19125024
-27,19125025,diep,tran thi ngoc ,23/01/1998,female,19125025
-28,19125026,linh,pham my ,3/10/1996,male,19125026
-29,19125027,my,nguyen thi nhu ,11/3/1998,male,19125027
-30,19125028,nhien,nguyen thi hong ,22/08/1996,female,19125028
-31,19125029,phi,pham phuong ,18/06/1997,male,19125029
-32,19125030,thao,tran thi thu ,30/08/1998,female,19125030
-33,19125031,thuy,nguyen thi bich ,7/2/1998,female,19125031
-34,19125032,tien,huynh thi thuy ,10/4/1996,male,19125032
-35,19125033,xuan,truong thi ,24/08/1997,male,19125033
-36,19125034,dat,nguyen ngoc ,4/6/1996,male,19125034
-37,19125035,nhan,le thi ,21/08/1996,male,19125035
-38,19125036,tien,dinh hoai my ,27/01/1998,female,19125036
-39,19125037,vinh,ngo hoang ,25/10/1997,male,19125037
-40,19125038,vinh,nguyen tu than ,7/7/1998,male,19125038
-41,19125039,trinh,huynh thi my ,15/02/1998,male,19125039
-42,19125040,nhu,nguyen thi quynh ,13/02/1996,female,19125040
-43,19125041,yen,dinh thi hai ,24/04/1997,male,19125041
-44,19125042,rieu,kieu thi hong ,21/06/1998,male,19125042
-45,19125043,thuyen,vi thi ,14/07/1996,male,19125043
-46,19125044,bao,do trieu ,31/03/1996,male,19125044
-47,19125045,binh,do long ,30/07/1998,male,19125045
-48,19125046,duc,nguyen tat ,11/3/1996,male,19125046
-49,19125047,thao,bui thi huong ,16/05/1996,male,19125047
-50,19125048,tinh,nguyen trung ,10/10/1996,female,19125048
-51,19125049,trang,nguyen thi ,16/12/1997,female,19125049
-52,19125050,vy,vu thi huyen ,24/02/1996,male,19125050
-53,19125051,trong,pham duc ,27/07/1997,female,19125051
-54,19125052,binh,thai thanh ,23/03/1996,female,19125052
-55,19125053,duong,tran van ,19/06/1998,male,19125053
-56,19125054,tung,le thanh ,17/09/1996,male,19125054
-57,19125055,tay,doan ngoc ,12/6/1996,female,19125055
-58,19125056,anh,tran thi ngoc ,10/2/1996,female,19125056
-59,19125057,han,nguyen thi ngoc ,17/03/1996,male,19125057
-60,19125058,hoc,phi dang ,24/07/1996,male,19125058
-61,19125059,thang,vo minh ,13/01/1996,male,19125059
-62,19125060,trung,le quoc ,17/10/1998,male,19125060
-63,19125061,linh,trinh xuan ,19/09/1997,female,19125061
-64,19125062,diem,phan thi ngoc ,4/3/1998,male,19125062
-65,19125063,diep,cao ngoc ,23/07/1996,female,19125063
-66,19125064,hao,nguyen thi my ,22/01/1997,female,19125064
-67,19125065,khiem,dang trong ,23/03/1998,female,19125065
-68,19125066,ly,tran mai khanh ,11/4/1998,male,19125066
-69,19125067,mai,tran nguyen xuan ,5/9/1998,male,19125067
-70,19125068,quyen,bui thi thuy ,30/08/1998,female,19125068
-71,19125069,quyen,nguyen thi bich ,5/2/1998,male,19125069
-72,19125070,thao,le thanh ,4/8/1997,female,19125070
-73,19125071,thuy,hoang ngoc doan ,10/10/1998,female,19125071
-74,19125072,tinh,doan cao huu ,19/08/1997,female,19125072
-75,19125073,vuong,dam xuan ,15/06/1998,male,19125073
-76,19125074,danh,nguyen dac thanh ,16/10/1997,male,19125074
-77,19125075,duc,chu minh ,28/07/1998,male,19125075
-78,19125076,hai,nguyen thi ngoc ,24/10/1996,male,19125076
-79,19125077,khang,vuong trong ,6/10/1997,male,19125077
-80,19125078,lam,tran bao ,4/6/1997,female,19125078
-81,19125079,luan,ngo minh ,1/6/1998,female,19125079
-82,19125080,nghi,le huu ,30/09/1997,male,19125080
-83,19125081,thoai,huynh trong ,20/01/1996,male,19125081
-84,19125082,tuan,le bao ,13/04/1998,female,19125082
-85,19125083,dieu,thai thi xuan ,23/09/1996,female,19125083
-86,19125084,thuong,tieu tieu ,15/09/1996,male,19125084
-87,19125085,anh,le thi lan ,5/10/1998,male,19125085
-88,19125086,minh,pham dang ,3/3/1997,male,19125086
-89,19125087,oanh,nguyen thi my ,10/11/1997,male,19125087
-90,19125088,phuong,nguyen thi bao ,5/10/1998,male,19125088
-91,19125089,sang,nguyen tan ,10/3/1996,female,19125089
-92,19125090,trinh,ho ngoc tu ,15/10/1998,female,19125090
-93,19125091,trung,nguyen minh ,15/02/1996,male,19125091
-94,19125092,viet,bui quoc ,7/11/1997,male,19125092
-95,19125093,cuc,nguyen thi ,30/10/1996,male,19125093
-96,19125094,ha,nguyen truong nu ,20/09/1996,female,19125094
-97,19125095,linh,tran huynh truc ,8/8/1997,male,19125095
-98,19125096,nhung,nguyen thi hong ,29/01/1996,male,19125096
-99,19125097,tai,van huu ,24/07/1998,female,19125097
-100,19125098,thanh,phan nhut ,5/7/1996,female,19125098
-101,19125099,thao,tran thi xuan ,2/1/1997,male,19125099
-102,,dbtien,dbtienn,a,asd,aoosj
-103,,tien,dinh,1/1/1990,male,dbtien
-104,,htthanh,ho tuan,1/1/1990,male,all
-105,,phat,tu tan,10/1/2001,male,ttphat
-106,19121810,hung,nguyen,10/18/2001,male,19121810
-,,,,,,
+1,19125000,hoang chi ,linh,6/8/1998,female,19125000
+2,19125001,nguyen khanh ,tin,20/12/1997,female,19125001
+3,19125002,nguyen tan ,thanh,22/10/1997,female,19125002
+4,19125003,cao thi ,xen,27/08/1997,male,19125003
+5,19125004,vu nguyen kim ,anh,7/7/1996,male,19125004
+6,19125005,le nho ,liem,29/12/1996,male,19125005
+7,19125006,vo thi ,thoa,2/7/1996,female,19125006
+8,19125007,phan van ,thuan,28/02/1998,female,19125007
+9,19125008,phan pham tri ,an,9/2/1998,male,19125008
+10,19125009,chiu van ,chung,10/2/1996,male,19125009
+11,19125010,nguyen duy ,tan,22/11/1997,male,19125010
+12,19125011,vo hoang ,kha,9/1/1998,female,19125011
+13,19125012,pham thi yen ,phi,1/1/1997,male,19125012
+14,19125013,vu van ,thanh,26/08/1998,female,19125013
+15,19125014,ngo van sinh ,toan,21/10/1997,male,19125014
+16,19125015,chau le ,tai,16/02/1996,female,19125015
+17,19125016,mai xuan ,hieu,6/10/1997,male,19125016
+18,19125017,tran thanh ,truc,28/08/1998,female,19125017
+19,19125018,vo thuy ,vy,14/07/1997,female,19125018
+20,19125019,do ngoc lan ,anh,8/1/1998,male,19125019
+21,19125020,duong van ,phong,22/02/1998,male,19125020
+22,19125021,nguyen thu ,phuong,7/9/1996,female,19125021
+23,19125022,vo thanh ,trung,28/11/1996,male,19125022
+24,19125023,nguyen my ,anh,18/02/1996,male,19125023
+25,19125024,nguyen thi tram ,anh,11/2/1996,female,19125024
+26,19125025,tran thi ngoc ,diep,23/01/1998,female,19125025
+27,19125026,pham my ,linh,3/10/1996,male,19125026
+28,19125027,nguyen thi nhu ,my,11/3/1998,male,19125027
+29,19125028,nguyen thi hong ,nhien,22/08/1996,female,19125028
+30,19125029,pham phuong ,phi,18/06/1997,male,19125029
+31,19125030,tran thi thu ,thao,30/08/1998,female,19125030
+32,19125031,nguyen thi bich ,thuy,7/2/1998,female,19125031
+33,19125032,huynh thi thuy ,tien,10/4/1996,male,19125032
+34,19125033,truong thi ,xuan,24/08/1997,male,19125033
+35,19125034,nguyen ngoc ,dat,4/6/1996,male,19125034
+36,19125035,le thi ,nhan,21/08/1996,male,19125035
+37,19125036,dinh hoai my ,tien,27/01/1998,female,19125036
+38,19125037,ngo hoang ,vinh,25/10/1997,male,19125037
+39,19125038,nguyen tu than ,vinh,7/7/1998,male,19125038
+40,19125039,huynh thi my ,trinh,15/02/1998,male,19125039
+41,19125040,nguyen thi quynh ,nhu,13/02/1996,female,19125040
+42,19125041,dinh thi hai ,yen,24/04/1997,male,19125041
+43,19125042,kieu thi hong ,rieu,21/06/1998,male,19125042
+44,19125043,vi thi ,thuyen,14/07/1996,male,19125043
+45,19125044,do trieu ,bao,31/03/1996,male,19125044
+46,19125045,do long ,binh,30/07/1998,male,19125045
+47,19125046,nguyen tat ,duc,11/3/1996,male,19125046
+48,19125047,bui thi huong ,thao,16/05/1996,male,19125047
+49,19125048,nguyen trung ,tinh,10/10/1996,female,19125048
+50,19125049,nguyen thi ,trang,16/12/1997,female,19125049
+51,19125050,vu thi huyen ,vy,24/02/1996,male,19125050
+52,19125051,pham duc ,trong,27/07/1997,female,19125051
+53,19125052,thai thanh ,binh,23/03/1996,female,19125052
+54,19125053,tran van ,duong,19/06/1998,male,19125053
+55,19125054,le thanh ,tung,17/09/1996,male,19125054
+56,19125055,doan ngoc ,tay,12/6/1996,female,19125055
+57,19125056,tran thi ngoc ,anh,10/2/1996,female,19125056
+58,19125057,nguyen thi ngoc ,han,17/03/1996,male,19125057
+59,19125058,phi dang ,hoc,24/07/1996,male,19125058
+60,19125059,vo minh ,thang,13/01/1996,male,19125059
+61,19125060,le quoc ,trung,17/10/1998,male,19125060
+62,19125061,trinh xuan ,linh,19/09/1997,female,19125061
+63,19125062,phan thi ngoc ,diem,4/3/1998,male,19125062
+64,19125063,cao ngoc ,diep,23/07/1996,female,19125063
+65,19125064,nguyen thi my ,hao,22/01/1997,female,19125064
+66,19125065,dang trong ,khiem,23/03/1998,female,19125065
+67,19125066,tran mai khanh ,ly,11/4/1998,male,19125066
+68,19125067,tran nguyen xuan ,mai,5/9/1998,male,19125067
+69,19125068,bui thi thuy ,quyen,30/08/1998,female,19125068
+70,19125069,nguyen thi bich ,quyen,5/2/1998,male,19125069
+71,19125070,le thanh ,thao,4/8/1997,female,19125070
+72,19125071,hoang ngoc doan ,thuy,10/10/1998,female,19125071
+73,19125072,doan cao huu ,tinh,19/08/1997,female,19125072
+74,19125073,dam xuan ,vuong,15/06/1998,male,19125073
+75,19125074,nguyen dac thanh ,danh,16/10/1997,male,19125074
+76,19125075,chu minh ,duc,28/07/1998,male,19125075
+77,19125076,nguyen thi ngoc ,hai,24/10/1996,male,19125076
+78,19125077,vuong trong ,khang,6/10/1997,male,19125077
+79,19125078,tran bao ,lam,4/6/1997,female,19125078
+80,19125079,ngo minh ,luan,1/6/1998,female,19125079
+81,19125080,le huu ,nghi,30/09/1997,male,19125080
+82,19125081,huynh trong ,thoai,20/01/1996,male,19125081
+83,19125082,le bao ,tuan,13/04/1998,female,19125082
+84,19125083,thai thi xuan ,dieu,23/09/1996,female,19125083
+85,19125084,tieu tieu ,thuong,15/09/1996,male,19125084
+86,19125085,le thi lan ,anh,5/10/1998,male,19125085
+87,19125086,pham dang ,minh,3/3/1997,male,19125086
+88,19125087,nguyen thi my ,oanh,10/11/1997,male,19125087
+89,19125088,nguyen thi bao ,phuong,5/10/1998,male,19125088
+90,19125089,nguyen tan ,sang,10/3/1996,female,19125089
+91,19125090,ho ngoc tu ,trinh,15/10/1998,female,19125090
+92,19125091,nguyen minh ,trung,15/02/1996,male,19125091
+93,19125092,bui quoc ,viet,7/11/1997,male,19125092
+94,19125093,nguyen thi ,cuc,30/10/1996,male,19125093
+95,19125094,nguyen truong nu ,ha,20/09/1996,female,19125094
+96,19125095,tran huynh truc ,linh,8/8/1997,male,19125095
+97,19125096,nguyen thi hong ,nhung,29/01/1996,male,19125096
+98,19125097,van huu ,tai,24/07/1998,female,19125097
+99,19125098,phan nhut ,thanh,5/7/1996,female,19125098
+100,19125099,tran thi xuan ,thao,2/1/1997,male,19125099
+101,,minh,le hoang,2001/12/02,male,lhminh
+102,,tien,dinh ba,1980-12-29,male,dbtien
+103,,tam,nguyen minh,1990-01-01,female,nttvan
+104,19135064,phat,tu tan,2001-10-01,male,19135064

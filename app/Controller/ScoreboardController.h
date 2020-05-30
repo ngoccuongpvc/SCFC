@@ -11,7 +11,6 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 class ScoreboardController : public ControllerInterface {
 private:
@@ -22,6 +21,12 @@ public:
         cout << "Choose file: ";
         string path;
         getline(cin, path);
+        ofstream of(path);
+        if (!of.is_open()) {
+            cout << "File not found, please recheck." << endl;
+            return;
+        }
+        of.close();
         CourseInformationModel* cim = new CourseInformationModel();
         AttendanceModel* am = new AttendanceModel();
         UserInfoModel* uim = new UserInfoModel();
@@ -148,7 +153,7 @@ public:
     void exportScoreboard() {
         cout << "Choose file to export to: ";
         string path;
-        cin >> path;
+        getline(cin, path);
         ScoreboardModel* sm = new ScoreboardModel();
         CourseInformationModel* cim = new CourseInformationModel();
         UserInfoModel* uim = new UserInfoModel();
@@ -206,6 +211,7 @@ public:
         View* view = new View(scores, header);
         view->setPath(path);
         view->exportTable();
+        cout << "Successfully exported scoreboard to " << path << endl;
         delete view;
         delete sm;
         delete sm_temp;

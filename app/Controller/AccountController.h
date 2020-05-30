@@ -13,7 +13,6 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 //using namespace std;
 
@@ -104,8 +103,15 @@ public:
             delete uim;
             return;
         }
+
+        cout << "Below is the current information of this lecturer:" << endl;
+        cout << "First name: " << results[0][2] << endl;
+        cout << "Last name: " << results[0][3] << endl;
+        cout << "Date of Birth: " << results[0][4] << endl;
+        cout << "Gender: " << results[0][5] << endl;
+
         myVector<string> record = results[0];
-        cout << "Please enter the information that you want to change about this course. Press enter if you don't want to change that info.." << endl;
+        cout << "Please enter the information that you want to change about this lecturer. Press enter if you don't want to change that info.." << endl;
         string temp;
         myVector<string> toUpdate;
         toUpdate.push_back(record[0]);
@@ -114,7 +120,7 @@ public:
 		cout << "Last name: ";     valid->read(temp, "all");    toUpdate.push_back(temp);
 		cout << "Date of birth: "; valid->read(temp, "date");   toUpdate.push_back(temp);
 		cout << "User gender: ";   valid->read(temp, "gender"); toUpdate.push_back(temp);
-		cout << "New username: ";  valid->read(temp, "nospc");  toUpdate.push_back(temp);
+        toUpdate.push_back("");
         uim->UpdateInfo(&record, &toUpdate);
         cout << "Successfully edited the lecturer." << endl;
         delete uim;

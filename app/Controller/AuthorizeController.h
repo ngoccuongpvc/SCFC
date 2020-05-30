@@ -11,7 +11,6 @@
 #include "../Model/AttendanceModel.h"
 #include "../View/View.h"
 #include "Validation.h"
-#include "../Utils/vector.h"
 
 string role;
 bool logged_in = false;
@@ -135,7 +134,6 @@ public:
     }
 
     void changePasswordAction() {
-        cout << "Change password here!";
         if (globalUsername == "null")
         {
             cout << "You have to login before changing password." << endl;
@@ -143,7 +141,7 @@ public:
         else
         {
             string newPass;
-            cout << "Please enter new password: ";
+            cout << "Please enter new your password (no space): ";
             valid->read(newPass, "nospc");
 
             AccountModel* model = new AccountModel();
@@ -158,7 +156,7 @@ public:
             {
                 cout << "Can't change password" << endl;
             }
-            //delete model;
+            delete model;
         }
     }
 
