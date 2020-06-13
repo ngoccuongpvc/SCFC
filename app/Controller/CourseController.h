@@ -23,7 +23,7 @@ public:
         string path;
         getline(cin, path);
 
-        ofstream of(path);
+        ifstream of(path);
         if (!of.is_open()) {
             cout << "File not found, please recheck." << endl;
             return;
